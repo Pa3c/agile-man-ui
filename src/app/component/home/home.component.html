@@ -1,1 +1,8 @@
-<p>home works!</p>
+<div (click)="loginView(true)">
+    Login
+</div>
+<div (click)="loginView(false)">
+    Register
+</div>
+<div *ngIf="showLogin; else registration"><app-login></app-login></div>
+<ng-template #registration><app-register></app-register></ng-template>
