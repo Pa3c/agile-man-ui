@@ -1,0 +1,31 @@
+.page{
+    display: flex;
+    justify-content: center;
+}
+.form-container{
+    display: flex;
+    border: 1px black solid;
+    flex-basis: 50%;
+    flex-direction: column;
+    justify-content: center;
+}
+.button-container{
+    display: flex;
+    flex-basis: 100%;
+    justify-content: center;
+}
+.home-button{
+    flex-basis: 50%;
+    border: 1px black solid;
+    text-align: center;
+    padding: 0.5em;
+    margin: 0.1em;
+}
+.choosed-form{
+    flex-basis: 100%;
+    display: flex;
+    padding: 0.5em;
+    margin: 0.1em;
+    border: 1px black solid;
+    justify-content: center;
+}

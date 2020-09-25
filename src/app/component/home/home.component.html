@@ -1,8 +1,16 @@
-<div (click)="loginView(true)">
-    Login
+<div class="page">
+    <div class="form-container">
+        <div class="button-container">
+            <div (click)="loginView(true)" class="home-button">
+                Login
+            </div>
+            <div (click)="loginView(false)" class="home-button">
+                Register
+            </div>
+        </div>
+        <div class="choosed-form">
+            <div *ngIf="showLogin; else registration"><app-login></app-login></div>
+            <ng-template #registration><app-register></app-register></ng-template>
+        </div>
+    </div>
 </div>
-<div (click)="loginView(false)">
-    Register
-</div>
-<div *ngIf="showLogin; else registration"><app-login></app-login></div>
-<ng-template #registration><app-register></app-register></ng-template>

@@ -1,1 +1,11 @@
-<p>login works!</p>
+<form #loginForm="ngForm" (ngSUbmit)="logIn(loginForm)">
+    <div class="login-form-content-container">
+        <input name="loginOrEmail" required type="text" ngModel required #loginOrEmail="ngModel" placeholder="Login or Email"/>
+        <div *ngIf="loginOrEmail.invalid && loginForm.submitted"
+    class="alert alert-danger">
+            Login is required.
+        </div>
+        <input name="password" required type="Password" ngModel required #password ="ngModel" placeholder="Password"/>
+        <button>Login</button>
+    </div>
+</form>
