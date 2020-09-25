@@ -1,10 +1,1 @@
-.login-form-content-container{
-    display: flex;
-    flex-basis: 80%;
-    flex-direction: column;
-    justify-content: center;
-}
-.login-form-content-container input,button {
- margin: 0.1em;
- padding: 0.5em;
-}
+@import "../styles/home-form.css";
