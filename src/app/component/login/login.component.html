@@ -1,4 +1,4 @@
-<form #loginForm="ngForm" (ngSUbmit)="logIn(loginForm.value)">
+<form #loginForm="ngForm" (ngSUbmit)="signIn(loginForm.value)">
     <div class="home-form-content-container">
         <input name="login" class="form-control black-focus" required type="text" ngModel required #login="ngModel" placeholder="Login"/>
         <div *ngIf="login.invalid && loginForm.submitted"
@@ -10,7 +10,7 @@
         class="home-form-alert">
             Password is required.
         </div>
-        <i *ngIf="showLoading" class="fas fa-spinner fa-spin"></i>&nbsp;&nbsp;
+        <i *ngIf="loadInProgress" class="fas fa-spinner fa-spin"></i>&nbsp;&nbsp;
         <span *ngIf="loadInProgress">Loading...</span>
         <button *ngIf="!loadInProgress" class="btn btn-dark w-100">Login</button>
     </div>

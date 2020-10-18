@@ -1,14 +1,14 @@
-<form #loginForm="ngForm" (ngSUbmit)="register(loginForm)">
+<form #registerForm="ngForm" (ngSUbmit)="signUp(registerForm.value)">
     <div class="home-form-content-container">
 
         <input name="login" class="form-control black-focus" required type="text" ngModel required #login="ngModel" placeholder="Login"/>
-        <div *ngIf="login.invalid && loginForm.submitted"
+        <div *ngIf="login.invalid && registerForm.submitted"
         class="home-form-alert">
             Login is required.
         </div>
 
         <input name="email" class="form-control black-focus" required type="text" ngModel required #email="ngModel" placeholder="Example@email.com"/>
-        <div *ngIf="email.invalid && loginForm.submitted"
+        <div *ngIf="email.invalid && registerForm.submitted"
         class="home-form-alert">
             Email is required.
         </div>
@@ -17,11 +17,12 @@
         <input name="surname" class="form-control black-focus" required type="text" ngModel #surname="ngModel" placeholder="Surname"/>
 
         <input name="password" class="form-control" required type="Password" ngModel required #password ="ngModel" placeholder="Password"/>
-        <div *ngIf="password.invalid && loginForm.submitted"
+        <div *ngIf="password.invalid && registerForm.submitted"
         class="home-form-alert">
             Password is required.
         </div>
-
-        <button class="btn btn-dark w-100">Register</button>
+        <i *ngIf="loadInProgress" class="fas fa-spinner fa-spin"></i>&nbsp;&nbsp;
+        <span *ngIf="loadInProgress">Loading...</span>
+        <button *ngIf="!loadInProgress" class="btn btn-dark w-100">Register</button>
     </div>
 </form>

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import {Router} from '@angular/router';
 import {UserService} from '../../service/user.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
@@ -27,7 +26,7 @@ ngOnInit(): void {
   }
 }
 
-  logIn(signInSO: SignInSO){
+public signIn(signInSO: SignInSO){
     this.loadInProgress = true;
     this.subscriptions.push(
       this.loginService.login(signInSO).subscribe(
@@ -45,5 +44,9 @@ ngOnInit(): void {
         }
       )
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }
