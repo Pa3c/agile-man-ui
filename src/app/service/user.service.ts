@@ -15,7 +15,7 @@ export class UserService {
     localStorage.setItem('token', token);
   }
 
-  public addUserToLocalCache(user: User): void {
+  public saveUser(user: User): void {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
@@ -51,6 +51,5 @@ export class UserService {
     this.loggedInUsername = null;
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-    localStorage.removeItem('users');
   }
 }

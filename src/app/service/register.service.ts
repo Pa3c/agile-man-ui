@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment';
 export class RegisterService {
   constructor(private http: HttpClient) {}
 
-  public register(user: User): Observable<User> {
+  public signUp(user: User): Observable<User> {
     return this.http.post<User>(`${environment.backendAddress}/auth/signup`, user);
   }
 }

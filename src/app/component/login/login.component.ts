@@ -20,9 +20,9 @@ export class LoginComponent implements OnInit {
 
 ngOnInit(): void {
   if (this.userService.isUserLoggedIn()) {
-      this.router.navigateByUrl('/menu');
+     // this.router.navigateByUrl('/menu');
   } else {
-      this.router.navigateByUrl('/login');
+      //this.router.navigateByUrl('/login');
   }
 }
 
@@ -33,7 +33,8 @@ public signIn(signInSO: SignInSO){
         (response: HttpResponse<User>) => {
           const token = response.headers.get('Jwt-Token');
           this.userService.saveToken(token);
-          this.userService.addUserToLocalCache(response.body);
+          console.log(token);
+          this.userService.saveUser(response.body);
           this.router.navigateByUrl('/menu');
           this.loadInProgress = false;
           this.loginFailed = false;
