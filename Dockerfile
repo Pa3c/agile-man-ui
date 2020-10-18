@@ -8,5 +8,5 @@ RUN npm run build
 FROM nginx
 #from means that we want copy from specific phase - 0 means the first phase
 #COPY --from=0 /agileman-frontend /usr/share/nginx/html
-
+EXPOSE 80
 COPY --from=0 /agileman-frontend/dist/agileman /usr/share/nginx/html
