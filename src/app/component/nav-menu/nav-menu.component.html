@@ -1,0 +1,36 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav"
+      [ngClass]= "{hidden: (isHandset$ | async)!.matches}"
+      fixedInViewport="false"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <button>Projects</button>  
+      <button>Teams</button>
+      <button>Profile</button>  
+      <button>Logout</button>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async" style="margin: 10px; background-color: black;">
+        Menu
+      </button>
+      <span>Agileman</span>
+      <span class="spacer"></span>
+      <span *ngIf="!(isHandset$ | async)" class="hidable-menu-container">
+        <button>Projects</button>  
+        <button>Teams</button>
+        <button>Profile</button>  
+        <button>Logout</button>
+      </span>
+    </mat-toolbar>
+    <ng-content>
+
+    </ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -2,6 +2,7 @@
     display: flex;
     flex-basis: 80%;
     flex-direction: column;
+    
 }
 .home-form-content-container button {
     cursor: pointer;
