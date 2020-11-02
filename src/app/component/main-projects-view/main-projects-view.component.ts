@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { from } from 'rxjs';
 import { ProjectSO } from 'src/app/model/ProjectModule';
 import { ProjectService } from 'src/app/service/project.service';
 import { UserService } from 'src/app/service/user.service';
+import {SortExpandableTableComponent} from '../sort-expandable-table/sort-expandable-table.component';
 
 @Component({
   selector: 'main-projects-view',

@@ -22,6 +22,8 @@ import { UserService } from './service/user.service';
 import { ProjectService } from './service/project.service';
 import { RegisterService } from './service/register.service';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { SortExpandableTableComponent } from './component/sort-expandable-table/sort-expandable-table.component';
+import { MatSortHeader, MatSortModule, MatTableModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -31,10 +33,13 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
     RegisterComponent,
     NavMenuComponent,
     MainFrameComponent,
-    MainProjectsViewComponent
+    MainProjectsViewComponent,
+    SortExpandableTableComponent
   ],
   imports: [
     BrowserModule,
+    MatTableModule,
+    MatSortModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
