@@ -12,14 +12,7 @@ export class ProjectService {
   constructor(private http: HttpClient) { }
 
   public getUserProjects(login: string,token: string): Observable<ProjectSO[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        Authorization: 'Bearer '+token
-      })
-    };
-    console.log(httpOptions);
-    return this.http.get<ProjectSO[]>(`${environment.backendAddress}/user/${login}/project`,httpOptions);
+    return this.http.get<ProjectSO[]>(`${environment.backendAddress}/user/${login}/project`);
   }
 
 }

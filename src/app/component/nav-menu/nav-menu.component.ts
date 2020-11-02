@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { MainProjectsViewComponent } from '../main-projects-view/main-projects-view.component';
 
 @Component({
   selector: 'nav-menu',
@@ -16,6 +17,6 @@ export class NavMenuComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver,private mainProjectView: MainProjectsViewComponent) {}
 
 }

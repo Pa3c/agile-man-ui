@@ -1,4 +1,6 @@
 html,body{
     color:ghostwhite;
     background-color: #222;
-}
+    margin: 0;
+    height: 100%;
+  }

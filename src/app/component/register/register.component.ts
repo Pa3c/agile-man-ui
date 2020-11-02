@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     if (this.userService.isUserLoggedIn()) {
-      this.router.navigateByUrl('/home');
+      //this.router.navigateByUrl('/home');
     }
   }
 
