@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { ChangeDetectorRef, NgModule } from '@angular/core';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms'; // <== add the imports!
 
@@ -45,7 +45,7 @@ import { MatSortHeader, MatSortModule, MatTableModule } from '@angular/material'
     BrowserAnimationsModule,
     FormsModule,ReactiveFormsModule, LayoutModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule
   ],
-  providers: [MainProjectsViewComponent,UserService, ProjectService,RegisterService,
+  providers: [SortExpandableTableComponent,MainProjectsViewComponent,UserService, ProjectService,RegisterService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })

@@ -6,7 +6,12 @@
 
 .sidenav {
   width: 200px;
+  height:100%;
+  display: flex;
+  background-color: #222;
+  align-content: stretch;
 }
+
 
 .hidden {
     display: none;
@@ -43,12 +48,10 @@ mat-nav-list {
 }
 
 mat-nav-list button {
-  margin: 0 10px;
-  border: 0px;
-  padding: 10px 10px;
-  background-color: transparent;
+  background-color: #333;
   text-decoration: none;
   color:ghostwhite;
+  padding: 9vh;
 }
 button :hover{
   background: yellowgreen;

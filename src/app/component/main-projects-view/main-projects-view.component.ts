@@ -12,8 +12,9 @@ import {SortExpandableTableComponent} from '../sort-expandable-table/sort-expand
 })
 export class MainProjectsViewComponent implements OnInit {
   private projects: ProjectSO[];
-
-  constructor(private projectService: ProjectService,private userService: UserService) { }
+  private columnsToDisplay = ['title'];
+  private columnsForDetails = ['description'];
+  constructor(private projectService: ProjectService,private userService: UserService,private projectTable: SortExpandableTableComponent) { }
 
   ngOnInit() {
     const login = this.userService.getUserFromLocalCache().login;
@@ -28,5 +29,4 @@ export class MainProjectsViewComponent implements OnInit {
       }
     );
   }
-
 }
