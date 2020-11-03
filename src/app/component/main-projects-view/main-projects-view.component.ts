@@ -18,8 +18,7 @@ export class MainProjectsViewComponent implements OnInit {
 
   ngOnInit() {
     const login = this.userService.getUserFromLocalCache().login;
-    const token = this.userService.getToken();
-    this.projectService.getUserProjects(login,token).subscribe(
+    this.projectService.getUserProjects(login).subscribe(
       (response: ProjectSO[]) => {
         this.projects = response;
         console.log(this.projects);
