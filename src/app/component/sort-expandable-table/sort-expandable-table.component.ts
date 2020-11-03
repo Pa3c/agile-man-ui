@@ -25,8 +25,6 @@ export class SortExpandableTableComponent implements OnInit {
   expandedElement :any;
   
   constructor() { }
-  sortData(sort: Sort) {
-  }
   ngOnInit() {
   }
   public expandElement(element){
@@ -36,5 +34,19 @@ export class SortExpandableTableComponent implements OnInit {
     }
     this.expandedElement = element;
   }
-
+  sortData(sort: Sort) {
+    if (!sort.active || sort.direction === "") {
+      return;
+    }
+    this.dataSource = this.dataSource.sort((a, b) => {
+      const isAsc = sort.direction === "asc";
+      const column = sort.active;
+      return compare(a[column], b[column], isAsc);
+    }).slice();
+  }
 }
+
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
+
