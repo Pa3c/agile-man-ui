@@ -15,7 +15,6 @@ export class MainProjectsViewComponent implements OnInit {
   private columnsToDisplay = ['title'];
   private columnsForDetails = ['description'];
   constructor(private projectService: ProjectService,private userService: UserService,private projectTable: SortExpandableTableComponent) { }
-
   ngOnInit() {
     const login = this.userService.getUserFromLocalCache().login;
     this.projectService.getUserProjects(login).subscribe(

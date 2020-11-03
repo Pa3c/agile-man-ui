@@ -24,6 +24,8 @@ import { RegisterService } from './service/register.service';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { SortExpandableTableComponent } from './component/sort-expandable-table/sort-expandable-table.component';
 import { MatSortHeader, MatSortModule, MatTableModule } from '@angular/material';
+import { MainTeamsViewComponent } from './component/main-teams-view/main-teams-view.component';
+import { MenuDirective } from './component/nav-menu/menu-directive';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { MatSortHeader, MatSortModule, MatTableModule } from '@angular/material'
     NavMenuComponent,
     MainFrameComponent,
     MainProjectsViewComponent,
-    SortExpandableTableComponent
+    SortExpandableTableComponent,
+    MainTeamsViewComponent,
+    MenuDirective
   ],
   imports: [
     BrowserModule,
@@ -45,6 +49,7 @@ import { MatSortHeader, MatSortModule, MatTableModule } from '@angular/material'
     BrowserAnimationsModule,
     FormsModule,ReactiveFormsModule, LayoutModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule
   ],
+  entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent],
   providers: [SortExpandableTableComponent,MainProjectsViewComponent,UserService, ProjectService,RegisterService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
