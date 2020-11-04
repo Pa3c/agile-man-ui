@@ -1,6 +1,7 @@
 import { Component, OnInit,Input } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Sort } from '@angular/material';
+import { toArray } from 'rxjs/operators';
 
 @Component({
   selector: 'sort-expandable-table',
@@ -23,8 +24,12 @@ export class SortExpandableTableComponent implements OnInit {
   @Input('detailColumns')
   public columnsForDetails;
   expandedElement :any;
-  
-  constructor() { }
+  @Input('itemResolver')
+  public itemResolver;
+
+
+  constructor() { 
+  }
   ngOnInit() {
   }
   public expandElement(element){

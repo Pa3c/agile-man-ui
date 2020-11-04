@@ -10,4 +10,4 @@
         public phoneNumber : string;
         public birthday : string;
         public skype : string;
-        }
+    }

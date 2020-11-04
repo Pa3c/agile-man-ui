@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { from } from 'rxjs';
-import { ProjectSO } from 'src/app/model/ProjectModule';
+import { defaultProjectResolver, Project } from 'src/app/model/ProjectModule';
 import { ProjectService } from 'src/app/service/project.service';
 import { UserService } from 'src/app/service/user.service';
 import {SortExpandableTableComponent} from '../sort-expandable-table/sort-expandable-table.component';
@@ -11,14 +11,18 @@ import {SortExpandableTableComponent} from '../sort-expandable-table/sort-expand
   styleUrls: ['./main-projects-view.component.css']
 })
 export class MainProjectsViewComponent implements OnInit {
-  private projects: ProjectSO[];
+  private projects: Project[];
   private columnsToDisplay = ['title'];
   private columnsForDetails = ['description'];
+  private itemResolver = defaultProjectResolver;
+
   constructor(private projectService: ProjectService,private userService: UserService,private projectTable: SortExpandableTableComponent) { }
+  
+  
   ngOnInit() {
     const login = this.userService.getUserFromLocalCache().login;
     this.projectService.getUserProjects(login).subscribe(
-      (response: ProjectSO[]) => {
+      (response: Project[]) => {
         this.projects = response;
         console.log(this.projects);
       },

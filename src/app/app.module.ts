@@ -26,6 +26,7 @@ import { SortExpandableTableComponent } from './component/sort-expandable-table/
 import { MatSortHeader, MatSortModule, MatTableModule } from '@angular/material';
 import { MainTeamsViewComponent } from './component/main-teams-view/main-teams-view.component';
 import { MenuDirective } from './component/nav-menu/menu-directive';
+import { TeamService } from './service/team.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import { MenuDirective } from './component/nav-menu/menu-directive';
     FormsModule,ReactiveFormsModule, LayoutModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule
   ],
   entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent],
-  providers: [SortExpandableTableComponent,MainProjectsViewComponent,UserService, ProjectService,RegisterService,
+  providers: [SortExpandableTableComponent,MainProjectsViewComponent,UserService, ProjectService,RegisterService,TeamService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })

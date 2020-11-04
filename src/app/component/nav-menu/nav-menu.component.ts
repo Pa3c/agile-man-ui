@@ -28,7 +28,7 @@ export class NavMenuComponent implements OnInit{
    
   }
   ngOnInit(): void {
-    this.setCurrentView("projects");
+    this.setCurrentView("teams");
   }
 
   setCurrentView(name: string){
