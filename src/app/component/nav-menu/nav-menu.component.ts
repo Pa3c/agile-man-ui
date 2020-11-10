@@ -5,6 +5,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { MainProjectsViewComponent } from '../main-projects-view/main-projects-view.component';
 import { MainTeamsViewComponent } from '../main-teams-view/main-teams-view.component';
 import { MenuDirective } from './menu-directive';
+import { DataComponent } from '../interface/data.component';
 
 @Component({
   selector: 'nav-menu',
@@ -31,13 +32,18 @@ export class NavMenuComponent implements OnInit{
     this.setCurrentView("teams");
   }
 
-  setCurrentView(name: string){
+  setCurrentViewWithData(name: string,data: any){
     const componentFactory = this.componentFactoryResolver
                                  .resolveComponentFactory(this.components.get(name));
     
     const viewContainerRef = this.currentView.viewContainerRef;
     viewContainerRef.clear();
-    viewContainerRef.createComponent<any>(componentFactory);
+    const componentContainerRef = viewContainerRef.createComponent<DataComponent>(componentFactory);
+    componentContainerRef.instance.data = data;
+  }
+
+  setCurrentView(name: string){
+    this.setCurrentViewWithData(name,null);
   }
 
 }
