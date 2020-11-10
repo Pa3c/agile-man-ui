@@ -1,2 +1,43 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container class="sidenav-container" *ngIf="!preventShowFrame()">
+  
+    <mat-sidenav #drawer class="sidenav"
+        [ngClass]= "{hidden: (isHandset$ | async)!.matches}"
+        fixedInViewport="false"
+        fixedBottomGap=0
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="false">
+      <mat-toolbar (click)="drawer.toggle()">Menu</mat-toolbar>
+      <mat-nav-list>
+        <button (click)='setCurrentView("projects")'>Projects</button>  
+        <button (click)='setCurrentView("teams")'>Teams</button>
+        <button>Profile</button>  
+        <button>Logout</button>
+      </mat-nav-list>
+    </mat-sidenav>
+  
+    <mat-sidenav-content>
+      <mat-toolbar color="primary">
+        <div
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async" style="padding: 0 10px 0 0;">
+          Menu
+      </div>
+        <span class="spacer"></span>
+        <span *ngIf="!(isHandset$ | async)" class="hidable-menu-container">
+          <button (click)='redirect("projects")'>Projects</button>  
+          <button (click)='redirect("teams")'>Teams</button>
+          <button>Profile</button>  
+          <button>Logout</button>
+        </span>
+      </mat-toolbar>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+    
+</mat-sidenav-container>
+
+<div *ngIf="preventShowFrame()">
+    <router-outlet></router-outlet>
+</div>
+
 

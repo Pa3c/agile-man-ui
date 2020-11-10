@@ -1,10 +1,10 @@
 <div class="page">
     <div class="form-container">
         <div class="button-container">
-            <div (click)="loginView(true)"[class.active-button]="showLogin" class="home-button">
+            <div (click)='redirect("login")'[class.active-button]="showLogin" class="home-button">
                 Login
             </div>
-            <div (click)="loginView(false)"[class.active-button]="!showLogin" class="home-button">
+            <div (click)='redirect("register")'[class.active-button]="!showLogin" class="home-button">
                 Register
             </div>
         </div>

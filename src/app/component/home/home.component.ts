@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {LoginComponent} from '../login/login.component';
 import {RegisterComponent} from '../register/register.component';
 
@@ -10,13 +13,17 @@ import {RegisterComponent} from '../register/register.component';
 export class HomeComponent implements OnInit {
 
   showLogin: boolean = true;
-  constructor() {
+  constructor(private routing: Router, private route: ActivatedRoute) {
    }
 
   ngOnInit() {
+    this.route.data.subscribe(data => {
+      this.showLogin = data['showLogin'];
+    });
   }
 
-  loginView(switchValue: boolean){
-    this.showLogin = switchValue;
+  redirect(path:string){
+    console.log(path);
+    this.routing.navigateByUrl(path);
   }
 }

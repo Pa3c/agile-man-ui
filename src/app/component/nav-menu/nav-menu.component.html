@@ -9,8 +9,8 @@
       [opened]="false">
     <mat-toolbar (click)="drawer.toggle()">Menu</mat-toolbar>
     <mat-nav-list>
-      <button (click)='setCurrentView("projects")'>Projects</button>  
-      <button (click)='setCurrentView("teams")'>Teams</button>
+      <button >Projects</button>  
+      <button >Teams</button>
       <button>Profile</button>  
       <button>Logout</button>
     </mat-nav-list>
@@ -31,7 +31,8 @@
         <button>Logout</button>
       </span>
     </mat-toolbar>
-    <ng-template currentView></ng-template> 
+    <ng-template currentView>
+    </ng-template> 
   </mat-sidenav-content>
   
 </mat-sidenav-container>

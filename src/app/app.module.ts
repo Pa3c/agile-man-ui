@@ -48,7 +48,14 @@ import { TeamService } from './service/team.service';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FormsModule,ReactiveFormsModule, LayoutModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule
+    FormsModule,
+    ReactiveFormsModule, 
+    LayoutModule, 
+    MatToolbarModule, 
+    MatButtonModule, 
+    MatSidenavModule, 
+    MatIconModule, 
+    MatListModule
   ],
   entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent],
   providers: [SortExpandableTableComponent,MainProjectsViewComponent,UserService, ProjectService,RegisterService,TeamService,
