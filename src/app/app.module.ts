@@ -24,6 +24,7 @@ import { SortExpandableTableComponent } from './component/sort-expandable-table/
 import { MatSortModule, MatTableModule } from '@angular/material';
 import { MainTeamsViewComponent } from './component/main-teams-view/main-teams-view.component';
 import { TeamService } from './service/team.service';
+import { ProjectComponent } from './component/project/project.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { TeamService } from './service/team.service';
     RegisterComponent,
     MainProjectsViewComponent,
     SortExpandableTableComponent,
-    MainTeamsViewComponent
+    MainTeamsViewComponent,
+    ProjectComponent
   ],
   imports: [
     BrowserModule,

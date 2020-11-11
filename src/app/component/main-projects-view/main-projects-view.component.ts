@@ -15,6 +15,7 @@ export class MainProjectsViewComponent implements OnInit {
   private columnsToDisplay = ['title'];
   private columnsForDetails = ['description'];
   private itemResolver = defaultProjectResolver;
+  private resourceUrl = "projects";
 
   constructor(private projectService: ProjectService,private userService: UserService,private projectTable: SortExpandableTableComponent) { }
   

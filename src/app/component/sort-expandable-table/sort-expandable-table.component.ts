@@ -2,6 +2,8 @@ import { Component, OnInit,Input } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Sort } from '@angular/material';
 import { toArray } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { Identifable } from 'src/app/model/common/CommonModule';
 
 @Component({
   selector: 'sort-expandable-table',
@@ -18,7 +20,7 @@ import { toArray } from 'rxjs/operators';
 export class SortExpandableTableComponent implements OnInit {
 
   @Input('data')
-  public dataSource;
+  public dataSource: Array<Identifable>;
   @Input('displayColums')
   public columnsToDisplay;
   @Input('detailColumns')
@@ -26,13 +28,15 @@ export class SortExpandableTableComponent implements OnInit {
   expandedElement :any;
   @Input('itemResolver')
   public itemResolver;
+  @Input('resourceUrl')
+  public resourceUrl;
 
 
-  constructor() { 
+  constructor(private router: Router) {
   }
   ngOnInit() {
   }
-  public expandElement(element){
+  public toggleElement(element){
     if(this.expandedElement==element){
       this.expandedElement = null;
       return;

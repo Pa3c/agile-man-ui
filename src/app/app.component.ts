@@ -29,7 +29,6 @@ export class AppComponent implements OnInit {
   }
 
   preventShowFrame() :boolean{
-    console.log(this.router.url);
     return this.router.url === '/register' || this.router.url === '/login'; 
   }
 

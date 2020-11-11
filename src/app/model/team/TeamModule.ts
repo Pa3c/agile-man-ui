@@ -1,14 +1,11 @@
+import { BaseModel, Identifable } from '../common/CommonModule';
 import { UserProject } from '../ProjectModule';
 
-export class UserTeam {
+export class UserTeam extends BaseModel implements Identifable{
+    id: number;
     projects: Set<UserProject>;
     title: string;
     description: string;
-    version :number;
-	creationDate :string;
-	modificationDate :string;
-	createdBy :string;
-	modifiedBy :string;
 }
 
 export function userTeamResolver(object: any): String {

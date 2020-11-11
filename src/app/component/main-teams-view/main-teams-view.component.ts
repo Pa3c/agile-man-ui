@@ -15,6 +15,7 @@ export class MainTeamsViewComponent implements OnInit {
   private columnsToDisplay = ['title'];
   private columnsForDetails = ['description','projects'];
   private itemResolver = userTeamResolver;
+  private resourceUrl = "teams";
   
   constructor(private teamService: TeamService,private userService: UserService,private projectTable: SortExpandableTableComponent) { }
 

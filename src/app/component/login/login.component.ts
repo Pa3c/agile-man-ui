@@ -34,7 +34,7 @@ public signIn(signInSO: SignInSO){
           const token = response.headers.get('Jwt-Token');
           this.userService.saveToken(token);
           this.userService.saveUser(response.body);
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('');
           this.loadInProgress = false;
           this.loginFailed = false;
         },
