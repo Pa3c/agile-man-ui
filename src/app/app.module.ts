@@ -20,7 +20,7 @@ import { UserService } from './service/user.service';
 import { ProjectService } from './service/project.service';
 import { RegisterService } from './service/register.service';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
-import { MatSortModule, MatTableModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatSortModule, MatTableModule } from '@angular/material';
 import { MainTeamsViewComponent } from './component/main-teams-view/main-teams-view.component';
 import { TeamService } from './service/team.service';
 import { ProjectComponent } from './component/project/project.component';
@@ -49,7 +49,11 @@ import { ProjectComponent } from './component/project/project.component';
     MatButtonModule, 
     MatSidenavModule, 
     MatIconModule, 
-    MatListModule
+    MatListModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatInputModule,
+    MatSelectModule
   ],
   entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent],
   providers: [MainProjectsViewComponent,UserService, ProjectService,RegisterService,TeamService,

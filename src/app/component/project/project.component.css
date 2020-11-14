@@ -1,0 +1,49 @@
+@import "../styles/table-team-project.css";
+
+.task-container-wrapper{
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.detailed-project-header{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.spacer{
+    flex: 1 1 auto;
+  }
+.main-project-info{
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 0px 0px;
+}
+.title{
+    margin-bottom: 10px;
+}
+
+
+.detailed-project-content{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.no-containers-info-wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+.no-containers-info{
+    text-align: center;
+    align-self: center;
+    font-size: 10vh;
+}
+select {
+    background-color: #222;
+    color:ghostwhite;
+    width: 100%;
+}
