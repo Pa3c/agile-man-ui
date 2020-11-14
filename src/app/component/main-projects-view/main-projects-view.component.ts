@@ -62,7 +62,7 @@ export class MainProjectsViewComponent implements OnInit {
     return description;
   }
 
-  deleteProject(id: number){
+  deleteElement(id: number){
     console.log("Delete project of id "+id);
   }
 }

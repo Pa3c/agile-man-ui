@@ -19,7 +19,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 })
 export class MainTeamsViewComponent implements OnInit {
   private teams: UserTeam[];
-  private columnsToDisplay = ['title'];
+  private columnsToDisplay = ['title','id'];
   private columnsForDetails = ['description','projects'];
   private resourceUrl = "teams";
   expandedElement :any;
@@ -66,6 +66,10 @@ export class MainTeamsViewComponent implements OnInit {
         .concat("<br/>&nbsp;&nbsp;&nbsp;Roles: "+x.roles+"<br/>");
     });
     return resolvedUserProject;
+}
+
+deleteElement(id: number){
+  console.log("Delete team of id "+id);
 }
 
 }

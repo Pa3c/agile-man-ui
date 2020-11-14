@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-container" *ngIf="!preventShowFrame()">
   
     <mat-sidenav #drawer class="sidenav"
-        [ngClass]= "{hidden: (isHandset$ | async)!.matches}"
+        [ngClass]= "{hidden: !(isHandset$ | async)}"
         fixedInViewport="false"
         fixedBottomGap=0
         [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"

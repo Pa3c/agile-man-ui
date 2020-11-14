@@ -3,4 +3,8 @@ html {
     background-color: #222;
     margin: 0;
     height: 100%;
+    font-size: 3vh;
   }
+body{
+  height: 100%;
+}
