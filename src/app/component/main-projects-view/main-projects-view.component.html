@@ -1,8 +1,40 @@
-<sort-expandable-table 
-[data]="projects" 
-[displayColums]="columnsToDisplay"
-[detailColumns]="columnsForDetails"
-[itemResolver]="itemResolver"
-[resourceUrl]='resourceUrl'
->
-</sort-expandable-table>
+<table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="projects" multiTemplateDataRows
+    class="mat-elevation-z8">
+    
+    <!-- Pattern for columns for not clicked row -->
+	<ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+		<th mat-header-cell *matHeaderCellDef  mat-sort-header="{{column}}">
+		<span style="text-transform: capitalize;">
+			{{column}}
+		</span>
+		</th>
+		<td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+	</ng-container>
+  
+
+	<!-- Pattern for columns for clicked row -->
+	<ng-container matColumnDef="detailedColumn">
+		<td mat-cell *matCellDef="let detailedElement" [attr.colspan]="columnsToDisplay.length-1" class="detail-cell">
+			<div class="detail-container-row">
+				<div class="detail-container" style="flex: 1 1 auto;">
+					<div class="detail-container-element" *ngFor="let detailColumn of columnsForDetails" [@detailExpand]="detailedElement == expandedElement ? 'expanded' : 'collapsed'">
+						<div  class="detail-element-title">{{detailColumn}}:</div>
+						<div [innerHTML]="itemResolver(detailedElement[detailColumn])">
+						</div>
+					</div>
+				</div>
+				<div class="detail-container">
+					<div [@detailExpand]="detailedElement == expandedElement ? 'expanded' : 'collapsed'">
+						<a href='{{this.resourceUrl}}/{{detailedElement.id}}'>>></a>
+					</div>
+				</div>
+			</div>
+		</td>
+	</ng-container>
+
+	<tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+	<tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="element-row"
+		[class.expanded-row]="expandedElement === element" (click)="toggleElement(element);">
+	</tr>
+	<tr mat-row *matRowDef="let detailedElement; columns: ['detailedColumn']" class="detail-row" ></tr>
+</table>

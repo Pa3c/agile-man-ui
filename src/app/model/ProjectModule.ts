@@ -19,6 +19,3 @@ export class DetailedUserProject extends BaseModel{
     taskContainers: TaskContainer[];
 }
 
-export function defaultProjectResolver(description :string): String{
-    return description;
-}
