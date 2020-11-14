@@ -20,7 +20,6 @@ import { UserService } from './service/user.service';
 import { ProjectService } from './service/project.service';
 import { RegisterService } from './service/register.service';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
-import { SortExpandableTableComponent } from './component/sort-expandable-table/sort-expandable-table.component';
 import { MatSortModule, MatTableModule } from '@angular/material';
 import { MainTeamsViewComponent } from './component/main-teams-view/main-teams-view.component';
 import { TeamService } from './service/team.service';
@@ -33,7 +32,6 @@ import { ProjectComponent } from './component/project/project.component';
     LoginComponent,
     RegisterComponent,
     MainProjectsViewComponent,
-    SortExpandableTableComponent,
     MainTeamsViewComponent,
     ProjectComponent
   ],
@@ -54,7 +52,7 @@ import { ProjectComponent } from './component/project/project.component';
     MatListModule
   ],
   entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent],
-  providers: [SortExpandableTableComponent,MainProjectsViewComponent,UserService, ProjectService,RegisterService,TeamService,
+  providers: [MainProjectsViewComponent,UserService, ProjectService,RegisterService,TeamService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })

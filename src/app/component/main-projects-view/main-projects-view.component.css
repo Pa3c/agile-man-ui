@@ -14,7 +14,14 @@ table {
    tr.-element-row:not(.expanded-row):active {
      background: #efefef;
    }
-   
+
+  .row-action-icons {
+    color: #efefef;
+   }
+  .row-action-icons :hover{
+    color: #222;
+  }
+
    .element-row td {
      border-bottom-width: 0;
      cursor: pointer;

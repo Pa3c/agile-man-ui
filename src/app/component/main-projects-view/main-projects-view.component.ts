@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/service/project.service';
 import { UserService } from 'src/app/service/user.service';
-import {SortExpandableTableComponent} from '../sort-expandable-table/sort-expandable-table.component';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Sort } from '@angular/material';
+import { Project } from 'src/app/model/ProjectModule';
 
 @Component({
   selector: 'main-projects-view',
@@ -19,13 +19,12 @@ import { Sort } from '@angular/material';
 })
 export class MainProjectsViewComponent implements OnInit {
   private projects: Project[];
-  private columnsToDisplay = ['title'];
+  private columnsToDisplay = ['title','id'];
   private columnsForDetails = ['description'];
-  private itemResolver = defaultProjectResolver;
   private resourceUrl = "projects";
   expandedElement :any;
 
-  constructor(private projectService: ProjectService,private userService: UserService,private projectTable: SortExpandableTableComponent) { }
+  constructor(private projectService: ProjectService,private userService: UserService) { }
   
   
   ngOnInit() {
@@ -58,6 +57,14 @@ export class MainProjectsViewComponent implements OnInit {
       return compare(a[column], b[column], isAsc);
     }).slice();
   }
+
+  itemResolver(description :string): String{
+    return description;
+  }
+
+  deleteProject(id: number){
+    console.log("Delete project of id "+id);
+  }
 }
 
 
@@ -65,6 +72,4 @@ function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
 
-export function itemResolver(description :string): String{
-  return description;
-}
+
