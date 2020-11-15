@@ -24,6 +24,7 @@ import { MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, M
 import { MainTeamsViewComponent } from './component/main-teams-view/main-teams-view.component';
 import { TeamService } from './service/team.service';
 import { ProjectComponent } from './component/project/project.component';
+import { MainTaskTableViewComponent } from './component/main-task-table-view/main-task-table-view.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ProjectComponent } from './component/project/project.component';
     RegisterComponent,
     MainProjectsViewComponent,
     MainTeamsViewComponent,
-    ProjectComponent
+    ProjectComponent,
+    MainTaskTableViewComponent
   ],
   imports: [
     BrowserModule,

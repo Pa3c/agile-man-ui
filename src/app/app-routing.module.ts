@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './component/home/home.component';
 import { MainProjectsViewComponent } from './component/main-projects-view/main-projects-view.component';
+import { MainTaskTableViewComponent } from './component/main-task-table-view/main-task-table-view.component';
 import { MainTeamsViewComponent } from './component/main-teams-view/main-teams-view.component';
 import { ProjectComponent } from './component/project/project.component';
 
@@ -10,6 +11,7 @@ const routes: Routes = [
   {path:'',component: MainProjectsViewComponent},
   {path:'projects',component: MainProjectsViewComponent},
   {path:'projects/:id',component: ProjectComponent},
+  {path:'projects/:project_id/tables/:table_id',component: MainTaskTableViewComponent},
   {path:'login',component: HomeComponent,data: {showLogin: true}},
   {path:'register',component: HomeComponent,data: {showLogin: false}},
   {path:'teams',component: MainTeamsViewComponent}
