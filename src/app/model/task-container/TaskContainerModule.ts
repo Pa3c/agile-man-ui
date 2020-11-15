@@ -1,4 +1,5 @@
 import { BaseModel, Identifable } from '../common/CommonModule';
+import { Task } from '../task/TaskModule';
 
 export class TaskContainer extends BaseModel{
     title: string;
@@ -13,6 +14,6 @@ export class State implements Identifable {
 }
 
 export class DetailedTaskContainer extends TaskContainer {
-    tasks: Task[]
+    tasks: Task[];
     states: State[];
 }
