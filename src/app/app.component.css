@@ -1,4 +1,4 @@
-.sidenav-container {
+  .sidenav-container {
     height: 100%;
     background-color: #222;
     color:ghostwhite;
@@ -7,7 +7,7 @@
     width: 200px;
     height:100%;
     display: flex;
-    background-color: #222;
+    background-color: yellowgreen;
     align-content: stretch;
   }
   .hidden {
@@ -22,12 +22,13 @@
   }
   mat-toolbar {
     background-color: yellowgreen;
+    min-height: 65px;
   } 
-  mat-toolbar button {
+  mat-toolbar div {
     display: inline-block;
     margin: 0 10px;
-    padding: 10px 10px;
     border: 0px;
+    font-size: 20px;
     background-color: transparent;
     text-decoration: none;
     color:ghostwhite;
@@ -39,15 +40,21 @@
   }
   mat-nav-list {
     display: flex;
+    height: 100%;
     flex-direction: column;
+    flex: 1;
   }
   
-  mat-nav-list button {
-    background-color: #333;
-    text-decoration: none;
+  mat-nav-list > div {
+    flex: 1 1 0;
+    display: flex;
     color:ghostwhite;
-    padding: 9vh;
+    text-align: center;
+    background-color: #222;
+    justify-content: center;
+    align-items: center;
   }
-  button :hover{
-    background: yellowgreen;
-  }
+  mat-nav-list > div :hover {
+    color: #222;
+    cursor: pointer;
+  } 

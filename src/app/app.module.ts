@@ -25,6 +25,9 @@ import { MainTeamsViewComponent } from './component/main-teams-view/main-teams-v
 import { TeamService } from './service/team.service';
 import { ProjectComponent } from './component/project/project.component';
 import { MainTaskTableViewComponent } from './component/main-task-table-view/main-task-table-view.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TaskService } from './service/task.service';
+import { StateService } from './service/state.service';
 
 @NgModule({
   declarations: [
@@ -55,10 +58,13 @@ import { MainTaskTableViewComponent } from './component/main-task-table-view/mai
     MatFormFieldModule,
     MatOptionModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    DragDropModule
   ],
   entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent],
-  providers: [MainProjectsViewComponent,UserService, ProjectService,RegisterService,TeamService,
+  providers: [MainProjectsViewComponent,
+    UserService, ProjectService,
+    RegisterService,TeamService,TaskService,StateService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })

@@ -7,12 +7,14 @@
         [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'"
         [opened]="false">
-      <mat-toolbar (click)="drawer.toggle()">Menu</mat-toolbar>
+      <mat-toolbar (click)="drawer.toggle()" style="color: transparent;">
+        
+      </mat-toolbar>
       <mat-nav-list>
-        <button (click)='setCurrentView("projects")'>Projects</button>  
-        <button (click)='setCurrentView("teams")'>Teams</button>
-        <button>Profile</button>  
-        <button>Logout</button>
+        <div (click)='redirect("projects")'>Projects</div>  
+        <div (click)='redirect("teams")'>Teams</div>
+        <div>Profile</div>  
+        <div>Logout</div>
       </mat-nav-list>
     </mat-sidenav>
   
@@ -20,15 +22,15 @@
       <mat-toolbar color="primary">
         <div
           (click)="drawer.toggle()"
-          *ngIf="isHandset$ | async" style="padding: 0 10px 0 0;">
+          *ngIf="isHandset$ | async">
           Menu
       </div>
         <span class="spacer"></span>
         <span *ngIf="!(isHandset$ | async)" class="hidable-menu-container">
-          <button (click)='redirect("projects")'>Projects</button>  
-          <button (click)='redirect("teams")'>Teams</button>
-          <button>Profile</button>  
-          <button>Logout</button>
+          <div (click)='redirect("projects")'>Projects</div>  
+          <div (click)='redirect("teams")'>Teams</div>
+          <div>Profile</div>  
+          <div>Logout</div>
         </span>
       </mat-toolbar>
         <router-outlet></router-outlet>

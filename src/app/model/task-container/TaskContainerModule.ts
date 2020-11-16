@@ -10,10 +10,13 @@ export class TaskContainer extends BaseModel{
 export class State implements Identifable {
     id: number;
     name: string;
+    oldName: string;
     order: number;
+    taskContainerId: number;
 }
 
-export class DetailedTaskContainer extends TaskContainer {
-    tasks: Task[];
+export class DetailedTaskContainer extends TaskContainer implements Identifable {
+    id: number;
+    tasks: Map<string,Task[]>;
     states: State[];
 }

@@ -1,6 +1,7 @@
-import { BaseModel } from '../common/CommonModule';
+import { BaseModel, Identifable } from '../common/CommonModule';
 
-export class Task extends BaseModel{
+export class Task extends BaseModel implements Identifable{
+id: number;
 title: string;
 state: string;
 solution: number;

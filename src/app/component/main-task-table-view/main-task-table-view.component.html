@@ -1,1 +1,63 @@
-<p>main-task-table-view works!</p>
+<div class="page-content-wrapper">
+    <div class="edit-panel">
+        <div>
+            <div> Add Column </div>
+        </div>
+        <div>
+            Filters
+        </div>
+    </div>
+
+
+    <div cdkDropList [cdkDropListData]="detailedTaskContainer.states" (cdkDropListDropped)="dropColumn($event)"
+        cdkDropListOrientation="horizontal" class="flex-table-container" *ngIf="detailedTaskContainer!=null">
+
+        <div class="column-container" cdkDropListGroup cdkDrag [cdkDragDisabled] = "headerEdit" [cdkDragData]="state"
+            *ngFor="let state of detailedTaskContainer.states">
+
+            <div style="width: 100%; display: flex; justify-content: space-between;">
+                <h2 class="draggable-header" 
+                [contentEditable] = "headerEdit"
+                cdkDragHandle 
+                contenteditable 
+                (input)="onStateNameChange($event.target.innerHTML,state.name)">
+                {{state.name}}
+                </h2>
+                <mat-icon *ngIf="!headerEdit" (click)="toggleHeaderEdit(true)">
+                    edit
+                </mat-icon>
+                <mat-icon *ngIf="headerEdit" (click)="saveNewColumnName()">
+                    done
+                </mat-icon> 
+                <mat-icon *ngIf="headerEdit" (click)="resetChanges(state.id)">
+                    cancel
+                </mat-icon>                
+            </div>
+
+            
+           
+            <div cdkDropList id={{state.name}} [cdkDropListData]='detailedTaskContainer.tasks[state.name]'
+                class="task-list" (cdkDropListDropped)="drop($event,state.name)"
+                [cdkDropListConnectedTo]="getConnectedList()">
+
+                <div class="task-box" [cdkDragData]="state.name"
+                    *ngFor="let item of detailedTaskContainer.tasks[state.name]" cdkDrag>
+                    {{item.title}}
+                </div>
+            </div>
+            <div class="task-box task-box-add">
+                +
+            </div>
+        </div>
+        <div class="flex-table-container">
+            <div class="column-container">
+                <h2 class="draggable-header" style="color: transparent;">X</h2>
+                <div (click)="addColumn()" style="text-align: center;">
+                    <mat-icon style="display: block; font-size: larger;">
+                        add_circle_outline
+                    </mat-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
