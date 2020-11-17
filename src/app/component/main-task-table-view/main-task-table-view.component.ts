@@ -115,6 +115,12 @@ export class MainTaskTableViewComponent implements OnInit {
     this.oldColumnName = name;
   }
 
+  deleteColumn(name: string){
+    let state = this.detailedTaskContainer.states.filter(x=>x.name==name)[0];
+    let index = this.detailedTaskContainer.states.indexOf(state);
+    this.detailedTaskContainer.states.splice(index,1);
+  }
+
   saveNewColumnName() {
     if(!this.columnEditionDetected()){
       this.toggleHeaderEdit(false);
