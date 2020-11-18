@@ -20,7 +20,7 @@ import { UserService } from './service/user.service';
 import { ProjectService } from './service/project.service';
 import { RegisterService } from './service/register.service';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
-import { MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatSortModule, MatTableModule } from '@angular/material';
+import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatSortModule, MatTableModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material';
 import { MainTeamsViewComponent } from './component/main-teams-view/main-teams-view.component';
 import { TeamService } from './service/team.service';
 import { ProjectComponent } from './component/project/project.component';
@@ -28,6 +28,7 @@ import { MainTaskTableViewComponent } from './component/main-task-table-view/mai
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TaskService } from './service/task.service';
 import { StateService } from './service/state.service';
+import { DeleteColumnComponent } from './component/dialogs/delete-column/delete-column.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { StateService } from './service/state.service';
     MainProjectsViewComponent,
     MainTeamsViewComponent,
     ProjectComponent,
-    MainTaskTableViewComponent
+    MainTaskTableViewComponent,
+    DeleteColumnComponent
   ],
   imports: [
     BrowserModule,
@@ -59,13 +61,15 @@ import { StateService } from './service/state.service';
     MatOptionModule,
     MatInputModule,
     MatSelectModule,
-    DragDropModule
+    DragDropModule,
+    MatDialogModule
   ],
-  entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent],
+  entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent,DeleteColumnComponent],
   providers: [MainProjectsViewComponent,
     UserService, ProjectService,
-    RegisterService,TeamService,TaskService,StateService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+    RegisterService,TeamService,TaskService,StateService,MatDialog,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

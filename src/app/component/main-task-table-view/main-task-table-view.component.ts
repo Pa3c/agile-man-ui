@@ -6,8 +6,9 @@ import { UserService } from 'src/app/service/user.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Task } from 'src/app/model/task/TaskModule';
 import { TaskService } from 'src/app/service/task.service';
-import { stat } from 'fs';
 import { StateService } from 'src/app/service/state.service';
+import { MatDialog } from '@angular/material';
+import { DeleteColumnComponent } from '../dialogs/delete-column/delete-column.component';
 
 @Component({
   selector: 'app-main-task-table-view',
@@ -21,11 +22,12 @@ export class MainTaskTableViewComponent implements OnInit {
   oldColumnName = "";
 
 
-  constructor(private taskService: TaskService, 
-    private taskContainerService: TaskContainerService, 
+  constructor(private taskService: TaskService,
+    private taskContainerService: TaskContainerService,
     private userService: UserService,
     private stateService: StateService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    public dialog: MatDialog) {
     let projectId: number;
     this.route.params.subscribe(params => projectId = params['project_id']);
     let taskContainerId: number;
@@ -57,21 +59,21 @@ export class MainTaskTableViewComponent implements OnInit {
     let previousIndex = event.previousIndex;
 
     let swapperState = this.detailedTaskContainer.states[currentIndex];
-    let swappedState =  this.detailedTaskContainer.states[previousIndex];
+    let swappedState = this.detailedTaskContainer.states[previousIndex];
 
     let helpOrder = swappedState.order;
     swappedState.order = swapperState.order;
-    swapperState.order = helpOrder; 
+    swapperState.order = helpOrder;
 
-    this.stateService.update(swappedState).subscribe(success=>{
+    this.stateService.update(swappedState).subscribe(success => {
       console.log(success);
-    },error=>{
+    }, error => {
       console.log(error);
     })
 
-    this.stateService.update(swapperState).subscribe(success=>{
+    this.stateService.update(swapperState).subscribe(success => {
       console.log(success);
-    },error=>{
+    }, error => {
       console.log(error);
     })
 
@@ -87,14 +89,14 @@ export class MainTaskTableViewComponent implements OnInit {
         event.currentIndex);
     }
     const state: State = this.detailedTaskContainer.states[event.currentIndex];
-    const task: Task = event.container.data[0];
+    const task: Task = JSON.parse(event.container.data[0]);
     ///idk if this.detailedTaskContainer needs to be updated
 
     task.state = newState;
     console.log(task.state);
-    this.taskService.update(task).subscribe(x=>{
+    this.taskService.update(task).subscribe(x => {
       console.log(x);
-    },error=>{
+    }, error => {
       console.log(error);
     });
   }
@@ -108,11 +110,11 @@ export class MainTaskTableViewComponent implements OnInit {
     state.name = "Column " + order;
     state.order = order;
     state.taskContainerId = this.detailedTaskContainer.id;
-    
-    this.stateService.create(state).subscribe(success=>{
+
+    this.stateService.create(state).subscribe(success => {
       console.log(success);
       this.detailedTaskContainer.states.push(state);
-    },error=>{
+    }, error => {
       console.log(error);
     });
   }
@@ -122,35 +124,47 @@ export class MainTaskTableViewComponent implements OnInit {
     this.oldColumnName = name;
   }
 
-  deleteColumn(name: string){
-    let state = this.detailedTaskContainer.states.filter(x=>x.name==name)[0];
-    let index = this.detailedTaskContainer.states.indexOf(state);
-    this.detailedTaskContainer.states.splice(index,1);
+  deleteColumn(name: string) {
+    let dialogRef = this.dialog.open(DeleteColumnComponent,{
+      height: "20%",
+      width: "20%"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != true) {
+        return;
+      }
+      let state = this.detailedTaskContainer.states.filter(x => x.name == name)[0];
+      let index = this.detailedTaskContainer.states.indexOf(state);
+      this.detailedTaskContainer.states.splice(index, 1);
+
+    });
+
   }
 
   saveNewColumnName() {
-    if(!this.columnEditionDetected()){
+    if (!this.columnEditionDetected()) {
       this.toggleHeaderEdit(false);
       return;
     }
     let state: State = this.detailedTaskContainer.states.filter(x => x.name == this.oldColumnName)[0];
     let stateIndex = this.detailedTaskContainer.states.indexOf(state);
-   
+
     this.updateStateName(state);
-    
+
   }
 
-  resetChanges(id:number){
-    if(!this.columnEditionDetected()){
+  resetChanges(id: number) {
+    if (!this.columnEditionDetected()) {
       this.toggleHeaderEdit(false);
       return;
     }
-    this.detailedTaskContainer.states.filter(x=>x.id==id)[0].name = this.oldColumnName;
+    this.detailedTaskContainer.states.filter(x => x.id == id)[0].name = this.oldColumnName;
     this.resetVariables();
     this.toggleHeaderEdit(false);
   }
   columnEditionDetected() {
-    return this.oldColumnName.length > 0 && this.newColumnName.length >0;
+    return this.oldColumnName.length > 0 && this.newColumnName.length > 0;
   }
 
 
@@ -163,21 +177,21 @@ export class MainTaskTableViewComponent implements OnInit {
     let tasks: Task[] = this.detailedTaskContainer
       .tasks[this.oldColumnName];
     this.detailedTaskContainer.tasks[this.oldColumnName] = undefined;
-    tasks.forEach(x=>x.state=this.newColumnName);
+    tasks.forEach(x => x.state = this.newColumnName);
     this.detailedTaskContainer.tasks[this.newColumnName] = tasks;
   }
 
   updateStateName(state: State) {
-    if( state.taskContainerId == undefined||state.taskContainerId == null ){
+    if (state.taskContainerId == undefined || state.taskContainerId == null) {
       state.taskContainerId = this.detailedTaskContainer.id;
     }
     state.name = this.newColumnName;
     state.oldName = this.oldColumnName;
-    this.stateService.updateName(state).subscribe(success=>{
+    this.stateService.updateName(state).subscribe(success => {
       this.updateDetailedTaskContainer();
       this.resetVariables();
       this.toggleHeaderEdit(false);
-    },error=>console.log(error));
+    }, error => console.log(error));
   }
   toggleHeaderEdit(toggle: boolean) {
     this.headerEdit = toggle;
