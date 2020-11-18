@@ -8,6 +8,9 @@ import { State } from '../model/task-container/TaskContainerModule';
   providedIn: 'root'
 })
 export class StateService {
+  create(state: State)  :Observable<State> {
+    return this.http.post<State>(`${environment.backendAddress}/state`,state);
+   }
 
   update(state: State) :Observable<State> {
    return this.http.put<State>(`${environment.backendAddress}/state/${state.id}`,state);

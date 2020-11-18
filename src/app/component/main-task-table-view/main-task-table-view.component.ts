@@ -107,7 +107,14 @@ export class MainTaskTableViewComponent implements OnInit {
     let state = new State();
     state.name = "Column " + order;
     state.order = order;
-    this.detailedTaskContainer.states.push(state);
+    state.taskContainerId = this.detailedTaskContainer.id;
+    
+    this.stateService.create(state).subscribe(success=>{
+      console.log(success);
+      this.detailedTaskContainer.states.push(state);
+    },error=>{
+      console.log(error);
+    });
   }
 
   onStateNameChange(newName: string, name: string) {
