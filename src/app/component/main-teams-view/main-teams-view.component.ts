@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { UserTeam } from 'src/app/model/team/TeamModule';
 import { TeamService } from 'src/app/service/team.service';
 import { UserService } from 'src/app/service/user.service';

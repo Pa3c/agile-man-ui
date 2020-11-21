@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/service/project.service';
 import { UserService } from 'src/app/service/user.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { Project } from 'src/app/model/ProjectModule';
 
 @Component({

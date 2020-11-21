@@ -1,7 +1,7 @@
 
-<h2 mat-dialog-title>Delete column</h2>
+<h5 style="font-size: 1.5vw;" mat-dialog-title>Delete column</h5>
 <mat-dialog-content class="mat-typography">Do you really want to delete column with all its tasks ?</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancel</button>
- <button mat-button [mat-dialog-close]="true">Delete</button>
-</mat-dialog-actions>
+  <mat-dialog-actions class="delete-column-mat-dialog-actions">
+    <button mat-button mat-dialog-close>Cancel</button>
+   <button mat-button [mat-dialog-close]="true">Delete</button>
+  </mat-dialog-actions>

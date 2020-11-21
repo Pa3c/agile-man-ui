@@ -7,7 +7,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { Task } from 'src/app/model/task/TaskModule';
 import { TaskService } from 'src/app/service/task.service';
 import { StateService } from 'src/app/service/state.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { DeleteColumnComponent } from '../dialogs/delete-column/delete-column.component';
 
 @Component({
@@ -125,19 +125,18 @@ export class MainTaskTableViewComponent implements OnInit {
   }
 
   deleteColumn(name: string) {
-    let dialogRef = this.dialog.open(DeleteColumnComponent,{
-      height: "20%",
-      width: "20%"
-    });
+    let dialogRef = this.dialog.open(DeleteColumnComponent,{ panelClass: ['delete-column-container-dialog-container','delete-column-mat-dialog-actions']});
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != true) {
         return;
       }
-      let state = this.detailedTaskContainer.states.filter(x => x.name == name)[0];
-      let index = this.detailedTaskContainer.states.indexOf(state);
+      const state :State = this.detailedTaskContainer.states.filter(x => x.name == name)[0];
+      const index = this.detailedTaskContainer.states.indexOf(state);
       this.detailedTaskContainer.states.splice(index, 1);
-
+      this.stateService.delete(state.id).subscribe(success=>{
+        console.log(success); 
+      })
     });
 
   }

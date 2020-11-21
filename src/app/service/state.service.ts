@@ -8,6 +8,7 @@ import { State } from '../model/task-container/TaskContainerModule';
   providedIn: 'root'
 })
 export class StateService {
+
   create(state: State)  :Observable<State> {
     return this.http.post<State>(`${environment.backendAddress}/state`,state);
    }
@@ -23,5 +24,9 @@ export class StateService {
 
   updateName(state: State) :Observable<State> {
    return this.http.put<State>(`${environment.backendAddress}/state/${state.id}/task`,state);
+  }
+
+  delete(id: number) :Observable<any>{
+    return this.http.delete<any>(`${environment.backendAddress}/state/${id}`);
   }
 }

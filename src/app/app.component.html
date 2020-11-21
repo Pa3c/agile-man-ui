@@ -7,14 +7,14 @@
         [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
         [mode]="(isHandset$ | async) ? 'over' : 'side'"
         [opened]="false">
-      <mat-toolbar (click)="drawer.toggle()" style="color: transparent;">
+      <mat-toolbar (click)="drawer.toggle()">
         
       </mat-toolbar>
       <mat-nav-list>
-        <div (click)='redirect("projects")'>Projects</div>  
-        <div (click)='redirect("teams")'>Teams</div>
-        <div>Profile</div>  
-        <div>Logout</div>
+        <div class="menu-button" (click)='redirect("projects")'>Projects</div>  
+        <div class="menu-button" (click)='redirect("teams")'>Teams</div>
+        <div class="menu-button" (click)='redirect("profile")'>Profile</div>  
+        <div class="menu-button" (click)='logOut()'>Logout</div>
       </mat-nav-list>
     </mat-sidenav>
   
@@ -27,10 +27,10 @@
       </div>
         <span class="spacer"></span>
         <span *ngIf="!(isHandset$ | async)" class="hidable-menu-container">
-          <div (click)='redirect("projects")'>Projects</div>  
-          <div (click)='redirect("teams")'>Teams</div>
-          <div>Profile</div>  
-          <div>Logout</div>
+          <div class="drawer-button" (click)='redirect("projects")'>Projects</div>  
+          <div class="drawer-button" (click)='redirect("teams")'>Teams</div>
+          <div class="drawer-button" (click)='redirect("profile")'>Profile</div>  
+          <div class="drawer-button" (click)='logOut()'>Logout</div>
         </span>
       </mat-toolbar>
         <router-outlet></router-outlet>

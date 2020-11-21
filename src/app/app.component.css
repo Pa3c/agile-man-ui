@@ -1,5 +1,5 @@
   .sidenav-container {
-    height: 100%;
+    height: 100vh;
     background-color: #222;
     color:ghostwhite;
   }
@@ -54,7 +54,14 @@
     justify-content: center;
     align-items: center;
   }
-  mat-nav-list > div :hover {
+ .drawer-button:hover {
     color: #222;
     cursor: pointer;
   } 
+  .menu-button:hover {
+    color: yellowgreen;
+    cursor: pointer;
+  }
+  .mat-drawer{
+    background-color: transparent;
+  }

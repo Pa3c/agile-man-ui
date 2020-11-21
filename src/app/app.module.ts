@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ChangeDetectorRef, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms'; // <== add the imports!
 
@@ -20,7 +20,7 @@ import { UserService } from './service/user.service';
 import { ProjectService } from './service/project.service';
 import { RegisterService } from './service/register.service';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
-import { MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule, MatSortModule, MatTableModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material';
+import { MatTableModule } from '@angular/material/table';
 import { MainTeamsViewComponent } from './component/main-teams-view/main-teams-view.component';
 import { TeamService } from './service/team.service';
 import { ProjectComponent } from './component/project/project.component';
@@ -29,6 +29,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TaskService } from './service/task.service';
 import { StateService } from './service/state.service';
 import { DeleteColumnComponent } from './component/dialogs/delete-column/delete-column.component';
+import { MatSortModule } from '@angular/material/sort';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AuthenticationGuard } from './guard/authentication.guard';
 
 @NgModule({
   declarations: [
@@ -58,16 +62,13 @@ import { DeleteColumnComponent } from './component/dialogs/delete-column/delete-
     MatIconModule, 
     MatListModule,
     MatFormFieldModule,
-    MatOptionModule,
-    MatInputModule,
-    MatSelectModule,
     DragDropModule,
-    MatDialogModule
+    MatDialogModule 
   ],
   entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent,DeleteColumnComponent],
   providers: [MainProjectsViewComponent,
-    UserService, ProjectService,
-    RegisterService,TeamService,TaskService,StateService,MatDialog,
+    UserService, ProjectService,AuthenticationGuard,
+    RegisterService,TeamService,TaskService,StateService,MatDialogModule ,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

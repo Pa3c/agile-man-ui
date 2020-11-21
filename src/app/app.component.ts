@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { UserService } from './service/user.service';
 
 @Component({
   selector: 'app-root',
@@ -21,11 +22,15 @@ export class AppComponent implements OnInit {
     );
 
 
-  constructor(private router: Router,private breakpointObserver: BreakpointObserver,private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(private userService: UserService, private router: Router,private breakpointObserver: BreakpointObserver,private componentFactoryResolver: ComponentFactoryResolver) {
 
   }
   ngOnInit(): void {
 
+  }
+  logOut(){
+    this.userService.logOut();
+    this.redirect('login');
   }
 
   preventShowFrame() :boolean{

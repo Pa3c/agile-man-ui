@@ -5,7 +5,7 @@ import { DetailedUserProject } from 'src/app/model/ProjectModule';
 import { ProjectService } from 'src/app/service/project.service';
 import { UserService } from 'src/app/service/user.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 interface Animal {
   name: string;
   sound: string;
