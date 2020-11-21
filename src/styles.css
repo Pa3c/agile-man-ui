@@ -33,3 +33,13 @@ body{
 flex: 1 1 auto;
 padding: 1vw 1vh;
 }
+.create-project-dialog-content {
+  background-color: yellowgreen;
+  font-size: 1vw;
+  display: flex;
+  width: 50vw;
+  align-self: center;
+  justify-self: start;
+  justify-content: space-around;
+  overflow-x: hidden;
+}

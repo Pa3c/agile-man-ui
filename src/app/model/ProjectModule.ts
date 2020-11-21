@@ -19,4 +19,7 @@ export class DetailedUserProject extends BaseModel implements Identifable{
     roles: string[];
     taskContainers: TaskContainer[];
 }
+export enum ProjectType {
+    XP,SCRUM,KANBAN
+}
 

@@ -33,6 +33,9 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AuthenticationGuard } from './guard/authentication.guard';
+import { CreateProjectComponent } from './component/dialogs/create-project/create-project.component';
+import { CreateTeamComponent } from './component/dialogs/create-team/create-team.component';
+import { CreateTaskContainerComponent } from './component/dialogs/create-task-container/create-task-container.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,10 @@ import { AuthenticationGuard } from './guard/authentication.guard';
     MainTeamsViewComponent,
     ProjectComponent,
     MainTaskTableViewComponent,
-    DeleteColumnComponent
+    DeleteColumnComponent,
+    CreateProjectComponent,
+    CreateTeamComponent,
+    CreateTaskContainerComponent
   ],
   imports: [
     BrowserModule,

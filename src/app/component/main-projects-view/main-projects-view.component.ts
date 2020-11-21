@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/service/project.service';
 import { UserService } from 'src/app/service/user.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Sort } from '@angular/material/sort';
 import { Project } from 'src/app/model/ProjectModule';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateProjectComponent } from '../dialogs/create-project/create-project.component';
+
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'main-projects-view',
@@ -23,8 +27,11 @@ export class MainProjectsViewComponent implements OnInit {
   private columnsForDetails = ['description'];
   private resourceUrl = "projects";
   expandedElement :any;
+  
+  dialogRef: MatDialogRef<any>;
 
-  constructor(private projectService: ProjectService,private userService: UserService) { }
+  constructor(private projectService: ProjectService,
+    private userService: UserService,public dialog: MatDialog,private changeDetectorRefs: ChangeDetectorRef) { }
   
   
   ngOnInit() {
@@ -32,7 +39,6 @@ export class MainProjectsViewComponent implements OnInit {
     this.projectService.getUserProjects(login).subscribe(
       (response: Project[]) => {
         this.projects = response;
-        console.log(this.projects);
       },
       (error: any) => {
         console.log(error);
@@ -64,6 +70,25 @@ export class MainProjectsViewComponent implements OnInit {
 
   deleteElement(id: number){
     console.log("Delete project of id "+id);
+  }
+
+  createProject(){
+    if(this.dialogRef!=null){
+      return;
+    }
+    this.dialogRef = this.dialog.open(CreateProjectComponent);
+
+    this.dialogRef.afterClosed().subscribe(result => {
+      if(result!=null){
+        this.addToProjects(result);     
+      }
+      this.dialogRef = null;
+    });
+  }
+  addToProjects(result: Project) {
+    console.log(result);
+    this.projects.push(result);
+    this.changeDetectorRefs.detectChanges();
   }
 }
 

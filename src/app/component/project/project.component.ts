@@ -4,7 +4,7 @@ import { TitleName } from 'src/app/model/common/CommonModule';
 import { DetailedUserProject } from 'src/app/model/ProjectModule';
 import { ProjectService } from 'src/app/service/project.service';
 import { UserService } from 'src/app/service/user.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Sort } from '@angular/material/sort';
 interface Animal {
   name: string;
@@ -16,8 +16,8 @@ interface Animal {
   styleUrls: ['./project.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0', display: 'none' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ]
@@ -25,69 +25,69 @@ interface Animal {
 export class ProjectComponent implements OnInit {
   projectTeams: TitleName[] = [];
   detailedProject: DetailedUserProject;
-  private columnsToDisplay = ['title','id'];
-  private columnsForDetails = ['type','closed'];
+  private columnsToDisplay = ['title', 'id'];
+  private columnsForDetails = ['type', 'closed'];
   private resourceUrl = "";
   selectedTeam: TitleName;
   noContainers = false;
   expandedElement: any;
 
-  constructor(private projectService: ProjectService,private userService: UserService,
+  constructor(private projectService: ProjectService, private userService: UserService,
     private route: ActivatedRoute) {
-    let projectId: number; 
-    this.route.params.subscribe(params=>projectId = params['id']);
+    let projectId: number;
+    this.route.params.subscribe(params => projectId = params['id']);
     const login = this.userService.getUserFromLocalCache().login;
-    this.getProjectTeamsOfUser(login,projectId);
-    
+    this.getProjectTeamsOfUser(login, projectId);
+
   }
 
   ngOnInit() {
 
   }
 
-  private getProjectTeamsOfUser(login: string,id: number){
-    
+  private getProjectTeamsOfUser(login: string, id: number) {
+
     this.projectService
-        .getProjectTeamsOfUser(login,id).subscribe(success=>{
-          this.projectTeams = success;
-          this.selectedTeam = success[0];
-        },
-        error=>{
+      .getProjectTeamsOfUser(login, id).subscribe(success => {
+        this.projectTeams = success;
+        this.selectedTeam = success[0];
+      },
+        error => {
           //unimplemented
           console.log(error);
-        },()=>{
-          if(this.projectTeams == undefined || this.projectTeams.length==0){
+        }, () => {
+          if (this.projectTeams == undefined || this.projectTeams.length == 0) {
             return;
           }
-          
-          this.getProjectTeamOfUser(login,id,this.projectTeams[0].id);
+
+          this.getProjectTeamOfUser(login, id, this.projectTeams[0].id);
         });
   }
 
-  private getProjectTeamOfUser(login: string,projectId: number, teamId: number){
+  private getProjectTeamOfUser(login: string, projectId: number, teamId: number) {
     this.projectService
-        .getProjectTeamOfUser(login,projectId,teamId)
-        .subscribe(success=>{
-          this.detailedProject = success;
-          this.resourceUrl = `projects/${success.id}/tables`;
-          this.noContainers = this.checkContainersAvailability();
-          console.log(success);
-        },error=>{
-          console.log(error);
-        });
+      .getProjectTeamOfUser(login, projectId, teamId)
+      .subscribe(success => {
+        this.detailedProject = success;
+        this.resourceUrl = `projects/${success.id}/tables`;
+        this.noContainers = this.checkContainersAvailability();
+        console.log(success);
+      }, error => {
+        console.log(error);
+      });
   }
 
-  checkContainersAvailability(){
-    return this.detailedProject.taskContainers == undefined || this.detailedProject.taskContainers.length==0;
+  checkContainersAvailability() {
+    return this.detailedProject.taskContainers == undefined || this.detailedProject.taskContainers.length == 0;
   }
-  updateCurrentProject(team: any){
+  updateCurrentProject(team: any) {
     console.log(team);
     const login = this.userService.getUserFromLocalCache().login;
-    this.getProjectTeamOfUser(login,this.detailedProject.id,team);
+    this.getProjectTeamOfUser(login, this.detailedProject.id, team);
   }
 
-  deleteElement(id: number){
-    console.log("Delete team of id "+id);
+  deleteElement(id: number) {
+    console.log("Delete team of id " + id);
   }
 
   public toggleElement(element) {

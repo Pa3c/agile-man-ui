@@ -9,9 +9,24 @@ import { TitleName } from '../model/common/CommonModule';
   providedIn: 'root'
 })
 export class ProjectService {
+  
+  
+  
+  addTeamToProject(projectId: number, teamId: number,projectType: string) :Observable<Project>{
+    return this.http.get<Project>(`${environment.backendAddress}/project/${projectId}/team/${teamId}/type/${projectType}`);
+  }
+
+
+
 
   public host = environment.backendAddress;
   constructor(private http: HttpClient) { }
+
+
+  create(project: Project) {
+    return this.http.post<Project>(`${environment.backendAddress}/project`,project);
+  }
+
 
   public getUserProjects(login: string): Observable<Project[]> {
     return this.http.get<Project[]>(`${environment.backendAddress}/user/${login}/project`);

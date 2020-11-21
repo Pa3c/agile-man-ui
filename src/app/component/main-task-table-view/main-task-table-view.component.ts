@@ -24,7 +24,6 @@ export class MainTaskTableViewComponent implements OnInit {
 
   constructor(private taskService: TaskService,
     private taskContainerService: TaskContainerService,
-    private userService: UserService,
     private stateService: StateService,
     private route: ActivatedRoute,
     public dialog: MatDialog) {
