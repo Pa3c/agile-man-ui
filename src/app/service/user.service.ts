@@ -5,6 +5,7 @@ import {User} from '../model/user/UserModule';
   providedIn: 'root'
 })
 export class UserService {
+
   private token: string;
   private loggedInUsername: string;
   private jwtHelper = new JwtHelperService();

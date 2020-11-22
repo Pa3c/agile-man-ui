@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
-import { UserTeam } from 'src/app/model/team/TeamModule';
+import { Team, UserTeam } from 'src/app/model/team/TeamModule';
 import { TeamService } from 'src/app/service/team.service';
 import { UserService } from 'src/app/service/user.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { CreateTeamComponent } from '../dialogs/create-team/create-team.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'main-teams-view',
@@ -22,9 +24,12 @@ export class MainTeamsViewComponent implements OnInit {
   private columnsToDisplay = ['title', 'id'];
   private columnsForDetails = ['description', 'projects'];
   private resourceUrl = "teams";
-  expandedElement: any;
+  private expandedElement: any;
+  private dialogRef: MatDialogRef<any>;
 
-  constructor(private teamService: TeamService, private userService: UserService) { }
+  constructor(private teamService: TeamService,
+     private userService: UserService,
+     public dialog: MatDialog,private changeDetectorRefs: ChangeDetectorRef) { }
 
   ngOnInit() {
     const login = this.userService.getUserFromLocalCache().login;
@@ -70,6 +75,18 @@ export class MainTeamsViewComponent implements OnInit {
 
   deleteElement(id: number) {
     console.log("Delete team of id " + id);
+  }
+
+  createTeam(){
+    if(this.dialogRef!=null){
+      return;
+    }
+    this.dialogRef = this.dialog.open(CreateTeamComponent);
+
+    this.dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.dialogRef = null;
+    });
   }
 
 }

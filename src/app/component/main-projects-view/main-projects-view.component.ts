@@ -26,9 +26,8 @@ export class MainProjectsViewComponent implements OnInit {
   private columnsToDisplay = ['title','id'];
   private columnsForDetails = ['description'];
   private resourceUrl = "projects";
-  expandedElement :any;
-  
-  dialogRef: MatDialogRef<any>;
+  private expandedElement :any;
+  private dialogRef: MatDialogRef<any>;
 
   constructor(private projectService: ProjectService,
     private userService: UserService,public dialog: MatDialog,private changeDetectorRefs: ChangeDetectorRef) { }
