@@ -2,12 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Team, UserTeam } from '../model/team/TeamModule';
+import { CreateTeam, Team, UserTeam } from '../model/team/TeamModule';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamService {
+  createWithUsers(createTeam: CreateTeam) {
+    return this.http.post<CreateTeam>(`${environment.backendAddress}/team/user`,createTeam);
+  }
 
   
   public host = environment.backendAddress;

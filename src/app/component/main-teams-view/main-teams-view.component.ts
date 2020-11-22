@@ -66,6 +66,9 @@ export class MainTeamsViewComponent implements OnInit {
       return object;
     }
     let resolvedUserProject = "projects: <br/>";
+    if(object==null){
+      return object;
+    }
     object.forEach(x => {
       resolvedUserProject = resolvedUserProject.concat("&nbsp;&nbsp;&nbsp;Title: " + x.title)
         .concat("<br/>&nbsp;&nbsp;&nbsp;Roles: " + x.roles + "<br/>");

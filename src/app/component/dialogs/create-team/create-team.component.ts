@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Team } from 'src/app/model/team/TeamModule';
+import { CreateTeam, Team } from 'src/app/model/team/TeamModule';
 import { User } from 'src/app/model/user/UserModule';
 import { AppUserService } from 'src/app/service/app-user.service';
 import { TeamService } from 'src/app/service/team.service';
@@ -41,10 +41,14 @@ export class CreateTeamComponent implements OnInit {
   }
 
   public create(team: Team) {
+    let createTeam = new CreateTeam();
+    createTeam.title = team.title;
+    createTeam.description = team.description
+    createTeam.users = this.addedUsers;
+
     this.requestInProgress = true;
-    this.teamService.create(team).subscribe(success => {
-      let returnedTeam: Team = success;
-      this.addUsersToTeam(returnedTeam);
+    this.teamService.createWithUsers(createTeam).subscribe(success => {
+      let returnedTeam: CreateTeam = success;
     }, error => {
       console.log(error);
       this.requestFailed = true;
@@ -53,16 +57,6 @@ export class CreateTeamComponent implements OnInit {
       this.requestInProgress = false;
     });
 
-  }
-  private addUsersToTeam(returnedTeam: Team) {
-    this.addedUsers.forEach(x => {
-      this.teamService.addUserToTeam(returnedTeam.id, x.login).subscribe(success => {
-      console.log(success)
-      }, error => {
-        console.log(error);
-      });
-    })
-    this.closeDialog(returnedTeam);
   }
 
   public addUser(login: string, name: string,surname:string) {
