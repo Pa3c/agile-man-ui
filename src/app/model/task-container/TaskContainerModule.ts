@@ -2,6 +2,7 @@ import { BaseModel, Identifable } from '../common/CommonModule';
 import { Task } from '../task/TaskModule';
 
 export class TaskContainer extends BaseModel{
+    teamInProjectId: number;
     title: string;
     type: string;
     closed: boolean;
@@ -19,4 +20,9 @@ export class DetailedTaskContainer extends TaskContainer implements Identifable 
     id: number;
     tasks: Map<string,Task[]>;
     states: State[];
+}
+export enum Type {
+
+    COMMON = "COMMON",
+    BACKLOG = "BACKLOG"
 }

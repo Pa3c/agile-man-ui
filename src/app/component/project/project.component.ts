@@ -6,6 +6,10 @@ import { ProjectService } from 'src/app/service/project.service';
 import { UserService } from 'src/app/service/user.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Sort } from '@angular/material/sort';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { CreateTaskContainerComponent } from '../dialogs/create-task-container/create-task-container.component';
+import { TaskContainer, Type } from 'src/app/model/task-container/TaskContainerModule';
+import { TaskContainerService } from 'src/app/service/task-container.service';
 interface Animal {
   name: string;
   sound: string;
@@ -31,9 +35,10 @@ export class ProjectComponent implements OnInit {
   selectedTeam: TitleName;
   noContainers = false;
   expandedElement: any;
+  private dialogRef: MatDialogRef<any>;
 
-  constructor(private projectService: ProjectService, private userService: UserService,
-    private route: ActivatedRoute) {
+  constructor(public dialog: MatDialog,private projectService: ProjectService, private userService: UserService,
+    private route: ActivatedRoute,private taskContainerService: TaskContainerService) {
     let projectId: number;
     this.route.params.subscribe(params => projectId = params['id']);
     const login = this.userService.getUserFromLocalCache().login;
@@ -109,6 +114,36 @@ export class ProjectComponent implements OnInit {
 
   itemResolver(object: any): String {
     return object;
+  }
+
+  createTaskContainer(){
+    if(this.dialogRef!=null){
+      return;
+    }
+    this.dialogRef = this.dialog.open(CreateTaskContainerComponent);
+
+    this.dialogRef.afterClosed().subscribe(result => {
+      if(result!=null){
+        this.addToDetailedUserProjectContainer(result);     
+      }
+      this.dialogRef = null;
+    });
+  }
+
+  private addToDetailedUserProjectContainer(result: string) {
+    if(result==null || result.length==0){
+      return
+    }
+    const taskContainer = new TaskContainer()
+    taskContainer.title = result;
+    taskContainer.type = Type.COMMON
+    taskContainer.teamInProjectId = this.detailedProject.teamInProjectId;
+    console.log(taskContainer);
+    this.taskContainerService.create(taskContainer).subscribe(success=>{
+      console.log(success);
+    },error=>{
+      console.log(error);
+    });
   }
 
 }

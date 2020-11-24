@@ -43,7 +43,6 @@ padding: 1vw 1vh;
   justify-content: space-around;
   overflow-x: hidden;
 }
-
 .create-team-dialog-content {
   background-color: yellowgreen;
   font-size: 1vw;
@@ -53,4 +52,7 @@ padding: 1vw 1vh;
   justify-self: start;
   justify-content: space-around;
   overflow-x: hidden;
+}
+mat-icon:hover{
+  cursor: pointer;
 }

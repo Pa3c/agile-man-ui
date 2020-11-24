@@ -42,3 +42,10 @@ input {
     padding: 2px;
     margin-bottom: 5px
 }
+.button-holder {
+    display: flex;
+    justify-content: flex-start;
+}
+.button-holder > button {
+    margin: 2px;
+}

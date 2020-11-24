@@ -16,7 +16,7 @@
                 <div style="width: 100%; color: red; text-align: center;" *ngIf="addedTeams.length == 0">
                     Please add at least one team
                 </div>
-                <div style="max-height: 20VH; overflow-y: auto;">
+                <div style="max-height: 10vh; min-height: 10vh; overflow-y: auto;">
                     <div *ngFor="let team of addedTeams" class="team-div">
                         <div style="flex-grow: 1;">
                             ID: {{team.id}}<br>
@@ -36,8 +36,10 @@
                         </div>
                     </div>
                 </div>
-                <button [disabled]="createForm.invalid || requestInProgress || addedTeams.length == 0" *ngIf="!requestInProgress" type="submit"
+                <div class="button-holder" >
+                    <button [disabled]="createForm.invalid || requestInProgress || addedTeams.length == 0" *ngIf="!requestInProgress" type="submit"
                     class="btn btn-dark w-100">Create</button>
+                </div>
             </form>
         </div>
         <div class="column">
@@ -48,7 +50,7 @@
             </div>
 
             Teams
-            <div style="max-height: 30VH; overflow-y: auto;">
+            <div style="max-height: 20vh;min-height: 20vh; overflow-y: auto;">
                 <div *ngFor="let team of filteredUserTeams" class="team-div">
                     <div>
                         ID: {{team.id}}<br>
@@ -61,6 +63,8 @@
                     </div>
                 </div>
             </div>
+            <button mat-dialog-close
+            class="btn btn-dark w-100">Cancel</button>
         </div>
     </div>
 </mat-dialog-content>
