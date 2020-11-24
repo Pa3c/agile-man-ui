@@ -71,7 +71,6 @@ export class ProjectComponent implements OnInit {
         this.detailedProject = success;
         this.resourceUrl = `projects/${success.id}/tables`;
         this.noContainers = this.checkContainersAvailability();
-        console.log(success);
       }, error => {
         console.log(error);
       });

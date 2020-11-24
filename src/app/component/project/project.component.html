@@ -9,7 +9,7 @@
             </span>
             <div *ngIf="projectTeams[0]!=null">
 
-                <select [(ngModel)]="selectedTeam" (ngModelChange)="updateCurrentProject($event)">
+                <select (change)="updateCurrentProject($event.target.value)" [selected] = "selectedTeam">
                     <option *ngFor="let team of projectTeams" value="{{team.id}}">{{team.title}}</option>
                 </select>
             </div>
