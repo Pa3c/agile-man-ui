@@ -36,6 +36,7 @@ import { AuthenticationGuard } from './guard/authentication.guard';
 import { CreateProjectComponent } from './component/dialogs/create-project/create-project.component';
 import { CreateTeamComponent } from './component/dialogs/create-team/create-team.component';
 import { CreateTaskContainerComponent } from './component/dialogs/create-task-container/create-task-container.component';
+import { CreateTaskComponent } from './component/dialogs/create-task/create-task.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { CreateTaskContainerComponent } from './component/dialogs/create-task-co
     DeleteColumnComponent,
     CreateProjectComponent,
     CreateTeamComponent,
-    CreateTaskContainerComponent
+    CreateTaskContainerComponent,
+    CreateTaskComponent
   ],
   imports: [
     BrowserModule,

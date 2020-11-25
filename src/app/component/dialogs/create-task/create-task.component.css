@@ -1,0 +1,22 @@
+.description-area {
+    padding: 0;
+    font-size: 1vw;
+}
+input {
+    margin: 10px 0px;
+    font-size: 2vw;
+    padding: 0px;
+}
+
+.column {
+    margin: 5px;
+    flex: 1 1 auto;
+}
+.button-holder {
+    display: flex;
+    justify-content: flex-start;
+}
+.button-holder > button {
+    margin: 2px;
+    font-size: 1.5vw;
+}

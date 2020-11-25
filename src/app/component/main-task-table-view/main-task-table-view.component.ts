@@ -7,8 +7,9 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { Task } from 'src/app/model/task/TaskModule';
 import { TaskService } from 'src/app/service/task.service';
 import { StateService } from 'src/app/service/state.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeleteColumnComponent } from '../dialogs/delete-column/delete-column.component';
+import { CreateTaskComponent } from '../dialogs/create-task/create-task.component';
 
 @Component({
   selector: 'app-main-task-table-view',
@@ -20,9 +21,10 @@ export class MainTaskTableViewComponent implements OnInit {
   headerEdit: boolean = false;
   newColumnName = "";
   oldColumnName = "";
+  private dialogRef: MatDialogRef<any>;
 
 
-  constructor(private taskService: TaskService,
+  constructor(public taskDialog: MatDialog,private taskService: TaskService,
     private taskContainerService: TaskContainerService,
     private stateService: StateService,
     private route: ActivatedRoute,
@@ -193,6 +195,23 @@ export class MainTaskTableViewComponent implements OnInit {
   }
   toggleHeaderEdit(toggle: boolean) {
     this.headerEdit = toggle;
+  }
+
+  createTask(state: State){
+    if(this.dialogRef!=null){
+      return;
+    }
+    this.dialogRef = this.taskDialog.open(CreateTaskComponent,{
+      data: {
+        state: state
+      }
+    });
+
+    this.dialogRef.afterClosed().subscribe(result => {
+
+      console.log(result);
+      this.dialogRef = null;
+    });
   }
 
 }

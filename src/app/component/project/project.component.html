@@ -8,7 +8,6 @@
                 {{detailedProject?.title || ""}}
             </span>
             <div *ngIf="projectTeams[0]!=null">
-
                 <select (change)="updateCurrentProject($event.target.value)">
                     <option *ngFor="let team of projectTeams" value="{{team.id}}">{{team.title}}</option>
                 </select>

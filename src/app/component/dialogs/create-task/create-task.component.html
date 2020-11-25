@@ -1,0 +1,62 @@
+<mat-dialog-content class="mat-typography">
+    <div class="create-team-dialog-content" style="font-size: 2vw;">
+        <div class="column">
+            <span style="font-size: 2vw;" mat-dialog-title>Create Task Container</span>
+            <form id="createForm" #createForm="ngForm">
+                
+                <input name="title"  class="form-control black-focus" required type="text" ngModel required
+                [(ngModel)]="task.title" #title="ngModel" placeholder="Title" />
+                <div *ngIf="title.invalid && title.touched" class="home-form-alert">
+                    Title is required.
+                </div>
+
+                Labels
+                <select>
+                    <option *ngFor="let label of projectLabels">{{label}}</option>
+                </select>
+                Technologies
+                <select>
+                    <option *ngFor="let technology of projectTechnologies">{{technology}}</option>
+                </select>
+
+                <label>
+                    Description
+                </label>
+                <textarea rows="4" name="description" class="form-control description-area" form="createForm"
+                placeholder="Description..."></textarea>
+
+                <label>
+                    Story Points
+                </label>
+                <input type="number" />
+
+                <label>
+                    Majority
+                </label>
+                <select>
+                    <option>Critical</option>                    
+                    <option>Major</option>
+                    <option>Minor</option>
+                    <option>Trivial</option>
+                </select>
+
+                <label>
+                    Complexity
+                </label>
+                <input type="number" value="0" required step="1" min="0" max="10" />
+
+
+
+                <i *ngIf="requestInProgress" class="fa fa-spinner fa-spin" style="font-size:24px"></i>&nbsp;&nbsp;
+                <span *ngIf="requestInProgress">Loading...</span>
+
+                <div class="button-holder" >
+                    <button [disabled]="createForm.invalid || requestInProgress" *ngIf="!requestInProgress" type="submit"
+                    class="btn btn-dark w-100" [mat-dialog-close]="containerTitle">Create</button>
+                    <button mat-dialog-close
+                    class="btn btn-dark w-100">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</mat-dialog-content>
