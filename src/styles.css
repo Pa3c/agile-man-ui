@@ -52,11 +52,10 @@ padding: 1vw 1vh;
   background-color: yellowgreen;
   font-size: 3vh;
   display: flex;
-  width: 50vw;
   align-self: center;
   justify-self: start;
   justify-content: space-around;
-  overflow-x: hidden;
+  width: 70vw;
 }
 mat-icon:hover{
   cursor: pointer;

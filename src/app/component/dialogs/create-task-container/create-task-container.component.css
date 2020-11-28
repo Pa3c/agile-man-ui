@@ -14,5 +14,5 @@ input {
 }
 .button-holder > button {
     margin: 2px;
-    font-size: 1.5vw;
+    font-size: 3vh;
 }

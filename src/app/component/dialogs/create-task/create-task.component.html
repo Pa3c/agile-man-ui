@@ -1,92 +1,126 @@
 <mat-dialog-content class="mat-typography">
     <div class="create-task-dialog-content">
         <div class="column">
-            <span mat-dialog-title>Create Task Container</span>
-            <form id="createForm" #createForm="ngForm">
+            <span mat-dialog-title style="text-align: center;">Create Task</span>
+            <form #createForm="ngForm" (ngSubmit)="closeDialog()">
                 <div class="form-content">
                     <input name="title" class="form-control black-focus" required type="text" ngModel required
                         [(ngModel)]="task.title" #title="ngModel" placeholder="Title" />
-                    <div *ngIf="title.invalid && title.touched">
+                    <div *ngIf="title.invalid && title.touched" style="margin: 10px;">
                         Title is required.
                     </div>
-                    <textarea rows="4" name="description" class="form-control description-area" form="createForm"
-                        placeholder="Description..."></textarea>
+                    <textarea [(ngModel)]="task.description" rows="4" name="description"
+                        class="form-control description-area" form="createForm" placeholder="Description...">
+                    </textarea>
 
 
-                    <mat-form-field style="border: 0;">
+                    <mat-form-field>
                         <mat-chip-list #labelList>
-                            <mat-chip *ngFor='let label of taskLabels' 
-                            [removable]="true" 
-                            (removed)="removeLabel(label)">
+                            <mat-chip *ngFor='let label of taskLabels' [removable]="true"
+                                (removed)="removeLabel(label)">
                                 {{label}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
+                                <mat-icon matChipRemove>cancel</mat-icon>
                             </mat-chip>
 
-                            <input placeholder="Labels" 
-                            #labelInput 
-                            [formControl]="labelsCtrl"
-                            [matAutocomplete]="autoLab"
-                            [matChipInputFor]="labelList" 
-                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                            (matChipInputTokenEnd)="addLabel($event)">
+                            <input placeholder="Labels" #labelInput [formControl]="labelsCtrl"
+                                [matAutocomplete]="autoLab" [matChipInputFor]="labelList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                (matChipInputTokenEnd)="addLabel($event)">
                         </mat-chip-list>
                         <mat-autocomplete #autoLab="matAutocomplete" (optionSelected)="selectedLabel($event)">
                             <mat-option *ngFor="let label of filteredLabels | async" [value]="label">
-                              {{label}}
+                                {{label}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-chip-list #technologyList>
+                            <mat-chip *ngFor='let technology of taskTechnologies' [removable]="true"
+                                (removed)="removeTechnology(technology)">
+                                {{technology}}
+                                <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+
+                            <input placeholder="Technologies" #technologyInput [formControl]="technologiesCtrl"
+                                [matAutocomplete]="autoTech" [matChipInputFor]="technologyList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                (matChipInputTokenEnd)="addTechnology($event)">
+                        </mat-chip-list>
+                        <mat-autocomplete #autoTech="matAutocomplete" (optionSelected)="selectedTechnology($event)">
+                            <mat-option *ngFor="let technology of filteredTechnologies | async" [value]="technology">
+                                {{technology}}
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
 
+                    <div class="row-number-input">
+                        <span style="width: 100%;">
+                            Story Points
+                        </span>
+                        <input type="number" value="0" [(ngModel)]="task.storyPoints" name="storyPoints" value="0"
+                            min="0" max="100" class="number-input" required />
+                    </div>
+                    <div class="row-number-input">
+                        <span style="width: 100%;">
+                            Complexity
+                        </span>
+                        <input type="number" value="0" [(ngModel)]="task.storyPoints" name="complexity" value="0"
+                            min="0" max="10" class="number-input" required />
+                    </div>
+                    <div class="row-number-input">
+                        <span style="width: 100%;">
+                            Complexity
+                        </span>
+                        <input type="number" [(ngModel)]="task.majority" name="complexity" value="0" min="0" max="4"
+                            class="number-input" required />
+                    </div>
+                    <br>
+                    <div>
+                        <div class="row-number-input">
+                            <span style="width: 100%;">
+                                Deadline
+                            </span>
+                            <div style="align-content: center;">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker [(ngModel)]="task.deadline"></mat-datepicker>                                
+                                <input matInput [matDatepicker]="picker" style="width: 0; height: 0;">
 
-                    <mat-form-field style="border: 0;">
-                        <mat-chip-list #technologyList>
-                            <mat-chip *ngFor='let technology of taskTechnologies' 
-                            [removable]="true" 
-                            (removed)="removeTechnology(technology)">
-                                {{technology}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                            </mat-chip>
+                            </div>
 
-                            <input placeholder="Technologies" 
-                            #technologyInput 
-                            [formControl]="technologiesCtrl"
-                            [matAutocomplete]="autoTech"
-                            [matChipInputFor]="technologyList" 
-                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                            (matChipInputTokenEnd)="addTechnology($event)">
-                        </mat-chip-list>
-                        <mat-autocomplete #autoTech="matAutocomplete" (optionSelected)="selectedTechnology($event)">
-                            <mat-option *ngFor="let technology of filteredTechnologies | async" [value]="technology">
-                              {{technology}}
-                            </mat-option>
-                        </mat-autocomplete>
-                    </mat-form-field><br>
-                    <label>
-                        Story Points
-                    </label>
-                    <input type="number" />
-
-                    <label>
-                        Majority
-                    </label>
-                    <select>
-                        <option>Critical</option>
-                        <option>Major</option>
-                        <option>Minor</option>
-                        <option>Trivial</option>
-                    </select>
-
-                    <label>
-                        Complexity
-                    </label>
-                    <input type="number" value="0" required step="1" min="0" max="10" />
+                        </div>
+                        <div class="row-number-input" style="margin-bottom: 20px;">
+                            <span style="width: 90%;">
+                                Steps
+                            </span>
+                            <mat-icon [inline]="true" style="width: 10%;text-align: right;font-size: 3vh; padding-right: 10px;"
+                                (click)="addStep()">
+                                add_circle_outline
+                            </mat-icon>
+                        </div>
+                        <div style="max-height: 150px; overflow-y: auto;">
+                            <div *ngFor="let step of task.
+                            steps">
+                                <div class="row-number-input" style="margin-bottom: 10px;">
+                                    <textarea rows="2" value={{step.description}}
+                                        (input)="updateStep($event.target.value,step.order)" style="width: 100%;
+                                     background-color: transparent; 
+                                     border: 0; border-bottom: solid 1px black;">
+                                    </textarea>
+                                    <mat-icon [inline]="true" style="width: 10%;text-align: right; font-size: 3vh;"
+                                        (click)="removeStep(step.order)">
+                                        remove_circle_outline
+                                    </mat-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <i *ngIf="requestInProgress" class="fa fa-spinner fa-spin" style="font-size:24px"></i>&nbsp;&nbsp;
                 <span *ngIf="requestInProgress">Loading...</span>
 
                 <div class="button-holder">
                     <button [disabled]="createForm.invalid || requestInProgress" *ngIf="!requestInProgress"
-                        type="submit" class="btn btn-dark w-100" [mat-dialog-close]="containerTitle">Create</button>
+                        type="submit" class="btn btn-dark w-100">Create</button>
                     <button mat-dialog-close class="btn btn-dark w-100">Cancel</button>
                 </div>
             </form>

@@ -31,6 +31,7 @@ import { StateService } from './service/state.service';
 import { DeleteColumnComponent } from './component/dialogs/delete-column/delete-column.component';
 import { MatSortModule } from '@angular/material/sort';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AuthenticationGuard } from './guard/authentication.guard';
 import { CreateProjectComponent } from './component/dialogs/create-project/create-project.component';
@@ -39,6 +40,8 @@ import { CreateTaskContainerComponent } from './component/dialogs/create-task-co
 import { CreateTaskComponent } from './component/dialogs/create-task/create-task.component';
 import {MatChipsModule} from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDatepickerModule, } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -75,8 +78,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     DragDropModule,
     MatDialogModule,
     MatChipsModule,
-    MatAutocompleteModule
-    
+    MatAutocompleteModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent,DeleteColumnComponent],
   providers: [MainProjectsViewComponent,

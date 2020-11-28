@@ -208,7 +208,6 @@ export class MainTaskTableViewComponent implements OnInit {
     });
 
     this.dialogRef.afterClosed().subscribe(result => {
-
       console.log(result);
       this.dialogRef = null;
     });

@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Step, Task } from 'src/app/model/task/TaskModule';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Step, Task, TaskWithSteps } from 'src/app/model/task/TaskModule';
 import {MatChipInputEvent} from '@angular/material/chips';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -15,8 +15,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 })
 export class CreateTaskComponent implements OnInit {
 
-task: Task = new Task();
-steps: Step[] = [];
+task: TaskWithSteps = new TaskWithSteps();
 taskLabels: string[] = [];
 taskTechnologies: string[] = [];
 
@@ -43,7 +42,8 @@ projectLabels: string[] = ["app","frontent","backend","database"];
 @ViewChild('technologyInput') technologyInput: ElementRef<HTMLInputElement>;
 
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+
+  constructor(private dialogRef: MatDialogRef<CreateTaskComponent>,@Inject(MAT_DIALOG_DATA) public data: any) {
     this.labelsByTypes = new Map();
     this.task.state = data.state.name;
 
@@ -63,6 +63,11 @@ projectLabels: string[] = ["app","frontent","backend","database"];
  }
 
   ngOnInit() {
+    this.task = new TaskWithSteps();
+    this.task.majority = 0;
+    this.task.storyPoints = 0;
+    this.task.complexity = 0;
+    this.task.deadline = null;
   }
 
   private addLabel(event: MatChipInputEvent): void {
@@ -91,6 +96,14 @@ projectLabels: string[] = ["app","frontent","backend","database"];
     this.technologiesCtrl.setValue(null);
   }
 
+  private addStep(){
+    let step = new Step();
+    step.order = this.task.steps.length;
+    step.done = false;
+    step.description = "";
+    this.task.steps.push(step);
+  }
+
   private filter(value: string,type:string): string[] {
     const filterValue = value.toLowerCase();
     return this.labelsByTypes.get(type).filter(label => label.toLowerCase().indexOf(filterValue) === 0);
@@ -98,15 +111,23 @@ projectLabels: string[] = ["app","frontent","backend","database"];
   }
 
   selectedLabel(event: MatAutocompleteSelectedEvent): void {
+
+    if(this.taskLabels.includes(event.option.viewValue)){
+      return;
+    }
     this.taskLabels.push(event.option.viewValue);
     this.labelInput.nativeElement.value = '';
     this.labelsCtrl.setValue(null);
   }
 
   selectedTechnology(event: MatAutocompleteSelectedEvent): void {
-    this.taskTechnologies.push(event.option.viewValue);
     this.technologyInput.nativeElement.value = '';
     this.technologiesCtrl.setValue(null);
+    if(this.taskTechnologies.includes(event.option.viewValue)){
+      return;
+    }
+    this.taskTechnologies.push(event.option.viewValue);
+    
   }
 
   removeLabel(label: string): void {
@@ -123,5 +144,32 @@ projectLabels: string[] = ["app","frontent","backend","database"];
     if (index >= 0) {
       this.taskTechnologies.splice(index, 1);
     }
+  }
+
+  removeStep(stepOrder: number){
+    this.task.steps.splice(stepOrder,1);
+    this.task.steps.forEach(x=>x.order--);
+  }
+
+  updateStep(description:string,order:number){
+    console.log(description);
+    console.log(order);
+    this.task.steps[order].description = description;
+    
+  }
+  closeDialog() {
+    let labelString = this.makeStringFromTable(this.taskLabels) 
+    let techString = this.makeStringFromTable(this.taskTechnologies);
+    this.task.technologies = techString;
+    this.task.labels = labelString;
+    console.log(this.task);
+    //this.dialogRef.close(task);
+  }
+  makeStringFromTable(table: string[]) {
+    if(table.length==0){
+      return "";
+    }
+
+    return table.toString();
   }
 }

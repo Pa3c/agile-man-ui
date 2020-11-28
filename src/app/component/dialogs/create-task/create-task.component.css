@@ -28,7 +28,6 @@ input {
     min-height: 40vh;
     max-height: 40vh;
     overflow-x: hidden;
-    padding-right: 5px;
 }
 ::-webkit-scrollbar {
     width: 5px;
@@ -43,3 +42,14 @@ input {
 ::ng-deep .mat-form-field-underline {
     display: none;
   }
+
+.row-number-input {
+    display: flex;width: 100%; align-items: center; align-content: flex-end;
+}
+.number-input {
+    background-color: transparent; border: 0; width: 25%; text-align: right;
+}
+
+.number-input:focus {
+    outline: none;
+}
