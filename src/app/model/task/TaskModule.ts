@@ -16,3 +16,11 @@ deadline: string;
 type: string;
 components: string;
 }
+
+export class Step extends BaseModel implements Identifable{
+    id: number;
+    taskId: number;
+    overstepId: number;
+    done: boolean;
+    description: string;
+}

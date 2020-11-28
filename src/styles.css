@@ -1,3 +1,4 @@
+@import 'basic-mat-style.css';
 html {
     color:ghostwhite;
     background-color: #222;
@@ -6,13 +7,6 @@ html {
   }
 body{
   height: 100%;
-}
-.cdk-global-overlay-wrapper {
-  position: absolute;
-  top: 25%;
-  z-index: 1000;
-  width: 100%;
-  display: flex;
 }
 
 .delete-column-container-dialog-container {
@@ -46,6 +40,17 @@ padding: 1vw 1vh;
 .create-team-dialog-content {
   background-color: yellowgreen;
   font-size: 1vw;
+  display: flex;
+  width: 50vw;
+  align-self: center;
+  justify-self: start;
+  justify-content: space-around;
+  overflow-x: hidden;
+}
+
+.create-task-dialog-content {
+  background-color: yellowgreen;
+  font-size: 3vh;
   display: flex;
   width: 50vw;
   align-self: center;

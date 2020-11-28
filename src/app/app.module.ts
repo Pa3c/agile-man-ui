@@ -37,6 +37,8 @@ import { CreateProjectComponent } from './component/dialogs/create-project/creat
 import { CreateTeamComponent } from './component/dialogs/create-team/create-team.component';
 import { CreateTaskContainerComponent } from './component/dialogs/create-task-container/create-task-container.component';
 import { CreateTaskComponent } from './component/dialogs/create-task/create-task.component';
+import {MatChipsModule} from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,10 @@ import { CreateTaskComponent } from './component/dialogs/create-task/create-task
     MatListModule,
     MatFormFieldModule,
     DragDropModule,
-    MatDialogModule 
+    MatDialogModule,
+    MatChipsModule,
+    MatAutocompleteModule
+    
   ],
   entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent,DeleteColumnComponent],
   providers: [MainProjectsViewComponent,

@@ -1,60 +1,93 @@
 <mat-dialog-content class="mat-typography">
-    <div class="create-team-dialog-content" style="font-size: 2vw;">
+    <div class="create-task-dialog-content">
         <div class="column">
-            <span style="font-size: 2vw;" mat-dialog-title>Create Task Container</span>
+            <span mat-dialog-title>Create Task Container</span>
             <form id="createForm" #createForm="ngForm">
-                
-                <input name="title"  class="form-control black-focus" required type="text" ngModel required
-                [(ngModel)]="task.title" #title="ngModel" placeholder="Title" />
-                <div *ngIf="title.invalid && title.touched" class="home-form-alert">
-                    Title is required.
+                <div class="form-content">
+                    <input name="title" class="form-control black-focus" required type="text" ngModel required
+                        [(ngModel)]="task.title" #title="ngModel" placeholder="Title" />
+                    <div *ngIf="title.invalid && title.touched">
+                        Title is required.
+                    </div>
+                    <textarea rows="4" name="description" class="form-control description-area" form="createForm"
+                        placeholder="Description..."></textarea>
+
+
+                    <mat-form-field style="border: 0;">
+                        <mat-chip-list #labelList>
+                            <mat-chip *ngFor='let label of taskLabels' 
+                            [removable]="true" 
+                            (removed)="removeLabel(label)">
+                                {{label}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+
+                            <input placeholder="Labels" 
+                            #labelInput 
+                            [formControl]="labelsCtrl"
+                            [matAutocomplete]="autoLab"
+                            [matChipInputFor]="labelList" 
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            (matChipInputTokenEnd)="addLabel($event)">
+                        </mat-chip-list>
+                        <mat-autocomplete #autoLab="matAutocomplete" (optionSelected)="selectedLabel($event)">
+                            <mat-option *ngFor="let label of filteredLabels | async" [value]="label">
+                              {{label}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+
+
+                    <mat-form-field style="border: 0;">
+                        <mat-chip-list #technologyList>
+                            <mat-chip *ngFor='let technology of taskTechnologies' 
+                            [removable]="true" 
+                            (removed)="removeTechnology(technology)">
+                                {{technology}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                            </mat-chip>
+
+                            <input placeholder="Technologies" 
+                            #technologyInput 
+                            [formControl]="technologiesCtrl"
+                            [matAutocomplete]="autoTech"
+                            [matChipInputFor]="technologyList" 
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            (matChipInputTokenEnd)="addTechnology($event)">
+                        </mat-chip-list>
+                        <mat-autocomplete #autoTech="matAutocomplete" (optionSelected)="selectedTechnology($event)">
+                            <mat-option *ngFor="let technology of filteredTechnologies | async" [value]="technology">
+                              {{technology}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field><br>
+                    <label>
+                        Story Points
+                    </label>
+                    <input type="number" />
+
+                    <label>
+                        Majority
+                    </label>
+                    <select>
+                        <option>Critical</option>
+                        <option>Major</option>
+                        <option>Minor</option>
+                        <option>Trivial</option>
+                    </select>
+
+                    <label>
+                        Complexity
+                    </label>
+                    <input type="number" value="0" required step="1" min="0" max="10" />
                 </div>
-
-                Labels
-                <select>
-                    <option *ngFor="let label of projectLabels">{{label}}</option>
-                </select>
-                Technologies
-                <select>
-                    <option *ngFor="let technology of projectTechnologies">{{technology}}</option>
-                </select>
-
-                <label>
-                    Description
-                </label>
-                <textarea rows="4" name="description" class="form-control description-area" form="createForm"
-                placeholder="Description..."></textarea>
-
-                <label>
-                    Story Points
-                </label>
-                <input type="number" />
-
-                <label>
-                    Majority
-                </label>
-                <select>
-                    <option>Critical</option>                    
-                    <option>Major</option>
-                    <option>Minor</option>
-                    <option>Trivial</option>
-                </select>
-
-                <label>
-                    Complexity
-                </label>
-                <input type="number" value="0" required step="1" min="0" max="10" />
-
-
-
                 <i *ngIf="requestInProgress" class="fa fa-spinner fa-spin" style="font-size:24px"></i>&nbsp;&nbsp;
                 <span *ngIf="requestInProgress">Loading...</span>
 
-                <div class="button-holder" >
-                    <button [disabled]="createForm.invalid || requestInProgress" *ngIf="!requestInProgress" type="submit"
-                    class="btn btn-dark w-100" [mat-dialog-close]="containerTitle">Create</button>
-                    <button mat-dialog-close
-                    class="btn btn-dark w-100">Cancel</button>
+                <div class="button-holder">
+                    <button [disabled]="createForm.invalid || requestInProgress" *ngIf="!requestInProgress"
+                        type="submit" class="btn btn-dark w-100" [mat-dialog-close]="containerTitle">Create</button>
+                    <button mat-dialog-close class="btn btn-dark w-100">Cancel</button>
                 </div>
             </form>
         </div>
