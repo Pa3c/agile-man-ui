@@ -2,6 +2,7 @@ import { BaseModel, Identifable } from '../common/CommonModule';
 
 export class Task extends BaseModel implements Identifable{
 id: number;
+taskContainerId;
 title: string;
 state: string;
 solution: number;
@@ -14,7 +15,19 @@ likes: number;
 complexity: number;
 deadline: string;
 type: string;
+steps: Step[] = [];
 }
+export enum TaskType {
+    TASK = "TASK",
+    TEST = "TEST",
+    STORY = "STORY"
+}
+
+export function getTaskTypes() {
+    return Object.keys(TaskType).filter(
+      (type) => isNaN(<any>type) && type !== 'values'
+    );
+  }
 
 export class Step extends BaseModel implements Identifable{
     id: number;
@@ -23,21 +36,4 @@ export class Step extends BaseModel implements Identifable{
     overstepId: number;
     done: boolean;
     description: string;
-}
-
-export class TaskWithSteps extends Task{
-    steps: Step[] = [];
-    title: string;
-    state: string;
-    solution: number;
-    labels: string;
-    technologies: string;
-    description: string;
-    storyPoints: number;
-    majority: number;
-    likes: number;
-    complexity: number;
-    deadline: string;
-    type: string;
-    components: string;
 }

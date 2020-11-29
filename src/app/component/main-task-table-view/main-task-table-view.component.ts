@@ -4,7 +4,7 @@ import { DetailedTaskContainer, State } from 'src/app/model/task-container/TaskC
 import { TaskContainerService } from 'src/app/service/task-container.service';
 import { UserService } from 'src/app/service/user.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Task } from 'src/app/model/task/TaskModule';
+import { Task, TaskWithSteps } from 'src/app/model/task/TaskModule';
 import { TaskService } from 'src/app/service/task.service';
 import { StateService } from 'src/app/service/state.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -205,8 +205,18 @@ export class MainTaskTableViewComponent implements OnInit {
       }
     });
 
-    this.dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+    this.dialogRef.afterClosed().subscribe(task => {
+      console.log(task);
+      if(task==undefined || task == null || task == ''){
+        this.dialogRef = null;
+        return;
+      }
+      task.taskContainerId = this.detailedTaskContainer.id;
+      this.taskService.create(task).subscribe(success=>{
+
+      },error=>{
+
+      })
       this.dialogRef = null;
     });
   }

@@ -64,24 +64,35 @@
                         <span style="width: 100%;">
                             Complexity
                         </span>
-                        <input type="number" value="0" [(ngModel)]="task.storyPoints" name="complexity" value="0"
-                            min="0" max="10" class="number-input" required />
+                        <input type="number" value="0" [(ngModel)]="task.complexity" name="complexity" value="0" min="0"
+                            max="10" class="number-input" required />
                     </div>
                     <div class="row-number-input">
                         <span style="width: 100%;">
-                            Complexity
+                            Majority
                         </span>
-                        <input type="number" [(ngModel)]="task.majority" name="complexity" value="0" min="0" max="4"
+                        <input type="number" [(ngModel)]="task.majority" name="majority" value="0" min="0" max="4"
                             class="number-input" required />
+                    </div>
+                    <div class="row-number-input">
+                        <span style="width: 100%;">
+                            Type
+                        </span>
+                        <select [(ngModel)]="task.type" name="type">
+                            <option *ngFor="let type of taskTypes" [value]="type">
+                              {{type}}
+                            </option>
+                          </select>
                     </div>
                     <br>
                     <div>
                         <div class="row-number-input">
-                            <span style="width: 90%; align-content: center;" >
+                            <span style="width: 90%; align-content: center;">
                                 Deadline
                             </span>
-                            <div style="display: flex; flex-direction: column;">
-                                <input name="deadline" matInput [matDatepicker]="picker" [(ngModel)]="task.deadline" width="0">
+                            <div style="display: flex; flex-direction: row;">
+                                <input style="text-align: right;" name="deadline" matInput [matDatepicker]="picker"
+                                    [(ngModel)]="task.deadline" width="0">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                             </div>

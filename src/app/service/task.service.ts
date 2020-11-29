@@ -8,6 +8,9 @@ import { Task } from '../model/task/TaskModule';
   providedIn: 'root'
 })
 export class TaskService {
+  create(task: Task) :Observable<Task>{
+    return this.http.post<Task>(`${environment.backendAddress}/task`,task);
+  }
 
 
   public host = environment.backendAddress;

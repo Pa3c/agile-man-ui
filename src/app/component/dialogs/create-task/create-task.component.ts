@@ -1,12 +1,12 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Step, Task, TaskWithSteps } from 'src/app/model/task/TaskModule';
-import {MatChipInputEvent} from '@angular/material/chips';
+import { getTaskTypes, Step, Task, TaskType } from 'src/app/model/task/TaskModule';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-create-task',
@@ -15,59 +15,62 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 })
 export class CreateTaskComponent implements OnInit {
 
-task: TaskWithSteps = new TaskWithSteps();
-taskLabels: string[] = [];
-taskTechnologies: string[] = [];
+  task: Task = new Task();
+  taskState: string;
+  taskLabels: string[] = [];
+  taskTechnologies: string[] = [];
 
-labelsByTypes :Map<string,string[]>
-separatorKeysCodes: number[] = [ENTER, COMMA];
-
-
-filteredLabels: Observable<string[]>;
-labelsCtrl = new FormControl();
-
-filteredTechnologies: Observable<string[]>;
-technologiesCtrl = new FormControl();
+  labelsByTypes: Map<string, string[]>
+  separatorKeysCodes: number[] = [ENTER, COMMA];
 
 
-projectTechnologies: string[] = ["Java","Python","C++","C#"];
-projectLabels: string[] = ["app","frontent","backend","database"];
+  filteredLabels: Observable<string[]>;
+  labelsCtrl = new FormControl();
+
+  filteredTechnologies: Observable<string[]>;
+  technologiesCtrl = new FormControl();
 
 
+  projectTechnologies: string[] = ["Java", "Python", "C++", "C#"];
+  projectLabels: string[] = ["app", "frontent", "backend", "database"];
 
-
-
-
-@ViewChild('labelInput') labelInput: ElementRef<HTMLInputElement>;
-@ViewChild('technologyInput') technologyInput: ElementRef<HTMLInputElement>;
+  taskTypes: string[] = getTaskTypes();
 
 
 
-  constructor(private dialogRef: MatDialogRef<CreateTaskComponent>,@Inject(MAT_DIALOG_DATA) public data: any) {
+
+  @ViewChild('labelInput') labelInput: ElementRef<HTMLInputElement>;
+  @ViewChild('technologyInput') technologyInput: ElementRef<HTMLInputElement>;
+
+
+
+  constructor(private dialogRef: MatDialogRef<CreateTaskComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.labelsByTypes = new Map();
-    this.task.state = data.state.name;
+    this.taskState = data.state.name;
 
-    this.labelsByTypes.set("label",this.projectLabels);
-    this.labelsByTypes.set("technology",this.projectTechnologies);
-    
+    this.labelsByTypes.set("label", this.projectLabels);
+    this.labelsByTypes.set("technology", this.projectTechnologies);
+
 
     this.filteredLabels = this.labelsCtrl.valueChanges.pipe(
       startWith(null),
-      map((label: string | null) => label ? this.filter(label,"label") : this.labelsByTypes.get("label").slice()));
-   
+      map((label: string | null) => label ? this.filter(label, "label") : this.labelsByTypes.get("label").slice()));
 
-   this.filteredTechnologies = this.technologiesCtrl.valueChanges.pipe(
-    startWith(null),
-    map((technology: string | null) => technology ? this.filter(technology,"technology") : this.labelsByTypes.get("technology").slice()));
-   
- }
+
+    this.filteredTechnologies = this.technologiesCtrl.valueChanges.pipe(
+      startWith(null),
+      map((technology: string | null) => technology ? this.filter(technology, "technology") : this.labelsByTypes.get("technology").slice()));
+
+  }
 
   ngOnInit() {
-    this.task = new TaskWithSteps();
+    this.task = new Task();
     this.task.majority = 0;
     this.task.storyPoints = 0;
     this.task.complexity = 0;
     this.task.deadline = null;
+    this.task.state = this.taskState;
+    this.task.type = TaskType.TASK;
   }
 
   private addLabel(event: MatChipInputEvent): void {
@@ -96,7 +99,7 @@ projectLabels: string[] = ["app","frontent","backend","database"];
     this.technologiesCtrl.setValue(null);
   }
 
-  private addStep(){
+  private addStep() {
     let step = new Step();
     step.order = this.task.steps.length;
     step.done = false;
@@ -104,15 +107,15 @@ projectLabels: string[] = ["app","frontent","backend","database"];
     this.task.steps.push(step);
   }
 
-  private filter(value: string,type:string): string[] {
+  private filter(value: string, type: string): string[] {
     const filterValue = value.toLowerCase();
     return this.labelsByTypes.get(type).filter(label => label.toLowerCase().indexOf(filterValue) === 0);
-  
+
   }
 
   selectedLabel(event: MatAutocompleteSelectedEvent): void {
 
-    if(this.taskLabels.includes(event.option.viewValue)){
+    if (this.taskLabels.includes(event.option.viewValue)) {
       return;
     }
     this.taskLabels.push(event.option.viewValue);
@@ -123,11 +126,11 @@ projectLabels: string[] = ["app","frontent","backend","database"];
   selectedTechnology(event: MatAutocompleteSelectedEvent): void {
     this.technologyInput.nativeElement.value = '';
     this.technologiesCtrl.setValue(null);
-    if(this.taskTechnologies.includes(event.option.viewValue)){
+    if (this.taskTechnologies.includes(event.option.viewValue)) {
       return;
     }
     this.taskTechnologies.push(event.option.viewValue);
-    
+
   }
 
   removeLabel(label: string): void {
@@ -146,27 +149,24 @@ projectLabels: string[] = ["app","frontent","backend","database"];
     }
   }
 
-  removeStep(stepOrder: number){
-    this.task.steps.splice(stepOrder,1);
-    this.task.steps.forEach(x=>x.order--);
+  removeStep(stepOrder: number) {
+    this.task.steps.splice(stepOrder, 1);
+    this.task.steps.forEach(x => x.order--);
   }
 
-  updateStep(description:string,order:number){
-    console.log(description);
-    console.log(order);
+  updateStep(description: string, order: number) {
     this.task.steps[order].description = description;
-    
   }
   closeDialog() {
-    let labelString = this.makeStringFromTable(this.taskLabels) 
+    let labelString = this.makeStringFromTable(this.taskLabels)
     let techString = this.makeStringFromTable(this.taskTechnologies);
     this.task.technologies = techString;
     this.task.labels = labelString;
     console.log(this.task);
-    //this.dialogRef.close(task);
+    this.dialogRef.close(this.task);
   }
   makeStringFromTable(table: string[]) {
-    if(table.length==0){
+    if (table.length == 0) {
       return "";
     }
 
