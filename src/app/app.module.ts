@@ -43,6 +43,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule, } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { TaskComponent } from './component/task/task.component';
+import { TeamComponent } from './component/team/team.component';
+import { ProfileComponent } from './component/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +61,10 @@ import { MatSelectModule } from '@angular/material/select';
     CreateProjectComponent,
     CreateTeamComponent,
     CreateTaskContainerComponent,
-    CreateTaskComponent
+    CreateTaskComponent,
+    TaskComponent,
+    TeamComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
