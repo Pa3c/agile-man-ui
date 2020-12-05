@@ -88,7 +88,13 @@
   background-color: transparent;
   border-radius: 4px;
 }
-
+.task-editable{
+  color: ghostwhite;
+}
+.task-editable:hover{
+  color: greenyellow;
+  text-decoration: none;
+}
 .draggable-header {
   align-self: center;
   font-size: 2vw;

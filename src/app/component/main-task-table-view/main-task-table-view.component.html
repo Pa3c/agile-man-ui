@@ -1,9 +1,6 @@
 <div class="page-content-wrapper">
     <div class="edit-panel">
         <div>
-            <div> Add Column </div>
-        </div>
-        <div>
             Filters
         </div>
     </div>
@@ -42,7 +39,9 @@
 
                     <div class="task-box" [cdkDragData]="state.name"
                         *ngFor="let item of detailedTaskContainer.tasks[state.name]" cdkDrag>
-                        {{item.title}}
+                        <a class="editable task-editable" href="/tasks/{{item.id}}">
+                            {{item.title}}
+                        </a>
                     </div>
                 </div>
                 <div class="task-box task-box-add" (click)="createTask(state)">

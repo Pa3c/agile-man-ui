@@ -1,3 +1,4 @@
+import { Input } from '@angular/core';
 import { BaseModel, Identifable } from '../common/CommonModule';
 import { Task } from '../task/TaskModule';
 

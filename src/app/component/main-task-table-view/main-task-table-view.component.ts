@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DetailedTaskContainer, State } from 'src/app/model/task-container/TaskContainerModule';
 import { TaskContainerService } from 'src/app/service/task-container.service';
-import { UserService } from 'src/app/service/user.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Task } from 'src/app/model/task/TaskModule';
 import { TaskService } from 'src/app/service/task.service';
@@ -10,7 +9,6 @@ import { StateService } from 'src/app/service/state.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeleteColumnComponent } from '../dialogs/delete-column/delete-column.component';
 import { CreateTaskComponent } from '../dialogs/create-task/create-task.component';
-import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-main-task-table-view',
@@ -137,7 +135,7 @@ export class MainTaskTableViewComponent implements OnInit {
       const index = this.detailedTaskContainer.states.indexOf(state);
       this.detailedTaskContainer.states.splice(index, 1);
       this.stateService.delete(state.id).subscribe(success=>{
-        console.log(success); 
+        console.log(success);
       })
     });
 
@@ -221,7 +219,7 @@ export class MainTaskTableViewComponent implements OnInit {
       }
       task.taskContainerId = this.detailedTaskContainer.id;
       this.taskService.create(task).subscribe(success=>{
-
+      this.detailedTaskContainer.tasks[success.state].push(success);
       },error=>{
 
       })
