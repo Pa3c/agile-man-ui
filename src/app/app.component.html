@@ -23,7 +23,9 @@
         <div
           (click)="drawer.toggle()"
           *ngIf="isHandset$ | async">
-          Menu
+          <mat-icon>
+            menu
+          </mat-icon>
       </div>
         <span class="spacer"></span>
         <span *ngIf="!(isHandset$ | async)" class="hidable-menu-container">

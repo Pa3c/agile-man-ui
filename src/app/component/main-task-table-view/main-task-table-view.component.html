@@ -15,7 +15,7 @@
                 *ngFor="let state of detailedTaskContainer.states">
 
                 <div style="width: 100%; display: flex; justify-content: space-between;">
-                    <h2 class="draggable-header" [contentEditable]="headerEdit" cdkDragHandle contenteditable
+                    <h2 class="draggable-header content-editable" [contentEditable]="headerEdit" cdkDragHandle contenteditable
                         (input)="onStateNameChange($event.target.innerHTML,state.name)">
                         {{state.name}}
                     </h2>

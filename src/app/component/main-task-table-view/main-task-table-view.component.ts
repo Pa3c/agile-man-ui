@@ -4,12 +4,13 @@ import { DetailedTaskContainer, State } from 'src/app/model/task-container/TaskC
 import { TaskContainerService } from 'src/app/service/task-container.service';
 import { UserService } from 'src/app/service/user.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Task, TaskWithSteps } from 'src/app/model/task/TaskModule';
+import { Task } from 'src/app/model/task/TaskModule';
 import { TaskService } from 'src/app/service/task.service';
 import { StateService } from 'src/app/service/state.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeleteColumnComponent } from '../dialogs/delete-column/delete-column.component';
 import { CreateTaskComponent } from '../dialogs/create-task/create-task.component';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-main-task-table-view',
@@ -90,6 +91,7 @@ export class MainTaskTableViewComponent implements OnInit {
         event.currentIndex);
     }
     const state: State = this.detailedTaskContainer.states[event.currentIndex];
+    console.log(event.container.data[0]);
     const task: Task = event.container.data[0];
 
     task.state = newState;
@@ -112,15 +114,16 @@ export class MainTaskTableViewComponent implements OnInit {
 
     this.stateService.create(state).subscribe(success => {
       console.log(success);
-      this.detailedTaskContainer.states.push(state);
+      this.detailedTaskContainer.states.push(success);
     }, error => {
       console.log(error);
     });
   }
 
   onStateNameChange(newName: string, name: string) {
-    this.newColumnName = newName;
-    this.oldColumnName = name;
+    this.newColumnName = newName.trim();
+    console.log(this.newColumnName);
+    this.oldColumnName = name.trim();
   }
 
   deleteColumn(name: string) {
@@ -145,10 +148,15 @@ export class MainTaskTableViewComponent implements OnInit {
       this.toggleHeaderEdit(false);
       return;
     }
-    let state: State = this.detailedTaskContainer.states.filter(x => x.name == this.oldColumnName)[0];
-    let stateIndex = this.detailedTaskContainer.states.indexOf(state);
+    let states: State[] = this.detailedTaskContainer.states.filter(x => x.name == this.oldColumnName);
+    if(states.length!=1){
+      console.log('Columns should have unique names \n'+states);
+      return;
+    }
+    console.log(states[0]);
+    let stateIndex = this.detailedTaskContainer.states.indexOf(states[0]);
 
-    this.updateStateName(state);
+    this.updateStateName(states[0]);
 
   }
 
