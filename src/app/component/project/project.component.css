@@ -1,46 +1,64 @@
 @import "../styles/table-team-project.css";
-
-.task-container-wrapper{
-    width: 100%;
-    height: 90vh;
-    display: flex;
-    flex-direction: column;
+.task-container-wrapper {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.detailed-project-header{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+.detailed-project-header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
-.spacer{
-    flex: 1 1 auto;
-  }
-.main-project-info{
-    display: flex;
-    flex-direction: column;
-    padding: 10px 10px 0px 0px;
+
+.spacer {
+  flex: 1 1 auto;
 }
-.title{
-    margin-bottom: 10px;
+
+.main-project-info {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1rem 0 0;
 }
-.detailed-project-content{
-    width: 100%;
-    height: 100%;
-    display: flex;
+
+.team-select {
+  font-size: 2vh;
+  border: none;
+  margin-bottom: 0.5rem;
+  padding: 0.2rem;
 }
-.no-containers-info-wrapper{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
+.team-select:focus{
+  outline: none;
 }
-.no-containers-info{
-    text-align: center;
-    align-self: center;
-    font-size: 10vh;
+
+.title {
+  margin-bottom: 1rem;
+  font-size: 2.5vh;
+  text-align: right;
 }
+
+.detailed-project-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.no-containers-info-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.no-containers-info {
+  text-align: center;
+  align-self: center;
+  font-size: 10vh;
+}
+
 select {
-    background-color: #222;
-    color:ghostwhite;
-    width: 100%;
+  background-color: #222;
+  color: ghostwhite;
+  width: 100%;
 }
