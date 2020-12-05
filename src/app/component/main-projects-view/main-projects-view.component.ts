@@ -22,17 +22,17 @@ import { MatDialogRef } from '@angular/material/dialog';
   ]
 })
 export class MainProjectsViewComponent implements OnInit {
-  private projects: Project[];
-  private columnsToDisplay = ['title','id'];
-  private columnsForDetails = ['description'];
-  private resourceUrl = "projects";
-  private expandedElement :any;
+  projects: Project[];
+  columnsToDisplay = ['title','id'];
+  columnsForDetails = ['description'];
+  resourceUrl = "projects";
+  expandedElement :any;
   private dialogRef: MatDialogRef<any>;
 
   constructor(private projectService: ProjectService,
     private userService: UserService,public dialog: MatDialog,private changeDetectorRefs: ChangeDetectorRef) { }
-  
-  
+
+
   ngOnInit() {
     const login = this.userService.getUserFromLocalCache().login;
     this.projectService.getUserProjects(login).subscribe(
@@ -79,7 +79,7 @@ export class MainProjectsViewComponent implements OnInit {
 
     this.dialogRef.afterClosed().subscribe(result => {
       if(result!=null){
-        this.addToProjects(result);     
+        this.addToProjects(result);
       }
       this.dialogRef = null;
     });

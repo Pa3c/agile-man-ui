@@ -13,6 +13,7 @@ import { UserService } from './service/user.service';
 export class AppComponent implements OnInit {
   title = 'agileman';
   showFrame: boolean;
+  login: string = "";
 
   components: Map<String,Type<any>>
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -26,7 +27,7 @@ export class AppComponent implements OnInit {
 
   }
   ngOnInit(): void {
-
+    this.login = this.userService.getUserFromLocalCache().name;
   }
   logOut(){
     this.userService.logOut();
@@ -34,7 +35,7 @@ export class AppComponent implements OnInit {
   }
 
   preventShowFrame() :boolean{
-    return this.router.url === '/register' || this.router.url === '/login'; 
+    return this.router.url === '/register' || this.router.url === '/login';
   }
 
   redirect(path: string){

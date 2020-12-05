@@ -29,9 +29,9 @@ interface Animal {
 export class ProjectComponent implements OnInit {
   projectTeams: TitleName[] = [];
   detailedProject: DetailedUserProject;
-  private columnsToDisplay = ['title', 'id'];
-  private columnsForDetails = ['type', 'closed'];
-  private resourceUrl = "";
+  columnsToDisplay = ['title', 'id'];
+  columnsForDetails = ['type', 'closed'];
+  resourceUrl = "";
   selectedTeam: TitleName;
   noContainers = false;
   expandedElement: any;
@@ -124,7 +124,7 @@ export class ProjectComponent implements OnInit {
 
     this.dialogRef.afterClosed().subscribe(result => {
       if(result!=null){
-        this.addToDetailedUserProjectContainer(result);     
+        this.addToDetailedUserProjectContainer(result);
       }
       this.dialogRef = null;
     });

@@ -1,1 +1,105 @@
-<p>task works!</p>
+<div class="container">
+  <div class="task-container">
+    <h5>
+      {{task.title}}
+    </h5>
+    <div>
+      <span>
+        Type:
+      </span>
+      <span>
+        {{task.type}}
+      </span>
+    </div>
+    <div>
+      <span>
+        State:
+      </span>
+      <span>
+        {{task.state}}
+      </span>
+    </div>
+    <div>
+      <span>
+        Majority:
+      </span>
+      <span>
+        {{task.majority}}
+      </span>
+    </div>
+    <div>
+      <span>
+        Complexity:
+      </span>
+      <span>
+        {{task.complexity}}
+      </span>
+    </div>
+    <div style="margin-bottom: 1rem">
+      <span>
+        Story Points:
+      </span>
+      <span>
+        {{task.storyPoints}}
+      </span>
+    </div>
+    <div style="margin-bottom: 1rem">
+      <span>
+        Labels:
+      </span>
+      <div>
+        {{task.labels}}
+      </div>
+    </div>
+
+    <div style="margin-bottom: 1rem">
+      <span>
+        Technologies:
+      </span>
+      <div>
+        {{task.technologies}}
+      </div>
+    </div>
+
+    <div style="margin-bottom: 1rem">
+      <span>
+        Description:
+      </span>
+      <div>
+        {{task.description}}
+      </div>
+    </div>
+
+    <div style="margin-bottom: 1rem">
+      <span>
+        Steps:
+      </span>
+      <div>
+        <div cdkDropList class="example-list" (cdkDropListDropped)="reorderSteps($event)">
+          <div class="example-box" *ngFor="let step of task.steps" cdkDrag>
+            <span>
+              {{step.order}}
+            </span>
+            <span>
+              {{step.description}}
+            </span>
+            <span>
+              {{step.done}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <span>
+        Solution:
+      </span>
+      <div>
+        {{task.solution}}
+      </div>
+    </div>
+
+  </div>
+
+</div>

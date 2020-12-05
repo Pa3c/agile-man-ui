@@ -101,7 +101,7 @@ export class CreateTaskComponent implements OnInit {
 
   private addStep() {
     let step = new Step();
-    step.order = this.task.steps.length;
+    step.order = this.task.steps.length+1;
     step.done = false;
     step.description = "";
     this.task.steps.push(step);

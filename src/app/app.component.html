@@ -1,5 +1,5 @@
 <mat-sidenav-container class="sidenav-container" *ngIf="!preventShowFrame()">
-  
+
     <mat-sidenav #drawer class="sidenav"
         [ngClass]= "{hidden: !(isHandset$ | async)}"
         fixedInViewport="false"
@@ -8,16 +8,16 @@
         [mode]="(isHandset$ | async) ? 'over' : 'side'"
         [opened]="false">
       <mat-toolbar (click)="drawer.toggle()">
-        
+
       </mat-toolbar>
       <mat-nav-list>
-        <div class="menu-button" (click)='redirect("projects")'>Projects</div>  
+        <div class="menu-button" (click)='redirect("projects")'>Projects</div>
         <div class="menu-button" (click)='redirect("teams")'>Teams</div>
-        <div class="menu-button" (click)='redirect("profile")'>Profile</div>  
+        <div class="menu-button" (click)='redirect("users/"+login)'>Profile</div>
         <div class="menu-button" (click)='logOut()'>Logout</div>
       </mat-nav-list>
     </mat-sidenav>
-  
+
     <mat-sidenav-content>
       <mat-toolbar color="primary">
         <div
@@ -29,15 +29,15 @@
       </div>
         <span class="spacer"></span>
         <span *ngIf="!(isHandset$ | async)" class="hidable-menu-container">
-          <div class="drawer-button" (click)='redirect("projects")'>Projects</div>  
+          <div class="drawer-button" (click)='redirect("projects")'>Projects</div>
           <div class="drawer-button" (click)='redirect("teams")'>Teams</div>
-          <div class="drawer-button" (click)='redirect("profile")'>Profile</div>  
+          <div class="drawer-button" (click)='redirect("users/"+login)'>Profile</div>
           <div class="drawer-button" (click)='logOut()'>Logout</div>
         </span>
       </mat-toolbar>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
-    
+
 </mat-sidenav-container>
 
 <div *ngIf="preventShowFrame()">
