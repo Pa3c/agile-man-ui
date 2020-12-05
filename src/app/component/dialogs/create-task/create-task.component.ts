@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { LabelService } from 'src/app/service/label.service';
 
 @Component({
   selector: 'app-create-task',
@@ -44,10 +45,16 @@ export class CreateTaskComponent implements OnInit {
 
 
 
-  constructor(private dialogRef: MatDialogRef<CreateTaskComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(private dialogRef: MatDialogRef<CreateTaskComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,private labelService: LabelService) {
     this.labelsByTypes = new Map();
     this.taskState = data.state.name;
 
+    this.labelService.getAll().subscribe(success=>{
+
+    },error=>{
+
+    });
     this.labelsByTypes.set("label", this.projectLabels);
     this.labelsByTypes.set("technology", this.projectTechnologies);
 

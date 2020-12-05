@@ -46,6 +46,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { TaskComponent } from './component/task/task.component';
 import { TeamComponent } from './component/team/team.component';
 import { ProfileComponent } from './component/profile/profile.component';
+import { LabelService } from './service/label.service';
+import { TaskCommentService } from './service/task-comment.service';
+import { ProjectCommentService } from './service/project-comment.service';
+import { TaskContainerCommentService } from './service/task-container-comment.service';
 
 @NgModule({
   declarations: [
@@ -74,12 +78,12 @@ import { ProfileComponent } from './component/profile/profile.component';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule, 
-    LayoutModule, 
-    MatToolbarModule, 
-    MatButtonModule, 
-    MatSidenavModule, 
-    MatIconModule, 
+    ReactiveFormsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
     MatListModule,
     MatFormFieldModule,
     DragDropModule,
@@ -94,7 +98,8 @@ import { ProfileComponent } from './component/profile/profile.component';
   entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent,DeleteColumnComponent],
   providers: [MainProjectsViewComponent,
     UserService, ProjectService,AuthenticationGuard,
-    RegisterService,TeamService,TaskService,StateService,MatDialogModule ,
+    LabelService,TaskCommentService,ProjectCommentService,TaskContainerCommentService,
+    RegisterService,TeamService,TaskService,StateService,MatDialogModule,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
