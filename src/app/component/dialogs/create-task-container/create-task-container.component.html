@@ -1,27 +1,20 @@
-<mat-dialog-content class="mat-typography">
-    <div class="create-team-dialog-content" style="font-size: 2vw;">
-        <div class="column">
-            <span style="font-size: 2vw;" mat-dialog-title>Create Task Container</span>
-            <form id="createForm" #createForm="ngForm">
-                <input name="title" 
-                class="form-control black-focus" 
-                style="font-size: 2vw;" required 
-                type="text" ngModel required
-                [(ngModel)]="containerTitle"
-                    #title="ngModel" placeholder="Title" />
-                <div *ngIf="title.invalid && title.touched" class="home-form-alert">
-                    Title is required.
-                </div>
-                <i *ngIf="requestInProgress" class="fa fa-spinner fa-spin" style="font-size:24px"></i>&nbsp;&nbsp;
-                <span *ngIf="requestInProgress">Loading...</span>
+<div class="custom-dialog-container-content">
+  <div class="column">
+    <span style="font-size: 2vw;" mat-dialog-title>Create Task Container</span>
+    <form id="createForm" #createForm="ngForm">
+      <input name="title" class="form-control black-focus" style="font-size: 2vw;" required type="text" ngModel required
+        [(ngModel)]="containerTitle" #title="ngModel" placeholder="Title" />
+      <div *ngIf="title.invalid && title.touched" class="home-form-alert">
+        Title is required.
+      </div>
+      <i *ngIf="requestInProgress" class="fa fa-spinner fa-spin" style="font-size:24px"></i>&nbsp;&nbsp;
+      <span *ngIf="requestInProgress">Loading...</span>
 
-                <div class="button-holder" >
-                    <button [disabled]="createForm.invalid || requestInProgress" *ngIf="!requestInProgress" type="submit"
-                    class="btn btn-dark w-100" [mat-dialog-close]="containerTitle">Create</button>
-                    <button mat-dialog-close
-                    class="btn btn-dark w-100">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</mat-dialog-content>
+      <div class="button-holder">
+        <button mat-dialog-close class="btn btn-dark w-100">Cancel</button>
+        <button [disabled]="createForm.invalid || requestInProgress" *ngIf="!requestInProgress" type="submit"
+        class="btn btn-dark w-100" [mat-dialog-close]="containerTitle">Create</button>
+      </div>
+    </form>
+  </div>
+</div>

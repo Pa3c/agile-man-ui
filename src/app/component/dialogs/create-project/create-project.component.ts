@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatAutocomplete } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { Project, ProjectType } from 'src/app/model/ProjectModule';
 import { Team, UserTeam } from 'src/app/model/team/TeamModule';
+import { LabelService } from 'src/app/service/label.service';
 import { ProjectService } from 'src/app/service/project.service';
 import { TeamService } from 'src/app/service/team.service';
 
@@ -20,8 +26,22 @@ export class CreateProjectComponent implements OnInit {
   addedTeams: Team[] = [];
   projecTypes: Map<number, string> = new Map();
   noTeamsError: boolean = false;
-  constructor(private dialogRef: MatDialogRef<CreateProjectComponent>, private projectService: ProjectService, private teamService: TeamService) {
 
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  fruitCtrl = new FormControl();
+  filteredFruits: Observable<string[]>;
+  fruits: string[] = ['Lemon'];
+  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+
+  constructor(private dialogRef: MatDialogRef<CreateProjectComponent>,
+    private projectService: ProjectService,
+    private teamService: TeamService,
+    private labelService: LabelService) {
+
+
+      this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+        startWith(null),
+        map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
   }
 
   ngOnInit(): void {
@@ -32,7 +52,17 @@ export class CreateProjectComponent implements OnInit {
     }, error => {
       console.log(error);
     });
+
+    this.labelService.getAll().subscribe(success=>{
+      console.log(success);
+    },error=>{
+      console.log(error);
+    });
   }
+
+  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+
 
   filterTeams(value: string) {
     console.log(value);
@@ -99,6 +129,37 @@ export class CreateProjectComponent implements OnInit {
 
   closeDialog(project :Project) {
     this.dialogRef.close(project);
+  }
+
+  remove(fruit: string): void {
+    const index = this.fruits.indexOf(fruit);
+
+    if (index >= 0) {
+      this.fruits.splice(index, 1);
+    }
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.fruits.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+
+    this.fruitCtrl.setValue(null);
   }
 
 }

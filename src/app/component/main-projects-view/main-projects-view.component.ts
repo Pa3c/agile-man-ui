@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateProjectComponent } from '../dialogs/create-project/create-project.component';
 
 import { MatDialogRef } from '@angular/material/dialog';
+import { NoopScrollStrategy, Overlay, ScrollStrategyOptions } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'main-projects-view',
@@ -75,7 +76,9 @@ export class MainProjectsViewComponent implements OnInit {
     if(this.dialogRef!=null){
       return;
     }
-    this.dialogRef = this.dialog.open(CreateProjectComponent);
+    this.dialogRef = this.dialog.open(CreateProjectComponent,{
+      panelClass: 'custom-dialog-container'
+    });
 
     this.dialogRef.afterClosed().subscribe(result => {
       if(result!=null){

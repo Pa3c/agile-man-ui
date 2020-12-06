@@ -1,70 +1,93 @@
-<mat-dialog-content class="mat-typography">
-    <div class="create-project-dialog-content">
-        <div class="column">
-            <span style="font-size: 1.5vw;" mat-dialog-title>Create Project</span>
-            <form id="createForm" #createForm="ngForm" (ngSubmit)="create(createForm.value)">
-                <input name="title" class="form-control black-focus" required type="text" ngModel required
-                    #title="ngModel" placeholder="Title" />
-                <div *ngIf="title.invalid && title.touched" class="home-form-alert">
-                    Title is required.
-                </div>
-                <textarea rows="4" name="description" class="form-control description-area" form="createForm"
-                    placeholder="Description..."></textarea>
-                <i *ngIf="requestInProgress" class="fa fa-spinner fa-spin" style="font-size:24px"></i>&nbsp;&nbsp;
-                <span *ngIf="requestInProgress">Loading...</span>
-                Teams
-                <div style="width: 100%; color: red; text-align: center;" *ngIf="addedTeams.length == 0">
-                    Please add at least one team
-                </div>
-                <div style="max-height: 10vh; min-height: 10vh; overflow-y: auto;">
-                    <div *ngFor="let team of addedTeams" class="team-div">
-                        <div style="flex-grow: 1;">
-                            ID: {{team.id}}<br>
-                            Name: {{team.title}}
-                        </div>
-                        <div>
-                            <select (change)="setTypeToProjectTeam($event.target.value,team.id)">
-                                <option value="KANBAN">KANBAN</option>
-                                <option value="SCRUM">SCRUM</option>
-                                <option value="XP">XP</option>
-                            </select>
-                        </div>
-                        <div>
-                            <mat-icon (click)="removeTeam(team.id)">
-                                remove
-                            </mat-icon>
-                        </div>
-                    </div>
-                </div>
-                <div class="button-holder" >
-                    <button [disabled]="createForm.invalid || requestInProgress || addedTeams.length == 0" *ngIf="!requestInProgress" type="submit"
-                    class="btn btn-dark w-100">Create</button>
-                </div>
-            </form>
-        </div>
-        <div class="column">
-            <span style="font-size: 1.5vw;" mat-dialog-title>Manage Teams</span>
-            <div class="search-panel">
-                <input name="title" class="form-control black-focus search-input"
-                    (input)="filterTeams($event.target.value)" type="text" placeholder="Search" />
-            </div>
+ <div class="custom-dialog-container-content">
 
-            Teams
-            <div style="max-height: 20vh;min-height: 20vh; overflow-y: auto;">
-                <div *ngFor="let team of filteredUserTeams" class="team-div">
-                    <div>
-                        ID: {{team.id}}<br>
-                        Name: {{team.title}}
-                    </div>
-                    <div>
-                        <mat-icon (click)="addTeam(team.id,team.title)">
-                            add
-                        </mat-icon>
-                    </div>
-                </div>
-            </div>
-            <button mat-dialog-close
-            class="btn btn-dark w-100">Cancel</button>
+
+ <div class="column">
+      <span mat-dialog-title>Create Project</span>
+      <form id="createForm" #createForm="ngForm" (ngSubmit)="create(createForm.value)">
+        <input name="title" class="form-control black-focus" required type="text" ngModel required #title="ngModel"
+          placeholder="Title" />
+        <div *ngIf="title.invalid && title.touched" >
+          Title is required.
         </div>
+        <textarea rows="4" name="description" class="form-control description-area" form="createForm"
+          placeholder="Description..."></textarea>
+        <i *ngIf="requestInProgress" class="fa fa-spinner fa-spin" style="font-size:24px"></i>&nbsp;&nbsp;
+        <span *ngIf="requestInProgress">Loading...</span>
+        <br>
+        Labels
+        <mat-form-field class="example-chip-list">
+          <mat-chip-list #chipList aria-label="Fruit selection">
+            <mat-chip *ngFor="let fruit of fruits" [selectable]=false [removable]=true (removed)="remove(fruit)">
+              {{fruit}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="New fruit..." #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto"
+              [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+              {{fruit}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <br>
+        Teams
+        <div style="width: 100%; color: red; text-align: center;" *ngIf="addedTeams.length == 0">
+          Please add at least one team
+        </div>
+        <div style="max-height: 20vh; min-height: 20vh; overflow-y: auto;">
+          <div *ngFor="let team of addedTeams" class="team-div">
+            <div style="flex-grow: 1;">
+              ID: {{team.id}}<br>
+              Name: {{team.title}}
+            </div>
+            <div>
+              <select (change)="setTypeToProjectTeam($event.target.value,team.id)">
+                <option value="KANBAN">KANBAN</option>
+                <option value="SCRUM">SCRUM</option>
+                <option value="XP">XP</option>
+              </select>
+            </div>
+            <div>
+              <mat-icon (click)="removeTeam(team.id)">
+                remove
+              </mat-icon>
+            </div>
+          </div>
+        </div>
+
+      </form>
     </div>
-</mat-dialog-content>
+    <div class="column">
+      <span mat-dialog-title>Manage Teams</span>
+      <div class="search-panel">
+        <input name="title" class="form-control black-focus search-input" (input)="filterTeams($event.target.value)"
+          type="text" placeholder="Search" />
+      </div>
+
+      Teams
+      <div style="max-height: 20vh;min-height: 20vh; overflow-y: auto;">
+        <div *ngFor="let team of filteredUserTeams" class="team-div">
+          <div>
+            ID: {{team.id}}<br>
+            Name: {{team.title}}
+          </div>
+          <div>
+            <mat-icon (click)="addTeam(team.id,team.title)">
+              add
+            </mat-icon>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<mat-dialog-actions>
+  <div class="button-holder">
+    <button mat-dialog-close class="btn btn-dark w-100">Cancel</button>
+    <button form="createForm" [disabled]="createForm.invalid || requestInProgress || addedTeams.length == 0"
+      *ngIf="!requestInProgress" type="submit" class="btn btn-dark w-100">Create</button>
+
+  </div>
+</mat-dialog-actions>

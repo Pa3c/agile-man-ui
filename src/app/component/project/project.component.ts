@@ -120,7 +120,9 @@ export class ProjectComponent implements OnInit {
     if(this.dialogRef!=null){
       return;
     }
-    this.dialogRef = this.dialog.open(CreateTaskContainerComponent);
+    this.dialogRef = this.dialog.open(CreateTaskContainerComponent,{
+      panelClass: 'custom-dialog-container'
+    });
 
     this.dialogRef.afterClosed().subscribe(result => {
       if(result!=null){

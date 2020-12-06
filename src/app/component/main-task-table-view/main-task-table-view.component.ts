@@ -208,7 +208,8 @@ export class MainTaskTableViewComponent implements OnInit {
     this.dialogRef = this.taskDialog.open(CreateTaskComponent,{
       data: {
         state: state
-      }
+      },
+      panelClass: 'custom-dialog-container'
     });
 
     this.dialogRef.afterClosed().subscribe(task => {

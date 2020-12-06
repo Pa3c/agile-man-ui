@@ -1,10 +1,13 @@
 input {
-    margin: 10px 0px;
-    font-size: 1vw;
     padding: 0px;
+    margin: 2px;
 }
-
-.column {
+.custom-dialog-container-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+ .column {
     margin: 5px;
     flex: 1 1 auto;
 }
@@ -30,7 +33,7 @@ input {
 
 .description-area {
     padding: 0;
-    font-size: 1vw;
+    font-size: 2vh;
 }
 
 .team-div {
@@ -44,8 +47,16 @@ input {
 }
 .button-holder {
     display: flex;
+    width: 100%;
+    flex-direction: row;
     justify-content: flex-start;
 }
 .button-holder > button {
     margin: 2px;
+}
+.button-holder > button:first-child {
+  margin-left: 0;
+}
+.button-holder > button:last-child {
+  margin-right: 0;
 }

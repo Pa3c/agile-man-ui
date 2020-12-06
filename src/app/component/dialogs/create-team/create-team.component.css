@@ -1,3 +1,9 @@
+.custom-dialog-container-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 input {
     margin: 10px 0px;
     font-size: 1vw;
@@ -41,4 +47,19 @@ input {
     display: flex;
     padding: 2px;
     margin-bottom: 5px
+}
+.button-holder {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.button-holder > button {
+  margin: 2px;
+}
+.button-holder > button:first-child {
+margin-left: 0;
+}
+.button-holder > button:last-child {
+margin-right: 0;
 }

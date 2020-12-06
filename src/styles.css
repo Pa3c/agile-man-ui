@@ -1,11 +1,12 @@
 @import 'basic-mat-style.css';
 html {
-    color:ghostwhite;
-    background-color: #222;
-    margin: 0;
-    font-size: 3vh;
-  }
-body{
+  color: ghostwhite;
+  background-color: #222;
+  margin: 0;
+  font-size: 3vh;
+}
+
+body {
   height: 100%;
 }
 
@@ -18,45 +19,25 @@ body{
   align-self: center;
   justify-self: center;
 }
+
+.custom-dialog-container .mat-dialog-container {
+  background-color: yellowgreen;
+  font-size: 2vh;
+}
+
 .delete-column-mat-dialog-actions {
   width: 100%;
   display: flex;
   justify-content: space-around;
 }
-.delete-column-mat-dialog-actions > button {
-flex: 1 1 auto;
-padding: 1vw 1vh;
-}
-.create-project-dialog-content {
-  background-color: yellowgreen;
-  font-size: 1vw;
-  display: flex;
-  width: 50vw;
-  align-self: center;
-  justify-self: start;
-  justify-content: space-around;
-  overflow-x: hidden;
-}
-.create-team-dialog-content {
-  background-color: yellowgreen;
-  font-size: 1vw;
-  display: flex;
-  width: 50vw;
-  align-self: center;
-  justify-self: start;
-  justify-content: space-around;
-  overflow-x: hidden;
+
+.delete-column-mat-dialog-actions>button {
+  flex: 1 1 auto;
+  padding: 1vw 1vh;
 }
 
-.create-task-dialog-content {
-  background-color: yellowgreen;
-  font-size: 3vh;
-  display: flex;
-  align-self: center;
-  justify-self: start;
-  justify-content: space-around;
-  width: 70vw;
-}
-mat-icon:hover{
+.custom-dialog-content {}
+
+mat-icon:hover {
   cursor: pointer;
 }

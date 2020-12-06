@@ -84,7 +84,9 @@ export class MainTeamsViewComponent implements OnInit {
     if(this.dialogRef!=null){
       return;
     }
-    this.dialogRef = this.dialog.open(CreateTeamComponent);
+    this.dialogRef = this.dialog.open(CreateTeamComponent,{
+      panelClass: 'custom-dialog-container'
+    });
 
     this.dialogRef.afterClosed().subscribe(result => {
       console.log(result);
