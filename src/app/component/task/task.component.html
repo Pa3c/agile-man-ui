@@ -48,7 +48,9 @@
         Labels:
       </span>
       <div>
-        {{task.labels}}
+        <mat-chip-list>
+          <mat-chip *ngFor='let label of task.labels.split(",")'>{{label}}</mat-chip>
+        </mat-chip-list>
       </div>
     </div>
 
@@ -57,7 +59,9 @@
         Technologies:
       </span>
       <div>
-        {{task.technologies}}
+        <mat-chip-list>
+          <mat-chip *ngFor='let label of task.technologies.split(",")'>{{label}}</mat-chip>
+        </mat-chip-list>
       </div>
     </div>
 
@@ -66,7 +70,8 @@
         Description:
       </span>
       <div>
-        {{task.description}}
+        <textarea class="description">{{task.description}}</textarea>
+
       </div>
     </div>
 

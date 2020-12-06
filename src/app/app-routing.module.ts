@@ -20,7 +20,7 @@ const routes: Routes = [
   {path:'register',component: HomeComponent,data: {showLogin: false}},
   {path:'teams',component: MainTeamsViewComponent,canActivate: [AuthenticationGuard]},
   {path:'teams/:id',component: TeamComponent,canActivate: [AuthenticationGuard]},
-  {path:'tasks/:id',component: TaskComponent,canActivate: [AuthenticationGuard]},
+  {path:'projects/:project_id/tables/:table_id/tasks/:task_id',component: TaskComponent,canActivate: [AuthenticationGuard]},
   {path:'users/:id',component: ProfileComponent,canActivate: [AuthenticationGuard]}
 ]
 @NgModule({

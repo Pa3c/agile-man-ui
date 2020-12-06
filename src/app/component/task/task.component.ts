@@ -1,7 +1,11 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Label, Type } from 'src/app/model/label/LabelModule';
 import { Step, Task } from 'src/app/model/task/TaskModule';
+import { LabelService } from 'src/app/service/label.service';
 import { TaskService } from 'src/app/service/task.service';
 
 @Component({
@@ -11,10 +15,16 @@ import { TaskService } from 'src/app/service/task.service';
 })
 export class TaskComponent implements OnInit {
 task: Task = new Task();
-  constructor(private route: ActivatedRoute,private taskService: TaskService) {
-    this.route.params.subscribe(params => this.task.id = params['id']);
+projectId: any;
 
+techLabels :string[] = [];
+labels :string[] = [];
+
+  constructor(private route: ActivatedRoute,private taskService: TaskService,private labelService: LabelService) {
+    this.route.params.subscribe(params => this.task.id = params['task_id']);
+    this.route.params.subscribe(params => this.projectId = params['project_id']);
    }
+
 
   ngOnInit(): void {
     this.taskService.get(this.task.id).subscribe(success=>{
@@ -24,6 +34,15 @@ task: Task = new Task();
       console.log(error);
 
     });
+    this.labelService.getLabelsOfProject(this.projectId).subscribe(success=>{
+      this.labels = success.filter(x=>x.type==Type.LABEL).map(x=>x.name);
+      this.techLabels = success.filter(x=>x.type==Type.TECHNOLOGY).map(x=>x.name);
+    },error=>{
+      console.log(error);
+
+    });
+
+
   }
   reorderSteps(event: CdkDragDrop<Step[]>) {
     moveItemInArray(this.task.steps, event.previousIndex, event.currentIndex);

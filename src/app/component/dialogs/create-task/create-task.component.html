@@ -130,7 +130,7 @@
 </div>
 <div class="button-holder">
   <button mat-dialog-close class="btn btn-dark w-100">Cancel</button>
-  <button form="createForm" [disabled]="createForm.invalid || requestInProgress" *ngIf="!requestInProgress" type="submit"
+  <button (click)="closeDialog()" [disabled]="createForm.invalid || requestInProgress" *ngIf="!requestInProgress"
     class="btn btn-dark w-100">Create</button>
 
 </div>
