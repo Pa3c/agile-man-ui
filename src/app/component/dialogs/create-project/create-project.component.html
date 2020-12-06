@@ -23,8 +23,7 @@
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input placeholder="Labels" #labelInput [formControl]="labelCtrl" [matAutocomplete]="auto"
-              [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              (matChipInputTokenEnd)="add($event)">
+              [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
           </mat-chip-list>
           <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
             <mat-option *ngFor="let label of filteredLabels | async" [value]="label">

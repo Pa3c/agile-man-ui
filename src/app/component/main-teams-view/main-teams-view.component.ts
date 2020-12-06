@@ -20,11 +20,11 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
   ]
 })
 export class MainTeamsViewComponent implements OnInit {
-  private teams: UserTeam[];
-  private columnsToDisplay = ['title', 'id'];
-  private columnsForDetails = ['description', 'projects'];
-  private resourceUrl = "teams";
-  private expandedElement: any;
+  teams: UserTeam[];
+  columnsToDisplay = ['title', 'id'];
+  columnsForDetails = ['description', 'projects'];
+  resourceUrl = "teams";
+  expandedElement: any;
   private dialogRef: MatDialogRef<any>;
 
   constructor(private teamService: TeamService,
@@ -85,7 +85,8 @@ export class MainTeamsViewComponent implements OnInit {
       return;
     }
     this.dialogRef = this.dialog.open(CreateTeamComponent,{
-      panelClass: 'custom-dialog-container'
+      panelClass: 'custom-dialog-container',
+      width: '90%'
     });
 
     this.dialogRef.afterClosed().subscribe(result => {
@@ -93,8 +94,11 @@ export class MainTeamsViewComponent implements OnInit {
       this.dialogRef = null;
     });
   }
-
+  deleteTeam(id: number){
+    console.log("deleting team of id "+id);
+    }
 }
+
 
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {

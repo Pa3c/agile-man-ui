@@ -32,8 +32,7 @@ export class CreateProjectComponent implements OnInit {
   labelCtrl = new FormControl();
   filteredLabels: Observable<Label[]>;
   labels: Label[] = [];
-  allLabels: Label[] =
-    [{"type":"TECHNOLOGY","name":"Java"},{"type":"TECHNOLOGY","name":"C#"},{"type":"TECHNOLOGY","name":"Python"},{"type":"TECHNOLOGY","name":"Angular"},{"type":"LABEL","name":"Frontend"},{"type":"LABEL","name":"Backend"},{"type":"LABEL","name":"API"},{"type":"LABEL","name":"Documentation"}];
+  allLabels: Label[] = [];
 
   constructor(private dialogRef: MatDialogRef<CreateProjectComponent>,
     private projectService: ProjectService,
@@ -43,9 +42,7 @@ export class CreateProjectComponent implements OnInit {
 
     this.filteredLabels = this.labelCtrl.valueChanges.pipe(
       startWith(null),
-      map((label: Label | null) => label ? this._filter(label.name) : this.allLabels));
-      console.log(this.filteredLabels.subscribe(x=>x.forEach(x=>console.log(x)
-      )));
+      map((labelName: string | null) => labelName ? this._filter(labelName) : this.allLabels));
   }
 
   ngOnInit(): void {
@@ -57,12 +54,12 @@ export class CreateProjectComponent implements OnInit {
       console.log(error);
     });
 
-    // this.labelService.getAll().subscribe( (success: Label[]) => {
-    //   this.allLabels = success;
-    //   console.log(JSON.stringify(success));
-    // }, error => {
-    //   console.log(error);
-    // });
+    this.labelService.getAll().subscribe( (success: Label[]) => {
+      this.allLabels = success;
+      console.log(JSON.stringify(success));
+    }, error => {
+      console.log(error);
+    });
   }
 
   @ViewChild('labelInput') labelInput: ElementRef<HTMLInputElement>;
@@ -145,33 +142,15 @@ export class CreateProjectComponent implements OnInit {
   }
 
   private _filter(labelName: string): Label[] {
+    console.log(labelName);
     const filterValue = labelName.toLowerCase();
 
     return this.allLabels.filter(label => label.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  add(event: MatChipInputEvent): void {
-    console.log(event.value);
-    const input = event.input;
-    const label = event.value;
-
-    // console.log(event.value);
-
-    // // Add our label
-    // if (label) {
-    //   this.labels.push(label);
-    // }
-
-    // // Reset the input value
-    // if (input) {
-    //   input.value = '';
-    // }
-
-    // this.labelCtrl.setValue(null);
-  }
-
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.labels.push(JSON.parse(event.option.viewValue));
+    let labelName = event.option.viewValue;
+    this.labels.push(this.allLabels.filter(x=>x.name==labelName)[0]);
     this.labelInput.nativeElement.value = '';
     this.labelCtrl.setValue(null);
   }
