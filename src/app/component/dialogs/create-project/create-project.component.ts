@@ -138,33 +138,74 @@ export class CreateProjectComponent implements OnInit {
 
   selectedLabel(event: MatAutocompleteSelectedEvent, type: Type): void {
     let labelName = event.option.viewValue;
-    this.projectLabels.push(this.allLabels.filter(x => x.name == labelName)[0]);
+
+    const index = this.projectLabels.findIndex(x=>x.name==labelName);
+
+    if (index != -1) {
+      return
+    }
+
+    const label = this.allLabels.filter(x => x.name == labelName)[0]
+    this.projectLabels.push(label);
     this.labelInput.nativeElement.value = '';
     this.labelCtrl.setValue(null);
 
     switch (type) {
       case Type.LABEL:
-        this.labels.push(this.allLabels.filter(x => x.name == labelName)[0]);
+        this.labels.push(label);
         break;
       case Type.TECHNOLOGY:
-        this.techLabels.push(this.allLabels.filter(x => x.name == labelName)[0]);
+        this.techLabels.push(label);
+        break;
+    }
+    console.log(this.projectLabels);
+  }
+
+  addLabel(event: MatChipInputEvent,type: Type): void {
+    const input = event.input;
+    const labelName = event.value;
+
+    const index = this.projectLabels.findIndex(x=>x.name==labelName);
+
+    if (index != -1) {
+      return
+    }
+
+    const newLabel = new Label(labelName.trim(),type);
+    if ((labelName || '').trim()) {
+      this.projectLabels.push(newLabel);
+    }
+
+    if (input) {
+      input.value = '';
+    }
+    this.labelCtrl.setValue(null);
+
+    switch (type) {
+      case Type.LABEL:
+        this.labels.push(newLabel);
+        break;
+      case Type.TECHNOLOGY:
+        this.techLabels.push(newLabel);
         break;
     }
     console.log(this.projectLabels);
   }
 
   removeLabel(label: Label, type: Type): void {
-    const index = this.projectLabels.indexOf(label);
+    const index = this.projectLabels.findIndex(x=>x.name==label.name);
 
-    if (index >= 0) {
-      this.projectLabels.splice(index, 1);
+    if (index == -1) {
+      return
     }
+    this.projectLabels.splice(index, 1);
+
     switch (type) {
       case Type.LABEL:
-        this.labels.splice(index, 1);
+        this.labels.splice(this.labels.findIndex(x=>x.name==label.name), 1);
         break;
       case Type.TECHNOLOGY:
-        this.techLabels.splice(index, 1);
+        this.techLabels.splice(this.techLabels.findIndex(x=>x.name==label.name), 1);
         break;
     }
     console.log(this.projectLabels);

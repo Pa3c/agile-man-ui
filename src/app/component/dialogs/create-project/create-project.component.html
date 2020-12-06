@@ -22,8 +22,14 @@
               {{label.name}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
-            <input placeholder="Labels" #labelInput [formControl]="labelCtrl" [matAutocomplete]="LabelAuto"
-              [matChipInputFor]="labelList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+            <input
+            placeholder="Labels"
+            #labelInput
+            [formControl]="labelCtrl"
+            [matAutocomplete]="LabelAuto"
+            [matChipInputFor]="labelList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)='addLabel($event,"LABEL")'>
           </mat-chip-list>
           <mat-autocomplete #LabelAuto="matAutocomplete" (optionSelected)='selectedLabel($event,"LABEL")'>
             <mat-option *ngFor="let label of filteredLabels | async" [value]="label.name">
@@ -38,8 +44,14 @@
               {{label.name}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
-            <input placeholder="Technologies" #labelInput [formControl]="labelCtrl" [matAutocomplete]="techLabelAuto"
-              [matChipInputFor]="techLabelList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+            <input
+            placeholder="Technologies"
+            #labelInput
+            [formControl]="labelCtrl"
+            [matAutocomplete]="techLabelAuto"
+            [matChipInputFor]="techLabelList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)='addLabel($event,"TECHNOLOGY")'>
           </mat-chip-list>
           <mat-autocomplete #techLabelAuto="matAutocomplete" (optionSelected)='selectedLabel($event,"TECHNOLOGY")'>
             <mat-option *ngFor="let label of filteredTechLabels | async" [value]="label.name">
