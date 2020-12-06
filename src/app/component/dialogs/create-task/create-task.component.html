@@ -30,6 +30,7 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+
         <mat-form-field>
           <mat-chip-list #technologyList>
             <mat-chip *ngFor='let technology of taskTechnologies' [removable]="true"
@@ -37,7 +38,6 @@
               {{technology}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
-
             <input placeholder="Technologies" #technologyInput [formControl]="technologiesCtrl"
               [matAutocomplete]="autoTech" [matChipInputFor]="technologyList"
               [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addTechnology($event)">

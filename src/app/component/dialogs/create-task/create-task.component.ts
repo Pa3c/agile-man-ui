@@ -8,6 +8,7 @@ import { map, startWith } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { LabelService } from 'src/app/service/label.service';
+import { Label, Type } from 'src/app/model/label/LabelModule';
 
 @Component({
   selector: 'app-create-task',
@@ -32,8 +33,8 @@ export class CreateTaskComponent implements OnInit {
   technologiesCtrl = new FormControl();
 
 
-  projectTechnologies: string[] = ["Java", "Python", "C++", "C#"];
-  projectLabels: string[] = ["app", "frontent", "backend", "database"];
+  projectTechnologies: string[] = ["xx","xx2"];
+  projectLabels: string[] = [];
 
   taskTypes: string[] = getTaskTypes();
 
@@ -48,15 +49,20 @@ export class CreateTaskComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<CreateTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,private labelService: LabelService) {
     this.labelsByTypes = new Map();
+    this.labelsByTypes.set("label", []);
+    this.labelsByTypes.set("technology", []);
     this.taskState = data.state.name;
 
-    this.labelService.getAll().subscribe(success=>{
+    this.labelService.getLabelsOfProject(data.projectId).subscribe(success=>{
 
+    this.labelsByTypes.set("label", success.filter(x=>x.type==Type.LABEL).map(x=>x.name));
+    this.labelsByTypes.set("technology", this.projectLabels = success.filter(x=>x.type==Type.TECHNOLOGY).map(x=>x.name));
+
+      console.log(this.projectLabels);
     },error=>{
-
+      console.log(error);
     });
-    this.labelsByTypes.set("label", this.projectLabels);
-    this.labelsByTypes.set("technology", this.projectTechnologies);
+
 
 
     this.filteredLabels = this.labelsCtrl.valueChanges.pipe(

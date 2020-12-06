@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Label } from '../model/label/LabelModule';
+import { Label, ProjectLabel } from '../model/label/LabelModule';
 
 @Injectable({
   providedIn: 'root'

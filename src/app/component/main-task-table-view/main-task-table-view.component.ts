@@ -21,6 +21,7 @@ export class MainTaskTableViewComponent implements OnInit {
   newColumnName = "";
   oldColumnName = "";
   private dialogRef: MatDialogRef<any>;
+  projectId :number;
 
 
   constructor(public taskDialog: MatDialog,private taskService: TaskService,
@@ -28,8 +29,7 @@ export class MainTaskTableViewComponent implements OnInit {
     private stateService: StateService,
     private route: ActivatedRoute,
     public dialog: MatDialog) {
-    let projectId: number;
-    this.route.params.subscribe(params => projectId = params['project_id']);
+    this.route.params.subscribe(params => this.projectId = params['project_id']);
     let taskContainerId: number;
     this.route.params.subscribe(params => taskContainerId = params['table_id']);
     this.getDetailedTaskContainer(taskContainerId);
@@ -207,7 +207,8 @@ export class MainTaskTableViewComponent implements OnInit {
     }
     this.dialogRef = this.taskDialog.open(CreateTaskComponent,{
       data: {
-        state: state
+        state: state,
+        projectId: this.projectId
       },
       panelClass: 'custom-dialog-container'
     });

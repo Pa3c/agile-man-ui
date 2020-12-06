@@ -18,7 +18,7 @@ export class ProjectService {
   constructor(private http: HttpClient) { }
 
   addTeamToProject(projectId: number, teamId: number,projectType: string) :Observable<Project>{
-    return this.http.post<Project>(`${environment.backendAddress}/project/${projectId}/team/${teamId}/type/${projectType}`,null);
+    return this.http.put<Project>(`${environment.backendAddress}/project/${projectId}/team/${teamId}/type/${projectType}`,null);
   }
 
   create(project: Project) {
