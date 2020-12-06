@@ -62,9 +62,6 @@
 
         <br>
         Teams
-        <div style="width: 100%; color: red; text-align: center;" *ngIf="addedTeams.length == 0">
-          Please add at least one team
-        </div>
         <div style="max-height: 20vh; min-height: 20vh; overflow-y: auto;">
           <div *ngFor="let team of addedTeams" class="team-div">
             <div style="flex-grow: 1;">
@@ -115,8 +112,8 @@
 <mat-dialog-actions>
   <div class="button-holder">
     <button mat-dialog-close class="btn btn-dark w-100">Cancel</button>
-    <button form="createForm" [disabled]="createForm.invalid || requestInProgress || addedTeams.length == 0"
-      *ngIf="!requestInProgress" type="submit" class="btn btn-dark w-100">Create</button>
+    <button form="createForm" [disabled]="createForm.invalid || requestInProgress"
+      *ngIf="!requestInProgress" class="btn btn-dark w-100">Create</button>
 
   </div>
 </mat-dialog-actions>

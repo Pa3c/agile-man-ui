@@ -9,7 +9,6 @@ import { Label } from '../model/label/LabelModule';
 })
 export class LabelService {
 
-
   public host = environment.backendAddress;
   constructor(private http: HttpClient) { }
   getAll(): Observable<Label[]> {
@@ -18,5 +17,9 @@ export class LabelService {
 
   getLabelsOfProject(projectId: number): Observable<Label[]> {
     return this.http.get<Label[]>(`${environment.backendAddress}/project/${projectId}/label`);
+  }
+
+  addLabelsToProject(projectId: number, projectLabels: Label[]) {
+    return this.http.put<Label[]>(`${environment.backendAddress}/project/${projectId}/label`,projectLabels);
   }
 }

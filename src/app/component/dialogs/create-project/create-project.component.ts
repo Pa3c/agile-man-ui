@@ -26,7 +26,6 @@ export class CreateProjectComponent implements OnInit {
   filteredUserTeams: UserTeam[];
   addedTeams: Team[] = [];
   projecTypes: Map<number, string> = new Map();
-  noTeamsError: boolean = false;
 
   @ViewChild('labelInput') labelInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
@@ -78,37 +77,49 @@ export class CreateProjectComponent implements OnInit {
   }
 
   public create(project: Project) {
-    if (this.addedTeams.length == 0) {
-      this.noTeamsError = true;
-      return;
-    }
-    this.noTeamsError = false;
+    let createdProject = null;
+    console.log(project);
+
     this.requestInProgress = true;
     this.projectService.create(project).subscribe(success => {
-      let returnedProject: Project = success;
-      this.addTeamsToProject(returnedProject);
+      let createdProject: Project = success;
+      if(this.addedTeams.length>0){
+        this.addTeamsToProject(createdProject);
+      }
+      if(this.projectLabels.length>0){
+        this.addLabelsToProject(createdProject);
+      }
+
     }, error => {
       console.log(error);
       this.requestFailed = true;
     }, () => {
 
       this.requestInProgress = false;
+      this.closeDialog(createdProject);
     });
 
   }
-  private addTeamsToProject(returnedProject: Project) {
+  private addTeamsToProject(project: Project){
     this.addedTeams.forEach(x => {
       let type = this.projecTypes[x.id];
       if (type == undefined) {
         type = "KANBAN";
       }
-      this.projectService.addTeamToProject(returnedProject.id, x.id, type).subscribe(success => {
-        console.log(success)
+       this.projectService.addTeamToProject(project.id, x.id, type).subscribe(success => {
+        console.log(success);
       }, error => {
         console.log(error);
       });
     })
-    this.closeDialog(returnedProject);
+  }
+
+  private addLabelsToProject(project: Project){
+    this.labelService.addLabelsToProject(project.id,this.projectLabels).subscribe(success => {
+      console.log(success);
+    }, error => {
+      console.log(error);
+    });
   }
 
   public addTeam(id: number, title: string) {
@@ -139,7 +150,7 @@ export class CreateProjectComponent implements OnInit {
   selectedLabel(event: MatAutocompleteSelectedEvent, type: Type): void {
     let labelName = event.option.viewValue;
 
-    const index = this.projectLabels.findIndex(x=>x.name==labelName);
+    const index = this.projectLabels.findIndex(x => x.name == labelName);
 
     if (index != -1) {
       return
@@ -161,17 +172,17 @@ export class CreateProjectComponent implements OnInit {
     console.log(this.projectLabels);
   }
 
-  addLabel(event: MatChipInputEvent,type: Type): void {
+  addLabel(event: MatChipInputEvent, type: Type): void {
     const input = event.input;
     const labelName = event.value;
 
-    const index = this.projectLabels.findIndex(x=>x.name==labelName);
+    const index = this.projectLabels.findIndex(x => x.name == labelName);
 
     if (index != -1) {
       return
     }
 
-    const newLabel = new Label(labelName.trim(),type);
+    const newLabel = new Label(labelName.trim(), type);
     if ((labelName || '').trim()) {
       this.projectLabels.push(newLabel);
     }
@@ -193,7 +204,7 @@ export class CreateProjectComponent implements OnInit {
   }
 
   removeLabel(label: Label, type: Type): void {
-    const index = this.projectLabels.findIndex(x=>x.name==label.name);
+    const index = this.projectLabels.findIndex(x => x.name == label.name);
 
     if (index == -1) {
       return
@@ -202,10 +213,10 @@ export class CreateProjectComponent implements OnInit {
 
     switch (type) {
       case Type.LABEL:
-        this.labels.splice(this.labels.findIndex(x=>x.name==label.name), 1);
+        this.labels.splice(this.labels.findIndex(x => x.name == label.name), 1);
         break;
       case Type.TECHNOLOGY:
-        this.techLabels.splice(this.techLabels.findIndex(x=>x.name==label.name), 1);
+        this.techLabels.splice(this.techLabels.findIndex(x => x.name == label.name), 1);
         break;
     }
     console.log(this.projectLabels);
