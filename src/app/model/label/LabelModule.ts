@@ -1,6 +1,7 @@
 export class Label {
-  id: string;
-  type: Type;
+  constructor(public name: string,public type: Type){
+  }
+
 }
 export enum Type {
   TECHNOLOGY = "TECHNOLOGY",

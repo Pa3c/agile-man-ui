@@ -15,7 +15,7 @@ import { LabelService } from 'src/app/service/label.service';
   styleUrls: ['./create-task.component.css']
 })
 export class CreateTaskComponent implements OnInit {
-
+  requestInProgress: boolean = false;
   task: Task = new Task();
   taskState: string;
   taskLabels: string[] = [];
@@ -80,7 +80,7 @@ export class CreateTaskComponent implements OnInit {
     this.task.type = TaskType.TASK;
   }
 
-  private addLabel(event: MatChipInputEvent): void {
+  addLabel(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
 
@@ -93,7 +93,7 @@ export class CreateTaskComponent implements OnInit {
     this.labelsCtrl.setValue(null);
   }
 
-  private addTechnology(event: MatChipInputEvent): void {
+  addTechnology(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
 
@@ -106,7 +106,7 @@ export class CreateTaskComponent implements OnInit {
     this.technologiesCtrl.setValue(null);
   }
 
-  private addStep() {
+  addStep() {
     let step = new Step();
     step.order = this.task.steps.length+1;
     step.done = false;

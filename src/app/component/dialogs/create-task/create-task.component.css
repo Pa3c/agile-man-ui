@@ -14,6 +14,14 @@ input {
     padding: 0px;
 }
 
+select {
+  background-color: yellowgreen;
+  border: none;
+}
+select:focus {
+  outline:none;
+}
+
 .column {
     margin: 5px;
     flex: 1 1 auto;

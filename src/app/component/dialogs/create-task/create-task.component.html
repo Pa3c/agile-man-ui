@@ -87,10 +87,11 @@
               Deadline
             </span>
             <div style="display: flex; flex-direction: row;">
-              <input style="text-align: right;" name="deadline" matInput [matDatepicker]="picker"
+              <input style="text-align: right; font-size: 2vh;" name="deadline" matInput [matDatepicker]="picker"
                 [(ngModel)]="task.deadline" width="0">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
+              <mat-datepicker-toggle matSuffix [for]="picker"
+              style="padding: 0;"></mat-datepicker-toggle>
+              <mat-datepicker #picker ></mat-datepicker>
             </div>
 
           </div>
@@ -128,7 +129,8 @@
   </div>
 </div>
 <div class="button-holder">
+  <button mat-dialog-close class="btn btn-dark w-100">Cancel</button>
   <button form="createForm" [disabled]="createForm.invalid || requestInProgress" *ngIf="!requestInProgress" type="submit"
     class="btn btn-dark w-100">Create</button>
-  <button mat-dialog-close class="btn btn-dark w-100">Cancel</button>
+
 </div>

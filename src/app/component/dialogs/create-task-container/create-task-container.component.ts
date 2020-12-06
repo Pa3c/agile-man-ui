@@ -8,6 +8,7 @@ import { TaskContainer } from 'src/app/model/task-container/TaskContainerModule'
 })
 export class CreateTaskContainerComponent implements OnInit {
   containerTitle: string;
+  requestInProgress: boolean = false;
   constructor() { }
 
   ngOnInit(): void {

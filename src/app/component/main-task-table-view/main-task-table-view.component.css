@@ -22,8 +22,8 @@
 
 .column-container {
   display: flex;
-  min-width: 20%;
-  max-width: 20%;
+  min-width: 18%;
+  max-width: 18%;
   flex-direction: column;
   margin: 0 0.5vw;
 }
@@ -59,7 +59,7 @@
   align-items: center;
   cursor: grab;
   background: #222;
-  font-size: 2vw;
+  font-size: 2vh;
 }
 
 .task-box-add {
@@ -75,7 +75,7 @@
   background: ghostwhite;
   color: #222;
   text-align: center;
-  font-size: 2vw;
+  font-size: 2vh;
 }
 .editable{
   cursor: pointer;
@@ -97,7 +97,7 @@
 }
 .draggable-header {
   align-self: center;
-  font-size: 2vw;
+  font-size: 2vh;
   cursor: grab;
 }
 

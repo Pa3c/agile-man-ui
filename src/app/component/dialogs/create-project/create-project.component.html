@@ -14,23 +14,25 @@
         <i *ngIf="requestInProgress" class="fa fa-spinner fa-spin" style="font-size:24px"></i>&nbsp;&nbsp;
         <span *ngIf="requestInProgress">Loading...</span>
         <br>
-        Labels
+
+
         <mat-form-field class="example-chip-list">
-          <mat-chip-list #chipList aria-label="Fruit selection">
-            <mat-chip *ngFor="let fruit of fruits" [selectable]=false [removable]=true (removed)="remove(fruit)">
-              {{fruit}}
+          <mat-chip-list #chipList aria-label="label selection">
+            <mat-chip *ngFor="let label of labels" [selectable]=false [removable]=true (removed)="remove(label)">
+              {{label.name}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
-            <input placeholder="New fruit..." #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto"
+            <input placeholder="Labels" #labelInput [formControl]="labelCtrl" [matAutocomplete]="auto"
               [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
               (matChipInputTokenEnd)="add($event)">
           </mat-chip-list>
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
-              {{fruit}}
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let label of filteredLabels | async" [value]="label">
+              {{label.name}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+
         <br>
         Teams
         <div style="width: 100%; color: red; text-align: center;" *ngIf="addedTeams.length == 0">

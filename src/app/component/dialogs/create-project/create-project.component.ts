@@ -1,11 +1,12 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatAutocomplete } from '@angular/material/autocomplete';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { Label } from 'src/app/model/label/LabelModule';
 import { Project, ProjectType } from 'src/app/model/ProjectModule';
 import { Team, UserTeam } from 'src/app/model/team/TeamModule';
 import { LabelService } from 'src/app/service/label.service';
@@ -28,10 +29,11 @@ export class CreateProjectComponent implements OnInit {
   noTeamsError: boolean = false;
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  labelCtrl = new FormControl();
+  filteredLabels: Observable<Label[]>;
+  labels: Label[] = [];
+  allLabels: Label[] =
+    [{"type":"TECHNOLOGY","name":"Java"},{"type":"TECHNOLOGY","name":"C#"},{"type":"TECHNOLOGY","name":"Python"},{"type":"TECHNOLOGY","name":"Angular"},{"type":"LABEL","name":"Frontend"},{"type":"LABEL","name":"Backend"},{"type":"LABEL","name":"API"},{"type":"LABEL","name":"Documentation"}];
 
   constructor(private dialogRef: MatDialogRef<CreateProjectComponent>,
     private projectService: ProjectService,
@@ -39,9 +41,11 @@ export class CreateProjectComponent implements OnInit {
     private labelService: LabelService) {
 
 
-      this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
-        startWith(null),
-        map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()));
+    this.filteredLabels = this.labelCtrl.valueChanges.pipe(
+      startWith(null),
+      map((label: Label | null) => label ? this._filter(label.name) : this.allLabels));
+      console.log(this.filteredLabels.subscribe(x=>x.forEach(x=>console.log(x)
+      )));
   }
 
   ngOnInit(): void {
@@ -53,14 +57,15 @@ export class CreateProjectComponent implements OnInit {
       console.log(error);
     });
 
-    this.labelService.getAll().subscribe(success=>{
-      console.log(success);
-    },error=>{
-      console.log(error);
-    });
+    // this.labelService.getAll().subscribe( (success: Label[]) => {
+    //   this.allLabels = success;
+    //   console.log(JSON.stringify(success));
+    // }, error => {
+    //   console.log(error);
+    // });
   }
 
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('labelInput') labelInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
 
@@ -98,7 +103,7 @@ export class CreateProjectComponent implements OnInit {
         type = "KANBAN";
       }
       this.projectService.addTeamToProject(returnedProject.id, x.id, type).subscribe(success => {
-      console.log(success)
+        console.log(success)
       }, error => {
         console.log(error);
       });
@@ -127,39 +132,48 @@ export class CreateProjectComponent implements OnInit {
     this.projecTypes[teamId] = type;
   }
 
-  closeDialog(project :Project) {
+  closeDialog(project: Project) {
     this.dialogRef.close(project);
   }
 
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
+  remove(label: Label): void {
+    const index = this.labels.indexOf(label);
 
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.labels.splice(index, 1);
     }
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+  private _filter(labelName: string): Label[] {
+    const filterValue = labelName.toLowerCase();
 
-    return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    return this.allLabels.filter(label => label.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
   add(event: MatChipInputEvent): void {
+    console.log(event.value);
     const input = event.input;
-    const value = event.value;
+    const label = event.value;
 
-    // Add our fruit
-    if ((value || '').trim()) {
-      this.fruits.push(value.trim());
-    }
+    // console.log(event.value);
 
-    // Reset the input value
-    if (input) {
-      input.value = '';
-    }
+    // // Add our label
+    // if (label) {
+    //   this.labels.push(label);
+    // }
 
-    this.fruitCtrl.setValue(null);
+    // // Reset the input value
+    // if (input) {
+    //   input.value = '';
+    // }
+
+    // this.labelCtrl.setValue(null);
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.labels.push(JSON.parse(event.option.viewValue));
+    this.labelInput.nativeElement.value = '';
+    this.labelCtrl.setValue(null);
   }
 
 }
