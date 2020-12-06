@@ -17,16 +17,32 @@
 
 
         <mat-form-field class="example-chip-list">
-          <mat-chip-list #chipList aria-label="label selection">
-            <mat-chip *ngFor="let label of labels" [selectable]=false [removable]=true (removed)="remove(label)">
+          <mat-chip-list #labelList aria-label="label selection">
+            <mat-chip *ngFor="let label of labels" [selectable]=false [removable]=true (removed)='removeLabel(label,"LABEL")'>
               {{label.name}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
-            <input placeholder="Labels" #labelInput [formControl]="labelCtrl" [matAutocomplete]="auto"
-              [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+            <input placeholder="Labels" #labelInput [formControl]="labelCtrl" [matAutocomplete]="LabelAuto"
+              [matChipInputFor]="labelList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
           </mat-chip-list>
-          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-            <mat-option *ngFor="let label of filteredLabels | async" [value]="label">
+          <mat-autocomplete #LabelAuto="matAutocomplete" (optionSelected)='selectedLabel($event,"LABEL")'>
+            <mat-option *ngFor="let label of filteredLabels | async" [value]="label.name">
+              {{label.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field class="example-chip-list">
+          <mat-chip-list #techLabelList aria-label="label selection">
+            <mat-chip *ngFor="let label of techLabels" [selectable]=false [removable]=true (removed)='removeLabel(label,"TECHNOLOGY")'>
+              {{label.name}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Technologies" #labelInput [formControl]="labelCtrl" [matAutocomplete]="techLabelAuto"
+              [matChipInputFor]="techLabelList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+          </mat-chip-list>
+          <mat-autocomplete #techLabelAuto="matAutocomplete" (optionSelected)='selectedLabel($event,"TECHNOLOGY")'>
+            <mat-option *ngFor="let label of filteredTechLabels | async" [value]="label.name">
               {{label.name}}
             </mat-option>
           </mat-autocomplete>

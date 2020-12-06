@@ -6,7 +6,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { Label } from 'src/app/model/label/LabelModule';
+import { Label, Type } from 'src/app/model/label/LabelModule';
 import { Project, ProjectType } from 'src/app/model/ProjectModule';
 import { Team, UserTeam } from 'src/app/model/team/TeamModule';
 import { LabelService } from 'src/app/service/label.service';
@@ -28,10 +28,19 @@ export class CreateProjectComponent implements OnInit {
   projecTypes: Map<number, string> = new Map();
   noTeamsError: boolean = false;
 
+  @ViewChild('labelInput') labelInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   labelCtrl = new FormControl();
+
   filteredLabels: Observable<Label[]>;
+  filteredTechLabels: Observable<Label[]>;
+
+  projectLabels: Label[] = [];
+
   labels: Label[] = [];
+  techLabels: Label[] = [];
+
   allLabels: Label[] = [];
 
   constructor(private dialogRef: MatDialogRef<CreateProjectComponent>,
@@ -40,9 +49,8 @@ export class CreateProjectComponent implements OnInit {
     private labelService: LabelService) {
 
 
-    this.filteredLabels = this.labelCtrl.valueChanges.pipe(
-      startWith(null),
-      map((labelName: string | null) => labelName ? this._filter(labelName) : this.allLabels));
+    this.filteredLabels = this.filterLabels(Type.LABEL);
+    this.filteredTechLabels = this.filterLabels(Type.TECHNOLOGY);
   }
 
   ngOnInit(): void {
@@ -54,17 +62,12 @@ export class CreateProjectComponent implements OnInit {
       console.log(error);
     });
 
-    this.labelService.getAll().subscribe( (success: Label[]) => {
+    this.labelService.getAll().subscribe((success: Label[]) => {
       this.allLabels = success;
-      console.log(JSON.stringify(success));
     }, error => {
       console.log(error);
     });
   }
-
-  @ViewChild('labelInput') labelInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto') matAutocomplete: MatAutocomplete;
-
 
   filterTeams(value: string) {
     console.log(value);
@@ -133,26 +136,53 @@ export class CreateProjectComponent implements OnInit {
     this.dialogRef.close(project);
   }
 
-  remove(label: Label): void {
-    const index = this.labels.indexOf(label);
-
-    if (index >= 0) {
-      this.labels.splice(index, 1);
-    }
-  }
-
-  private _filter(labelName: string): Label[] {
-    console.log(labelName);
-    const filterValue = labelName.toLowerCase();
-
-    return this.allLabels.filter(label => label.name.toLowerCase().indexOf(filterValue) === 0);
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
+  selectedLabel(event: MatAutocompleteSelectedEvent, type: Type): void {
     let labelName = event.option.viewValue;
-    this.labels.push(this.allLabels.filter(x=>x.name==labelName)[0]);
+    this.projectLabels.push(this.allLabels.filter(x => x.name == labelName)[0]);
     this.labelInput.nativeElement.value = '';
     this.labelCtrl.setValue(null);
+
+    switch (type) {
+      case Type.LABEL:
+        this.labels.push(this.allLabels.filter(x => x.name == labelName)[0]);
+        break;
+      case Type.TECHNOLOGY:
+        this.techLabels.push(this.allLabels.filter(x => x.name == labelName)[0]);
+        break;
+    }
+    console.log(this.projectLabels);
+  }
+
+  removeLabel(label: Label, type: Type): void {
+    const index = this.projectLabels.indexOf(label);
+
+    if (index >= 0) {
+      this.projectLabels.splice(index, 1);
+    }
+    switch (type) {
+      case Type.LABEL:
+        this.labels.splice(index, 1);
+        break;
+      case Type.TECHNOLOGY:
+        this.techLabels.splice(index, 1);
+        break;
+    }
+    console.log(this.projectLabels);
+  }
+
+  private filterLabels(type: Type): Observable<Label[]> {
+
+    return this.labelCtrl.valueChanges.pipe(
+      startWith(null),
+      map((labelName: string | null) => labelName ? this._filter(labelName, type) : this.allLabels.filter(label => label.type == type)));
+  }
+
+  private _filter(labelName: string, type: Type): Label[] {
+    const filterValue = labelName.toLowerCase();
+
+    return this.allLabels
+      .filter(label => label.name.toLowerCase().indexOf(filterValue) === 0)
+      .filter(label => label.type == type);
   }
 
 }
