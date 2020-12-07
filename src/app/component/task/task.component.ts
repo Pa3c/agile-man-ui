@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Label, Type } from 'src/app/model/label/LabelModule';
 import { Step, Task } from 'src/app/model/task/TaskModule';
+import { BasicUserInfo } from 'src/app/model/user/UserModule';
+import { AppUserService } from 'src/app/service/app-user.service';
 import { LabelService } from 'src/app/service/label.service';
 import { TaskService } from 'src/app/service/task.service';
 
@@ -19,7 +21,9 @@ export class TaskComponent implements OnInit {
   techLabels: string[] = [];
   labels: string[] = [];
 
-  constructor(private route: ActivatedRoute, private taskService: TaskService, private labelService: LabelService) {
+  constructor(private route: ActivatedRoute,
+    private taskService: TaskService, private labelService: LabelService,
+    private appUserService: AppUserService) {
     this.route.params.subscribe(params => this.task.id = params['id']);
   }
 
@@ -29,6 +33,7 @@ export class TaskComponent implements OnInit {
     this.taskService.get(this.task.id).subscribe(success => {
       console.log(success);
       this.task = success;
+      this.getBasicUserInfo(this.task.createdBy);
       this.loadLabels();
     }, error => {
       console.log(error);
@@ -54,6 +59,15 @@ export class TaskComponent implements OnInit {
 
   private getTask(){
 
+  }
+
+  private getBasicUserInfo(login: string){
+    this.appUserService.getBasicUserInfo(login)
+    .subscribe((user: BasicUserInfo)=>{
+      console.log(user);
+    },error=>{
+      console.log(error);
+    })
   }
 
 }

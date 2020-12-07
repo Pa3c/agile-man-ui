@@ -50,7 +50,7 @@
             Deadline:
           </span>
           <span>
-            {{task.deadline}}
+            {{task.deadline | date: 'yyyy-MM-dd HH:mm'}}
           </span>
         </div>
 
@@ -77,9 +77,12 @@
         </div>
       </div>
       <div class="simple-properties-container">
-        <div>
-         <mat-icon>thumb_down</mat-icon><mat-icon>thumb_up</mat-icon>
-           {{task.likes}}
+        <div style="display: flex;">
+         <mat-icon [inline]=true>thumb_up</mat-icon>&nbsp;<mat-icon [inline]=true>thumb_down</mat-icon>
+         <span>
+          &nbsp;&nbsp;{{task.likes}}
+         </span>
+
         </div>
         <div>
           Observers
@@ -91,7 +94,7 @@
           Created by:{{task.createdBy}}
         </div>
         <div>
-          Creation date: {{task.creationDate}}
+          Creation date: {{task.creationDate | date: 'yyyy-MM-dd HH:mm'}}
         </div>
       </div>
     </div>

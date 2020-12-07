@@ -7,8 +7,8 @@ export interface Identifable{
 }
 export class BaseModel {
     version: number;
-    creationDate: string;
-    modificationDate: string;
+    creationDate: Date;
+    modificationDate: Date;
     createdBy: string;
     modifiedBy: string;
 }
