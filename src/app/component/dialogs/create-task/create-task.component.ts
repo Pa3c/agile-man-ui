@@ -21,6 +21,7 @@ export class CreateTaskComponent implements OnInit {
   taskState: string;
   taskLabels: string[] = [];
   taskTechnologies: string[] = [];
+  projectId :number;
 
   labelsByTypes: Map<string, string[]>
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -52,6 +53,7 @@ export class CreateTaskComponent implements OnInit {
     this.labelsByTypes.set("label", []);
     this.labelsByTypes.set("technology", []);
     this.taskState = data.state.name;
+    this.projectId = data.projectId;
 
     this.labelService.getLabelsOfProject(data.projectId).subscribe(success=>{
 
@@ -84,6 +86,7 @@ export class CreateTaskComponent implements OnInit {
     this.task.deadline = null;
     this.task.state = this.taskState;
     this.task.type = TaskType.TASK;
+    this.task.projectId = this.projectId;
   }
 
   addLabel(event: MatChipInputEvent): void {
@@ -168,7 +171,7 @@ export class CreateTaskComponent implements OnInit {
   }
 
   updateStep(description: string, order: number) {
-    this.task.steps[order].description = description;
+    this.task.steps[order-1].description = description;
   }
   closeDialog() {
     let labelString = this.makeStringFromTable(this.taskLabels)

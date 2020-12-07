@@ -39,7 +39,7 @@
 
                     <div class="task-box" [cdkDragData]="state.name"
                         *ngFor="let item of detailedTaskContainer.tasks[state.name]" cdkDrag>
-                        <a class="editable task-editable"  routerLink="tasks/{{item.id}}">
+                        <a class="editable task-editable"  routerLink="/tasks/{{item.id}}">
                             {{item.title}}
                         </a>
                     </div>

@@ -15,6 +15,7 @@ likes: number;
 complexity: number;
 deadline: string;
 type: string;
+projectId: number;
 steps: Step[] = [];
 }
 export enum TaskType {

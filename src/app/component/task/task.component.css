@@ -1,11 +1,19 @@
 .container {
-  margin: 0.5rem 0.1rem;
+  padding: 0.5rem 0.1rem;
   font-size: 2vh;
+  min-width: 100%;
+  overflow-x: hidden;
+}
+.task-container {
+  width: 100%;
+}
+.simple-properties-container {
+  width: 50%;
 }
 
 .example-list {
   min-width: 50%;
-  width: 50%;
+  width: 100%;
   max-width: 100%;
   border: solid 1px black;
   min-height: 60px;
@@ -19,8 +27,8 @@ textarea.description {
   background-color: transparent;
   color: ghostwhite;
   border-color: black;
-  min-width: 50%;
-  width: 50%;
+  min-height: 10em;
+  min-width: 100%;
   padding: 0;
 }
 textarea.description:focus {

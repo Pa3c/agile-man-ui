@@ -14,41 +14,46 @@ import { TaskService } from 'src/app/service/task.service';
   styleUrls: ['./task.component.css']
 })
 export class TaskComponent implements OnInit {
-task: Task = new Task();
-projectId: any;
+  task: Task = new Task();
 
-techLabels :string[] = [];
-labels :string[] = [];
+  techLabels: string[] = [];
+  labels: string[] = [];
 
-  constructor(private route: ActivatedRoute,private taskService: TaskService,private labelService: LabelService) {
-    this.route.params.subscribe(params => this.task.id = params['task_id']);
-    this.route.params.subscribe(params => this.projectId = params['project_id']);
-   }
+  constructor(private route: ActivatedRoute, private taskService: TaskService, private labelService: LabelService) {
+    this.route.params.subscribe(params => this.task.id = params['id']);
+  }
 
 
   ngOnInit(): void {
-    this.taskService.get(this.task.id).subscribe(success=>{
+
+    this.taskService.get(this.task.id).subscribe(success => {
+      console.log(success);
       this.task = success;
-      console.log(this.task);
-    },error=>{
+      this.loadLabels();
+    }, error => {
       console.log(error);
-
-    });
-    this.labelService.getLabelsOfProject(this.projectId).subscribe(success=>{
-      this.labels = success.filter(x=>x.type==Type.LABEL).map(x=>x.name);
-      this.techLabels = success.filter(x=>x.type==Type.TECHNOLOGY).map(x=>x.name);
-    },error=>{
-      console.log(error);
-
     });
 
 
+  }
+  loadLabels() {
+    this.labelService.getLabelsOfProject(this.task.projectId).subscribe(success => {
+      this.labels = success.filter(x => x.type == Type.LABEL).map(x => x.name);
+      this.techLabels = success.filter(x => x.type == Type.TECHNOLOGY).map(x => x.name);
+    }, error => {
+      console.log(error);
+    });
   }
   reorderSteps(event: CdkDragDrop<Step[]>) {
     moveItemInArray(this.task.steps, event.previousIndex, event.currentIndex);
-    this.task.steps.forEach((step,index)=>{
-      step.order = index+1;
+    this.task.steps.forEach((step, index) => {
+      step.order = index + 1;
     });
 
   }
+
+  private getTask(){
+
+  }
+
 }
