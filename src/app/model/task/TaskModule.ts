@@ -1,6 +1,7 @@
 import { BaseModel, Identifable } from '../common/CommonModule';
 
 export class Task extends BaseModel implements Identifable{
+
 id: number;
 taskContainerId;
 title: string;
@@ -37,4 +38,16 @@ export class Step extends BaseModel implements Identifable{
     overstepId: number;
     done: boolean;
     description: string;
+}
+export class TaskUser {
+  public login: string;
+  public name: string;
+  public surname: string;
+  public type: TaskRelationType;
+}
+export enum TaskRelationType {
+  EXECUTOR = "EXECUTOR",
+  OBSERVER = "OBSERVER",
+  LIKER = "LIKER",
+  DISLIKER = "DISLIKER"
 }

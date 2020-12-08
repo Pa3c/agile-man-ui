@@ -1,14 +1,13 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Label, Type } from 'src/app/model/label/LabelModule';
-import { Step, Task } from 'src/app/model/task/TaskModule';
+import { Type } from 'src/app/model/label/LabelModule';
+import { Step, Task,TaskRelationType, TaskUser } from 'src/app/model/task/TaskModule';
 import { BasicUserInfo } from 'src/app/model/user/UserModule';
 import { AppUserService } from 'src/app/service/app-user.service';
 import { LabelService } from 'src/app/service/label.service';
 import { TaskService } from 'src/app/service/task.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-task',
@@ -21,7 +20,7 @@ export class TaskComponent implements OnInit {
   techLabels: string[] = [];
   labels: string[] = [];
 
-  constructor(private route: ActivatedRoute,
+  constructor(private userService: UserService, private route: ActivatedRoute,
     private taskService: TaskService, private labelService: LabelService,
     private appUserService: AppUserService) {
     this.route.params.subscribe(params => this.task.id = params['id']);
@@ -35,6 +34,12 @@ export class TaskComponent implements OnInit {
       this.task = success;
       this.getBasicUserInfo(this.task.createdBy);
       this.loadLabels();
+    }, error => {
+      console.log(error);
+    });
+
+    this.taskService.getUserTask(this.task.id).subscribe(success => {
+      console.log(success);
     }, error => {
       console.log(error);
     });
@@ -57,8 +62,18 @@ export class TaskComponent implements OnInit {
 
   }
 
-  private getTask(){
+  observe(){
+    const login = this.userService.getUserFromLocalCache().login
+    const taskUser = new TaskUser();
+    taskUser.login = login;
+    taskUser.type = TaskRelationType.OBSERVER
+    this.addTaskUser(taskUser);
+  }
+  addTaskUser(taskUser: TaskUser) {
+    console.log(this.taskService);
 
+    this.taskService.addTaskUser(this.task.id,taskUser).subscribe(success=>console.log(success),
+    error=>console.log(error));
   }
 
   private getBasicUserInfo(login: string){
