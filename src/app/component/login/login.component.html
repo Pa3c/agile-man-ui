@@ -10,8 +10,7 @@
         class="home-form-alert">
             Password is required.
         </div>
-        <i *ngIf="loadInProgress" class="fa fa-spinner fa-spin" style="font-size:24px"></i>&nbsp;&nbsp;
-        <span *ngIf="loadInProgress">Loading...</span>
+        <i *ngIf="loadInProgress" style="text-align: center;" class="fa fa-spinner fa-spin"></i>
         <button [disabled]="loginForm.invalid || loadInProgress" *ngIf="!loadInProgress" type="submit" class="btn btn-dark w-100">Login</button>
     </div>
 </form>

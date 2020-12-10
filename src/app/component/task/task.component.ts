@@ -33,6 +33,8 @@ export class TaskComponent implements OnInit {
   isLiker = false;
   isDisliker = false;
 
+  isLoading = true;
+
   separatorKeysCodes: number[] = [ENTER, COMMA];
   executorsCtrl = new FormControl();
   @ViewChild('executorInput') executorInput: ElementRef<HTMLInputElement>;
@@ -50,13 +52,23 @@ export class TaskComponent implements OnInit {
   ngOnInit(): void {
     this.executorsCtrl.valueChanges.pipe(
       debounceTime(500),
-      tap(() => this.filteredUsers = []),
-      switchMap(value => this.appUserService.getFilteredBasicUserInfo(value)
-        .pipe(
-          finalize(() => console.log("Dupa"))))).subscribe(data => {
-            this.filteredUsers = data;
-            console.log(this.filteredUsers);
-          });
+      tap(() => {
+        this.filteredUsers = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => {
+        if (typeof value == "object") {
+          return [];
+        }
+        return this.appUserService.getFilteredBasicUserInfo(value)
+          .pipe(
+            finalize(() => { this.isLoading = false; })
+          );
+      }
+      )).subscribe(data => {
+        this.filteredUsers = data;
+        console.log(this.filteredUsers);
+      });
 
     this.loadTask();
     this.loadTaskRelatedUsers();
@@ -243,7 +255,7 @@ export class TaskComponent implements OnInit {
   }
 
   selectedExecutor(event: any) {
-    console.log(event);
+    console.log(event.option.value);
   }
   // private getBasicUserInfo(login: string) {
   //   this.appUserService.getBasicUserInfo(login)

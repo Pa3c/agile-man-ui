@@ -62,7 +62,7 @@
             <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;" (click)="addMeAsExecutor()">Add me
             </mat-chip>
           </span>
-          <div *ngIf="executors!=[]">
+          <div>
             <mat-form-field>
               <mat-chip-list #executorList>
                 <mat-chip *ngFor='let executor of executors' [removable]="true"
@@ -74,9 +74,15 @@
                   [matChipInputFor]="executorList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
               </mat-chip-list>
               <mat-autocomplete #autoExec="matAutocomplete" (optionSelected)="selectedExecutor($event)">
-                <mat-option *ngFor="let user of filteredUsers" [value]="user.login">
-                  {{user.login}} {{user.name}} {{user.surname}}
+                <mat-option style="text-align: center;background-color: yellowgreen;"
+                *ngIf="isLoading" class="is-loading">
+                  <i style="text-align: center;" class="fa fa-spinner fa-spin"></i>
                 </mat-option>
+                <ng-container *ngIf="!isLoading">
+                  <mat-option style="background-color: yellowgreen;" *ngFor="let user of filteredUsers" [value]="user">
+                    {{user.login}} {{user.name}} {{user.surname}}
+                  </mat-option>
+                </ng-container>
               </mat-autocomplete>
             </mat-form-field>
           </div>
