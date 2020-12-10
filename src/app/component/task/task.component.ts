@@ -22,7 +22,7 @@ export class TaskComponent implements OnInit {
 
   observers: number = 0;
   likes: number = 0;
-  executors: BasicUserInfo[];
+  executors: BasicUserInfo[] = [];
 
   isObserver = false;
   isExecutor = false;
@@ -41,7 +41,6 @@ export class TaskComponent implements OnInit {
   ngOnInit(): void {
 
     this.taskService.get(this.task.id).subscribe(success => {
-      console.log(success);
       this.task = success;
       //this.getBasicUserInfo(this.task.createdBy);
       this.loadLabels();
@@ -61,16 +60,26 @@ export class TaskComponent implements OnInit {
         this.isDisliker = currentUserRelations.filter(x => x.type == TaskRelationType.DISLIKER).length == 1;
       }
 
-      console.log(this.isDisliker);
       this.observers = success.filter(x => x.type == TaskRelationType.OBSERVER).length;
 
       success.forEach(x => {
-        if (x.type == TaskRelationType.DISLIKER) {
-          this.task.likes--;
-        } else if (x.type == TaskRelationType.LIKER) {
-          this.task.likes++;
+        switch(x.type){
+          case TaskRelationType.DISLIKER:
+            this.task.likes--;
+          break;
+          case TaskRelationType.LIKER:
+            this.task.likes++;
+          break;
+          case TaskRelationType.OBSERVER:
+            this.observers++;
+          break;
+          case TaskRelationType.EXECUTOR:
+            this.executors.push(new BasicUserInfo(x.login,x.name,x.surname));
+          break;
         }
-      })
+      });
+      console.log(this.executors);
+
     }, error => {
       console.log(error);
     });
@@ -114,7 +123,6 @@ export class TaskComponent implements OnInit {
     this.addTaskUser(taskUser);
     this.task.likes++;
     this.isLiker = true;
-    console.log(this.isDisliker);
     if(this.isDisliker){
       this.unDislike();
     }
@@ -185,10 +193,14 @@ export class TaskComponent implements OnInit {
 
 
   addTaskUser(taskUser: TaskUser) {
-    console.log(this.taskService);
-
     this.taskService.addTaskUser(this.task.id, taskUser).subscribe(success => console.log(success),
       error => console.log(error));
+  }
+
+  addMe(){
+    const taskUser = this.createTaskUser(TaskRelationType.EXECUTOR);
+    this.addTaskUser(taskUser);
+    this.executors.push(new BasicUserInfo(taskUser.login,taskUser.name,taskUser.surname));
   }
 
   // private getBasicUserInfo(login: string) {

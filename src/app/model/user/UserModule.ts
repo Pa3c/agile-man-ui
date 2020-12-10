@@ -12,7 +12,8 @@ export class User {
   public skype: string;
 }
 export class BasicUserInfo {
-  public login: string;
-  public name: string;
-  public surname: string;
+  constructor(public login: string,
+  public name: string,
+  public surname: string){
+  }
 }

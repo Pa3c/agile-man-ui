@@ -37,7 +37,7 @@
             {{task.complexity}}
           </span>
         </div>
-        <div style="margin-bottom: 1rem">
+        <div>
           <span>
             Story Points:
           </span>
@@ -49,16 +49,33 @@
           <span>
             Deadline:
           </span>
-          <span>
+          <span *ngIf="task.deadline">
+            <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;">
             {{task.deadline | date: 'yyyy-MM-dd HH:mm'}}
+            </mat-chip>
           </span>
+        </div>
+
+        <div style="margin-bottom: 1rem">
+          <span>
+            Assigned:
+            <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;"
+            (click)="addMe()">Add me</mat-chip>
+          </span>
+          <div *ngIf="executors!=[]">
+            <mat-chip-list>
+              <mat-chip *ngFor='let executor of executors'>
+                {{executor.name}} {{executor.surname}}
+              </mat-chip>
+            </mat-chip-list>
+          </div>
         </div>
 
         <div style="margin-bottom: 1rem">
           <span>
             Labels:
           </span>
-          <div>
+          <div *ngIf="task.labels">
             <mat-chip-list>
               <mat-chip *ngFor='let label of task.labels.split(",")'>{{label}}</mat-chip>
             </mat-chip-list>
@@ -69,13 +86,14 @@
           <span>
             Technologies:
           </span>
-          <div>
+          <div *ngIf="task.technologies!=[]">
             <mat-chip-list>
               <mat-chip *ngFor='let label of task.technologies.split(",")'>{{label}}</mat-chip>
             </mat-chip-list>
           </div>
         </div>
       </div>
+
       <div class="simple-properties-container">
         <div style="display: flex;">
           <mat-icon [inline]=true [ngStyle]="isLiker && {'color': 'yellowgreen'}" (click)="handleLike()">thumb_up
@@ -96,13 +114,24 @@
           </span>
         </div>
         <div>
-          Assigned
+          Modified by: <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;">{{task.modifiedBy}}
+          </mat-chip>
         </div>
         <div>
-          Created by:{{task.createdBy}}
+          Created by: <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;"> {{task.createdBy}}
+          </mat-chip>
         </div>
         <div>
-          Creation date: {{task.creationDate | date: 'yyyy-MM-dd HH:mm'}}
+          Modification date:
+          <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;">
+            {{task.modificationDate | date: 'yyyy-MM-dd HH:mm'}}
+          </mat-chip>
+        </div>
+        <div>
+          Creation date:
+          <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;">
+            {{task.creationDate | date: 'yyyy-MM-dd HH:mm'}}
+          </mat-chip>
         </div>
       </div>
     </div>
