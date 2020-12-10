@@ -58,20 +58,19 @@ export class TaskComponent implements OnInit {
       this.isLiker = currentUserRelations.filter(x => x.type == TaskRelationType.LIKER).length == 1;
 
       if (!this.isLiker) {
-        this.isDisliker = currentUserRelations.filter(x => x.type == TaskRelationType.LIKER).length == 1;
+        this.isDisliker = currentUserRelations.filter(x => x.type == TaskRelationType.DISLIKER).length == 1;
       }
 
+      console.log(this.isDisliker);
       this.observers = success.filter(x => x.type == TaskRelationType.OBSERVER).length;
 
       success.forEach(x => {
         if (x.type == TaskRelationType.DISLIKER) {
-          this.likes--;
+          this.task.likes--;
         } else if (x.type == TaskRelationType.LIKER) {
-          this.likes++;
+          this.task.likes++;
         }
       })
-
-      console.log(this.isObserver);
     }, error => {
       console.log(error);
     });
@@ -94,10 +93,7 @@ export class TaskComponent implements OnInit {
   }
 
   observe() {
-    const login = this.userService.getUserFromLocalCache().login
-    const taskUser = new TaskUser();
-    taskUser.login = login;
-    taskUser.type = TaskRelationType.OBSERVER
+    const taskUser = this.createTaskUser(TaskRelationType.OBSERVER);
     this.addTaskUser(taskUser);
     this.observers++;
     this.isObserver = true;
@@ -113,6 +109,57 @@ export class TaskComponent implements OnInit {
     });
   }
 
+  like() {
+    const taskUser = this.createTaskUser(TaskRelationType.LIKER);
+    this.addTaskUser(taskUser);
+    this.task.likes++;
+    this.isLiker = true;
+    console.log(this.isDisliker);
+    if(this.isDisliker){
+      this.unDislike();
+    }
+  }
+
+  unLike() {
+    const login = this.userService.getUserFromLocalCache().login
+    this.taskService.removeTaskUser(this.task.id, login, TaskRelationType.LIKER).subscribe(success => {
+    this.task.likes--;
+    this.isLiker = false;
+    }, error => {
+
+    });
+  }
+
+
+  dislike() {
+    const taskUser = this.createTaskUser(TaskRelationType.DISLIKER);
+    this.addTaskUser(taskUser);
+    this.task.likes--;
+    this.isDisliker = true;
+    if(this.isLiker){
+      this.unLike();
+    }
+  }
+
+  createTaskUser(type: TaskRelationType): TaskUser {
+    const login = this.userService.getUserFromLocalCache().login
+    const taskUser = new TaskUser();
+    taskUser.login = login;
+    taskUser.type = type;
+    return taskUser;
+  }
+
+  unDislike() {
+    const login = this.userService.getUserFromLocalCache().login
+    this.taskService.removeTaskUser(this.task.id, login, TaskRelationType.DISLIKER).subscribe(success => {
+    this.task.likes++;
+    this.isDisliker = false;
+    }, error => {
+
+    });
+  }
+
+
 
   handleObserving() {
     if (this.isObserver) {
@@ -121,6 +168,20 @@ export class TaskComponent implements OnInit {
     return this.observe();
   }
 
+  handleDislike(){
+
+    if (this.isDisliker) {
+      return this.unDislike();
+    }
+    return this.dislike();
+  }
+
+  handleLike(){
+    if (this.isLiker) {
+      return this.unLike();
+    }
+    return this.like();
+  }
 
 
   addTaskUser(taskUser: TaskUser) {

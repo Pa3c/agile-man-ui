@@ -78,14 +78,19 @@
       </div>
       <div class="simple-properties-container">
         <div style="display: flex;">
-         <mat-icon [inline]=true>thumb_up</mat-icon>&nbsp;<mat-icon [inline]=true>thumb_down</mat-icon>
-         <span>
-          &nbsp;&nbsp;{{task.likes}}
-         </span>
+          <mat-icon [inline]=true [ngStyle]="isLiker && {'color': 'yellowgreen'}" (click)="handleLike()">thumb_up
+          </mat-icon>
+          &nbsp;
+          <mat-icon [inline]=true [ngStyle]="isDisliker && {'color': 'red'}" (click)="handleDislike()">thumb_down
+          </mat-icon>
+          <span>
+            &nbsp;&nbsp;{{task.likes}}
+          </span>
 
         </div>
         <div style="display: flex;">
-          <mat-icon [inline]=true [ngStyle]="isObserver && {'color': 'yellowgreen'}" (click)="handleObserving()">remove_red_eye</mat-icon>
+          <mat-icon [inline]=true [ngStyle]="isObserver && {'color': 'yellowgreen'}" (click)="handleObserving()">
+            remove_red_eye</mat-icon>
           <span>
             &nbsp;&nbsp;{{observers}}
           </span>
