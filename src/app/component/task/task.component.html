@@ -84,8 +84,11 @@
          </span>
 
         </div>
-        <div>
-          <mat-icon (click)="observe()">remove_red_eye</mat-icon>
+        <div style="display: flex;">
+          <mat-icon [inline]=true [ngStyle]="isObserver && {'color': 'yellowgreen'}" (click)="handleObserving()">remove_red_eye</mat-icon>
+          <span>
+            &nbsp;&nbsp;{{observers}}
+          </span>
         </div>
         <div>
           Assigned
