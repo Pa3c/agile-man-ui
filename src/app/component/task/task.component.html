@@ -51,7 +51,7 @@
           </span>
           <span *ngIf="task.deadline">
             <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;">
-            {{task.deadline | date: 'yyyy-MM-dd HH:mm'}}
+              {{task.deadline | date: 'yyyy-MM-dd HH:mm'}}
             </mat-chip>
           </span>
         </div>
@@ -59,15 +59,26 @@
         <div style="margin-bottom: 1rem">
           <span>
             Assigned:
-            <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;"
-            (click)="addMe()">Add me</mat-chip>
+            <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;" (click)="addMeAsExecutor()">Add me
+            </mat-chip>
           </span>
           <div *ngIf="executors!=[]">
-            <mat-chip-list>
-              <mat-chip *ngFor='let executor of executors'>
-                {{executor.name}} {{executor.surname}}
-              </mat-chip>
-            </mat-chip-list>
+            <mat-form-field>
+              <mat-chip-list #executorList>
+                <mat-chip *ngFor='let executor of executors' [removable]="true"
+                  (removed)="removeExecutor(executor.login)">
+                  {{executor.login}}
+                  <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="Executors" #executorInput [formControl]="executorsCtrl" [matAutocomplete]="autoExec"
+                  [matChipInputFor]="executorList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+              </mat-chip-list>
+              <mat-autocomplete #autoExec="matAutocomplete" (optionSelected)="selectedExecutor($event)">
+                <mat-option *ngFor="let user of filteredUsers" [value]="user.login">
+                  {{user.login}} {{user.name}} {{user.surname}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
           </div>
         </div>
 

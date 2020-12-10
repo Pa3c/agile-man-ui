@@ -1,6 +1,10 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { debounceTime, finalize, switchMap, tap } from 'rxjs/operators';
 import { Type } from 'src/app/model/label/LabelModule';
 import { Step, Task, TaskRelationType, TaskType, TaskUser } from 'src/app/model/task/TaskModule';
 import { BasicUserInfo } from 'src/app/model/user/UserModule';
@@ -29,6 +33,11 @@ export class TaskComponent implements OnInit {
   isLiker = false;
   isDisliker = false;
 
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  executorsCtrl = new FormControl();
+  @ViewChild('executorInput') executorInput: ElementRef<HTMLInputElement>;
+  filteredUsers: BasicUserInfo[];
+
 
 
   constructor(private userService: UserService, private route: ActivatedRoute,
@@ -39,7 +48,20 @@ export class TaskComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.executorsCtrl.valueChanges.pipe(
+      debounceTime(500),
+      tap(() => this.filteredUsers = []),
+      switchMap(value => this.appUserService.getFilteredBasicUserInfo(value)
+        .pipe(
+          finalize(() => console.log("Dupa"))))).subscribe(data => {
+            this.filteredUsers = data;
+            console.log(this.filteredUsers);
+          });
 
+    this.loadTask();
+    this.loadTaskRelatedUsers();
+  }
+  loadTask() {
     this.taskService.get(this.task.id).subscribe(success => {
       this.task = success;
       //this.getBasicUserInfo(this.task.createdBy);
@@ -47,7 +69,9 @@ export class TaskComponent implements OnInit {
     }, error => {
       console.log(error);
     });
+  }
 
+  loadTaskRelatedUsers() {
     this.taskService.getUserTask(this.task.id).subscribe((success: TaskUser[]) => {
       const login = this.userService.getUserFromLocalCache().login;
       const currentUserRelations = success.filter(x => x.login == login);
@@ -63,19 +87,19 @@ export class TaskComponent implements OnInit {
       this.observers = success.filter(x => x.type == TaskRelationType.OBSERVER).length;
 
       success.forEach(x => {
-        switch(x.type){
+        switch (x.type) {
           case TaskRelationType.DISLIKER:
             this.task.likes--;
-          break;
+            break;
           case TaskRelationType.LIKER:
             this.task.likes++;
-          break;
+            break;
           case TaskRelationType.OBSERVER:
             this.observers++;
-          break;
+            break;
           case TaskRelationType.EXECUTOR:
-            this.executors.push(new BasicUserInfo(x.login,x.name,x.surname));
-          break;
+            this.executors.push(new BasicUserInfo(x.login, x.name, x.surname));
+            break;
         }
       });
       console.log(this.executors);
@@ -85,6 +109,8 @@ export class TaskComponent implements OnInit {
     });
 
   }
+
+
   loadLabels() {
     this.labelService.getLabelsOfProject(this.task.projectId).subscribe(success => {
       this.labels = success.filter(x => x.type == Type.LABEL).map(x => x.name);
@@ -111,8 +137,8 @@ export class TaskComponent implements OnInit {
   disObserve() {
     const login = this.userService.getUserFromLocalCache().login
     this.taskService.removeTaskUser(this.task.id, login, TaskRelationType.OBSERVER).subscribe(success => {
-    this.observers--;
-    this.isObserver = false;
+      this.observers--;
+      this.isObserver = false;
     }, error => {
 
     });
@@ -123,7 +149,7 @@ export class TaskComponent implements OnInit {
     this.addTaskUser(taskUser);
     this.task.likes++;
     this.isLiker = true;
-    if(this.isDisliker){
+    if (this.isDisliker) {
       this.unDislike();
     }
   }
@@ -131,8 +157,8 @@ export class TaskComponent implements OnInit {
   unLike() {
     const login = this.userService.getUserFromLocalCache().login
     this.taskService.removeTaskUser(this.task.id, login, TaskRelationType.LIKER).subscribe(success => {
-    this.task.likes--;
-    this.isLiker = false;
+      this.task.likes--;
+      this.isLiker = false;
     }, error => {
 
     });
@@ -144,7 +170,7 @@ export class TaskComponent implements OnInit {
     this.addTaskUser(taskUser);
     this.task.likes--;
     this.isDisliker = true;
-    if(this.isLiker){
+    if (this.isLiker) {
       this.unLike();
     }
   }
@@ -160,14 +186,12 @@ export class TaskComponent implements OnInit {
   unDislike() {
     const login = this.userService.getUserFromLocalCache().login
     this.taskService.removeTaskUser(this.task.id, login, TaskRelationType.DISLIKER).subscribe(success => {
-    this.task.likes++;
-    this.isDisliker = false;
+      this.task.likes++;
+      this.isDisliker = false;
     }, error => {
 
     });
   }
-
-
 
   handleObserving() {
     if (this.isObserver) {
@@ -176,7 +200,7 @@ export class TaskComponent implements OnInit {
     return this.observe();
   }
 
-  handleDislike(){
+  handleDislike() {
 
     if (this.isDisliker) {
       return this.unDislike();
@@ -184,7 +208,7 @@ export class TaskComponent implements OnInit {
     return this.dislike();
   }
 
-  handleLike(){
+  handleLike() {
     if (this.isLiker) {
       return this.unLike();
     }
@@ -197,12 +221,30 @@ export class TaskComponent implements OnInit {
       error => console.log(error));
   }
 
-  addMe(){
-    const taskUser = this.createTaskUser(TaskRelationType.EXECUTOR);
-    this.addTaskUser(taskUser);
-    this.executors.push(new BasicUserInfo(taskUser.login,taskUser.name,taskUser.surname));
+  addMeAsExecutor() {
+    const user = this.userService.getUserFromLocalCache();
+    this.addExecutor(user.login, user.name, user.surname);
   }
 
+  addExecutor(login: string, name: string, surname: string) {
+    const taskUser = new TaskUser();
+    taskUser.type = TaskRelationType.EXECUTOR;
+    taskUser.login = login;
+    this.addTaskUser(taskUser);
+    this.executors.push(new BasicUserInfo(taskUser.login, taskUser.name, taskUser.surname));
+  }
+  removeExecutor(login: string) {
+    this.taskService.removeTaskUser(this.task.id, login, TaskRelationType.EXECUTOR).subscribe(success => {
+      const index = this.executors.findIndex(x => x.login == login);
+      this.executors.splice(index, 1);
+    }, error => {
+
+    });
+  }
+
+  selectedExecutor(event: any) {
+    console.log(event);
+  }
   // private getBasicUserInfo(login: string) {
   //   this.appUserService.getBasicUserInfo(login)
   //     .subscribe((user: BasicUserInfo) => {

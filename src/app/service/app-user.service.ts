@@ -18,4 +18,13 @@ export class AppUserService {
   getBasicUserInfo(login :string):Observable<BasicUserInfo>{
     return this.http.get<BasicUserInfo>(`${environment.backendAddress}/user/${login}/basic`);
   }
+
+  getFilteredBasicUserInfo(login :string):Observable<BasicUserInfo[]>{
+    if(login == null){
+      login = "a";
+    }
+    console.log(login);
+
+    return this.http.get<BasicUserInfo[]>(`${environment.backendAddress}/user/basic/filtered?login=${login}`);
+  }
 }
