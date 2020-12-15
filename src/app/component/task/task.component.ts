@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { debounceTime, finalize, switchMap, tap } from 'rxjs/operators';
-import { Type } from 'src/app/model/label/LabelModule';
+import { Label, Type } from 'src/app/model/label/LabelModule';
 import { Step, Task, TaskRelationType, TaskType, TaskUser } from 'src/app/model/task/TaskModule';
 import { BasicUserInfo } from 'src/app/model/user/UserModule';
 import { AppUserService } from 'src/app/service/app-user.service';
@@ -39,8 +39,11 @@ export class TaskComponent implements OnInit {
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
   executorsCtrl = new FormControl();
-  @ViewChild('executorInput') executorInput: ElementRef<HTMLInputElement>;
+  labelsCtrl = new FormControl();
+
+
   filteredUsers: BasicUserInfo[];
+  filteredLabels: Label[];
 
 
 
@@ -52,6 +55,7 @@ export class TaskComponent implements OnInit {
 
 
   ngOnInit(): void {
+    //USERS
     this.executorsCtrl.valueChanges.pipe(
       debounceTime(500),
       tap(() => {
@@ -70,6 +74,28 @@ export class TaskComponent implements OnInit {
       )).subscribe(data => {
         this.filteredUsers = data;
         console.log(this.filteredUsers);
+      });
+
+    //LABELS
+    this.labelsCtrl.valueChanges.pipe(
+      debounceTime(500),
+      tap(() => {
+        this.filteredLabels = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => {
+        console.log(value);
+        if (typeof value == "object") {
+          return [];
+        }
+        return this.labelService.getFilteredLabelsOfProject(this.task.projectId,Type.LABEL,value)
+          .pipe(
+            finalize(() => { this.isLoading = false; })
+          );
+      }
+      )).subscribe(data => {
+        this.filteredLabels = data;
+        console.log(this.filteredLabels);
       });
 
     this.loadTask();
@@ -242,7 +268,7 @@ export class TaskComponent implements OnInit {
     const taskUser = new TaskUser();
     taskUser.type = TaskRelationType.EXECUTOR;
     taskUser.login = login;
-    if(this.executors.findIndex(x=>x.login==login)>-1){
+    if (this.executors.findIndex(x => x.login == login) > -1) {
       return;
     }
     this.addTaskUser(taskUser);
@@ -258,16 +284,32 @@ export class TaskComponent implements OnInit {
   }
 
   selectedExecutor(event: any) {
-    const user :BasicUserInfo = event.option.value;
-    this.addExecutor(user.login,user.name,user.surname);
+    const user: BasicUserInfo = event.option.value;
+    this.addExecutor(user.login, user.name, user.surname);
   }
 
-  beginEditing(){
+  removeLabel(label: string) {
+    const labels = this.task.labels.split(",");
+    labels.splice(this.task.labels.indexOf(label),1);
+    this.task.labels = labels.toString();
+    console.log(this.task.labels);
+
+  }
+  selectedLabel(event: any) {
+    console.log(event.option.value);
+    const labels = this.task.labels.split(",");
+    labels.push(event.option.value);
+    this.task.labels = labels.toString();
+    console.log(this.task.labels);
+  }
+
+
+  beginEditing() {
     this.editMode = true;
     this.tempTask = new Task();
-    Object.assign(this.tempTask,this.task);
+    Object.assign(this.tempTask, this.task);
   }
-  cancelEditing(){
+  cancelEditing() {
     this.editMode = false;
     this.tempTask = null;
 
@@ -276,7 +318,7 @@ export class TaskComponent implements OnInit {
     console.log("OLD TASK");
     console.log(this.task);
   }
-  saveEditing(){
+  saveEditing() {
     this.editMode = false;
     // if(JSON.stringify(this.tempTask) === JSON.stringify(this.task)){
     //   return;

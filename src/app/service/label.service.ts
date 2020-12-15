@@ -8,6 +8,9 @@ import { Label, ProjectLabel } from '../model/label/LabelModule';
   providedIn: 'root'
 })
 export class LabelService {
+  getFilteredLabelsOfProject(projectId: number,type: string,value: string): Observable<Label[]> {
+    return this.http.get<Label[]>(`${environment.backendAddress}/project/${projectId}/label/filtered?type=${type}&filter=${value}`);
+  }
 
   public host = environment.backendAddress;
   constructor(private http: HttpClient) { }

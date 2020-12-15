@@ -1,11 +1,11 @@
 <div class="container">
   <div class="task-container">
     <div style="display: flex; flex-direction: row;">
-      <h5 style="width: fit-content;" *ngIf="!editMode"  >
+      <h5 style="width: fit-content;" *ngIf="!editMode">
         {{task.title}}
       </h5>
-      <h5 *ngIf="editMode"  contenteditable="true"  [(textContent)]="task.title"
-      (input)="task.title = $event.target.innerText">
+      <h5 *ngIf="editMode" contenteditable="true" [(textContent)]="task.title"
+        (input)="task.title = $event.target.innerText">
       </h5>
 
       <div class="editable" *ngIf="!editMode" style="display: flex; flex-direction: column;">
@@ -48,7 +48,7 @@
             {{task.majority}}
           </span>
           <span *ngIf="editMode">
-            <input class="editable-input" [(ngModel)]="task.majority" type="number" min="0" max="4"/>
+            <input class="editable-input" [(ngModel)]="task.majority" type="number" min="0" max="4" />
           </span>
         </div>
         <div>
@@ -59,7 +59,7 @@
             {{task.complexity}}
           </span>
           <span *ngIf="editMode">
-            <input class="editable-input" [(ngModel)]="task.complexity" type="number" min="0" max="10"/>
+            <input class="editable-input" [(ngModel)]="task.complexity" type="number" min="0" max="10" />
           </span>
         </div>
         <div>
@@ -70,7 +70,7 @@
             {{task.storyPoints}}
           </span>
           <span *ngIf="editMode">
-            <input class="editable-input" [(ngModel)]="task.storyPoints" type="number" min="0" max="100"/>
+            <input class="editable-input" [(ngModel)]="task.storyPoints" type="number" min="0" max="100" />
           </span>
         </div>
         <div style="margin-bottom: 1rem">
@@ -102,8 +102,8 @@
                   [matChipInputFor]="executorList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
               </mat-chip-list>
               <mat-autocomplete #autoExec="matAutocomplete" (optionSelected)="selectedExecutor($event)">
-                <mat-option style="text-align: center;background-color: yellowgreen;"
-                *ngIf="isLoading" class="is-loading">
+                <mat-option style="text-align: center;background-color: yellowgreen;" *ngIf="isLoading"
+                  class="is-loading">
                   <i style="text-align: center;" class="fa fa-spinner fa-spin"></i>
                 </mat-option>
                 <ng-container *ngIf="!isLoading">
@@ -120,23 +120,50 @@
           <span>
             Labels:
           </span>
-          <div *ngIf="task.labels">
+          <div *ngIf="task.labels && !editMode">
             <mat-chip-list>
               <mat-chip *ngFor='let label of task.labels.split(",")'>{{label}}</mat-chip>
             </mat-chip-list>
           </div>
+
+          <mat-form-field *ngIf="editMode">
+            <mat-chip-list #labelList>
+              <mat-chip *ngFor='let label of task.labels.split(",")' [removable]="true"
+                (removed)="removeLabel(label)">
+                {{label}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Labels" #labelInput [formControl]="labelsCtrl" [matAutocomplete]="autoLabel"
+                [matChipInputFor]="labelList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+            </mat-chip-list>
+
+            <mat-autocomplete #autoLabel="matAutocomplete" (optionSelected)="selectedLabel($event)">
+              <mat-option style="text-align: center;background-color: yellowgreen;" *ngIf="isLoading"
+                class="is-loading">
+                <i style="text-align: center;" class="fa fa-spinner fa-spin"></i>
+              </mat-option>
+              <ng-container *ngIf="!isLoading">
+                <mat-option style="background-color: yellowgreen;" *ngFor="let label of filteredLabels" [value]="label">
+                  {{label.name}}
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+
+          </mat-form-field>
+
         </div>
 
         <div style="margin-bottom: 1rem">
           <span>
             Technologies:
           </span>
-          <div *ngIf="task.technologies">
+          <div *ngIf="task.technologies && !editMode">
             <mat-chip-list>
               <mat-chip *ngFor='let label of task.technologies.split(",")'>{{label}}</mat-chip>
             </mat-chip-list>
           </div>
         </div>
+
       </div>
 
       <div class="simple-properties-container">
