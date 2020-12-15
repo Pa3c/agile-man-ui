@@ -90,6 +90,7 @@
 }
 .task-editable{
   color: ghostwhite;
+  text-decoration: none;
 }
 .task-editable:hover{
   color: greenyellow;

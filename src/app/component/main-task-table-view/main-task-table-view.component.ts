@@ -90,8 +90,7 @@ export class MainTaskTableViewComponent implements OnInit {
     }
     const state: State = this.detailedTaskContainer.states[event.currentIndex];
     console.log(event.container.data[0]);
-    const task: Task = JSON.parse(event.container.data[0]);
-    //const task: Task = event.container.data[0];
+    const task: Task = (event.container.data[0] as unknown);
 
     task.state = newState;
     this.taskService.update(task).subscribe(x => {

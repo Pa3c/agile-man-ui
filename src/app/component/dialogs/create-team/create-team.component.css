@@ -6,7 +6,6 @@
 
 input {
   margin: 10px 0px;
-  font-size: 1vw;
   padding: 0px;
 }
 
@@ -43,7 +42,6 @@ input {
 
 .description-area {
   padding: 0;
-  font-size: 1vw;
 }
 
 .user-div {

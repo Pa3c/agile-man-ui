@@ -1,59 +1,58 @@
 <div class="page-content-wrapper">
-    <div class="edit-panel">
-        <div>
-            Filters
-        </div>
+  <div class="edit-panel">
+    <div>
+      Filters
     </div>
+  </div>
 
-    <div style="display: flex;justify-content: space-between;">
-        <div cdkDropList [cdkDropListData]="detailedTaskContainer.states" (cdkDropListDropped)="dropColumn($event)"
-            cdkDropListOrientation="horizontal" class="flex-table-container" *ngIf="detailedTaskContainer!=null">
-            <div class="column-container" cdkDropListGroup cdkDrag [cdkDragDisabled]="headerEdit" [cdkDragData]="state"
-                *ngFor="let state of detailedTaskContainer.states">
+  <div style="display: flex;justify-content: space-between;">
+    <div cdkDropList [cdkDropListData]="detailedTaskContainer.states" (cdkDropListDropped)="dropColumn($event)"
+      cdkDropListOrientation="horizontal" class="flex-table-container" *ngIf="detailedTaskContainer!=null">
+      <div class="column-container" cdkDropListGroup cdkDrag [cdkDragDisabled]="headerEdit" [cdkDragData]="state"
+        *ngFor="let state of detailedTaskContainer.states">
 
-                <div style="width: 100%; display: flex; justify-content: space-between;">
-                    <h2 class="draggable-header content-editable" [contentEditable]="headerEdit" cdkDragHandle contenteditable
-                        (input)="onStateNameChange($event.target.innerHTML,state.name)">
-                        {{state.name}}
-                    </h2>
-                    <div class="editable" *ngIf="!headerEdit" style="display: flex; flex-direction: column;">
-                        <mat-icon (click)="toggleHeaderEdit(true)">
-                            edit
-                        </mat-icon>
-                        <mat-icon class="deletable" (click)="deleteColumn(state.name)">
-                            delete_forever
-                        </mat-icon>
-                    </div>
-                    <div class="editable" *ngIf="headerEdit" style="display: flex; flex-direction: column;">
-                        <mat-icon class="editable" (click)="saveNewColumnName()">
-                            done
-                        </mat-icon>
-                        <mat-icon class="editable" (click)="resetChanges(state.id)">
-                            cancel
-                        </mat-icon>
-                    </div>
-                </div>
-                <div cdkDropList id={{state.name}} [cdkDropListData]='detailedTaskContainer.tasks[state.name]'
-                    class="task-list" (cdkDropListDropped)="drop($event,state.name)"
-                    [cdkDropListConnectedTo]="getConnectedList()">
-
-                    <div class="task-box" [cdkDragData]="state.name"
-                        *ngFor="let item of detailedTaskContainer.tasks[state.name]" cdkDrag>
-                        <a class="editable task-editable"  routerLink="/tasks/{{item.id}}">
-                            {{item.title}}
-                        </a>
-                    </div>
-                </div>
-                <div class="task-box task-box-add" (click)="createTask(state)">
-                    +
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <mat-icon (click)="addColumn()" style="flex-grow: 0.05; cursor: pointer;">
-                add_circle_outline
+        <div style="width: 100%; display: flex; justify-content: space-between;">
+          <h2 class="draggable-header content-editable" [contentEditable]="headerEdit" cdkDragHandle contenteditable
+            (input)="onStateNameChange($event.target.innerHTML,state.name)">
+            {{state.name}}
+          </h2>
+          <div class="editable" *ngIf="!headerEdit" style="display: flex; flex-direction: column;">
+            <mat-icon (click)="toggleHeaderEdit(true)">
+              edit
             </mat-icon>
+            <mat-icon class="deletable" (click)="deleteColumn(state.name)">
+              delete_forever
+            </mat-icon>
+          </div>
+          <div class="editable" *ngIf="headerEdit" style="display: flex; flex-direction: column;">
+            <mat-icon class="editable" (click)="saveNewColumnName()">
+              done
+            </mat-icon>
+            <mat-icon class="editable" (click)="resetChanges(state.id)">
+              cancel
+            </mat-icon>
+          </div>
         </div>
+        <div cdkDropList id={{state.name}} [cdkDropListData]='detailedTaskContainer.tasks[state.name]' class="task-list"
+          (cdkDropListDropped)="drop($event,state.name)" [cdkDropListConnectedTo]="getConnectedList()">
+
+          <div class="task-box" [cdkDragData]="state.name" *ngFor="let item of detailedTaskContainer.tasks[state.name]"
+            cdkDrag>
+            <a class="editable task-editable" routerLink="/tasks/{{item.id}}">
+              {{item.title}}
+            </a>
+          </div>
+        </div>
+        <div class="task-box task-box-add" (click)="createTask(state)">
+          +
+        </div>
+      </div>
     </div>
+
+    <div>
+      <mat-icon (click)="addColumn()" style="flex-grow: 0.05; cursor: pointer;">
+        add_circle_outline
+      </mat-icon>
+    </div>
+  </div>
 </div>

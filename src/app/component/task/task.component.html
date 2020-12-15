@@ -1,8 +1,27 @@
 <div class="container">
   <div class="task-container">
-    <h5>
-      {{task.title}}
-    </h5>
+    <div style="display: flex; flex-direction: row;">
+      <h5 style="width: fit-content;" *ngIf="!editMode"  >
+        {{task.title}}
+      </h5>
+      <h5 *ngIf="editMode"  contenteditable="true"  [(textContent)]="task.title"
+      (input)="task.title = $event.target.innerText">
+      </h5>
+
+      <div class="editable" *ngIf="!editMode" style="display: flex; flex-direction: column;">
+        <mat-icon (click)="beginEditing()">
+          edit
+        </mat-icon>
+      </div>
+      <div class="editable" *ngIf="editMode" style="display: flex; flex-direction: column;">
+        <mat-icon class="editable" (click)="saveEditing()">
+          done
+        </mat-icon>
+        <mat-icon class="editable" (click)="cancelEditing()">
+          cancel
+        </mat-icon>
+      </div>
+    </div>
     <div style="display: flex; width: 100%; flex-direction: row;">
       <div class="simple-properties-container">
         <div>
@@ -25,24 +44,33 @@
           <span>
             Majority:
           </span>
-          <span>
+          <span *ngIf="!editMode">
             {{task.majority}}
+          </span>
+          <span *ngIf="editMode">
+            <input class="editable-input" [(ngModel)]="task.majority" type="number" min="0" max="4"/>
           </span>
         </div>
         <div>
           <span>
             Complexity:
           </span>
-          <span>
+          <span *ngIf="!editMode">
             {{task.complexity}}
+          </span>
+          <span *ngIf="editMode">
+            <input class="editable-input" [(ngModel)]="task.complexity" type="number" min="0" max="10"/>
           </span>
         </div>
         <div>
           <span>
             Story Points:
           </span>
-          <span>
+          <span *ngIf="!editMode">
             {{task.storyPoints}}
+          </span>
+          <span *ngIf="editMode">
+            <input class="editable-input" [(ngModel)]="task.storyPoints" type="number" min="0" max="100"/>
           </span>
         </div>
         <div style="margin-bottom: 1rem">
@@ -103,7 +131,7 @@
           <span>
             Technologies:
           </span>
-          <div *ngIf="task.technologies!=[]">
+          <div *ngIf="task.technologies">
             <mat-chip-list>
               <mat-chip *ngFor='let label of task.technologies.split(",")'>{{label}}</mat-chip>
             </mat-chip-list>
@@ -157,7 +185,7 @@
         Description:
       </span>
       <div>
-        <textarea class="description" disabled="true">{{task.description}}</textarea>
+        <textarea class="description" [disabled]="!editMode" [(ngModel)]="task.description"></textarea>
       </div>
     </div>
 
@@ -171,7 +199,7 @@
             <span>
               {{step.order}}
             </span>
-            <span>
+            <span contenteditable="editMode">
               {{step.description}}
             </span>
             <span>
@@ -183,11 +211,13 @@
     </div>
 
     <div>
-      <span>
-        Solution:
-      </span>
-      <div>
-        {{task.solution}}
+      <div style="margin-bottom: 1rem">
+        <span>
+          Solution:
+        </span>
+        <div>
+          <textarea class="description">{{task.solution}}</textarea>
+        </div>
       </div>
     </div>
 

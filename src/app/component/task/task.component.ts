@@ -20,6 +20,8 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class TaskComponent implements OnInit {
   task: Task = new Task();
+  tempTask: Task = null;
+  editMode = false;
 
   techLabels: string[] = [];
   labels: string[] = [];
@@ -96,8 +98,6 @@ export class TaskComponent implements OnInit {
         this.isDisliker = currentUserRelations.filter(x => x.type == TaskRelationType.DISLIKER).length == 1;
       }
 
-      this.observers = success.filter(x => x.type == TaskRelationType.OBSERVER).length;
-
       success.forEach(x => {
         switch (x.type) {
           case TaskRelationType.DISLIKER:
@@ -146,7 +146,7 @@ export class TaskComponent implements OnInit {
     this.isObserver = true;
   }
 
-  disObserve() {
+  unObserve() {
     const login = this.userService.getUserFromLocalCache().login
     this.taskService.removeTaskUser(this.task.id, login, TaskRelationType.OBSERVER).subscribe(success => {
       this.observers--;
@@ -207,7 +207,7 @@ export class TaskComponent implements OnInit {
 
   handleObserving() {
     if (this.isObserver) {
-      return this.disObserve();
+      return this.unObserve();
     }
     return this.observe();
   }
@@ -242,6 +242,9 @@ export class TaskComponent implements OnInit {
     const taskUser = new TaskUser();
     taskUser.type = TaskRelationType.EXECUTOR;
     taskUser.login = login;
+    if(this.executors.findIndex(x=>x.login==login)>-1){
+      return;
+    }
     this.addTaskUser(taskUser);
     this.executors.push(new BasicUserInfo(taskUser.login, taskUser.name, taskUser.surname));
   }
@@ -250,12 +253,38 @@ export class TaskComponent implements OnInit {
       const index = this.executors.findIndex(x => x.login == login);
       this.executors.splice(index, 1);
     }, error => {
-
+      console.log(error);
     });
   }
 
   selectedExecutor(event: any) {
-    console.log(event.option.value);
+    const user :BasicUserInfo = event.option.value;
+    this.addExecutor(user.login,user.name,user.surname);
+  }
+
+  beginEditing(){
+    this.editMode = true;
+    this.tempTask = new Task();
+    Object.assign(this.tempTask,this.task);
+  }
+  cancelEditing(){
+    this.editMode = false;
+    this.tempTask = null;
+
+    console.log("NEW TASK");
+    console.log(this.tempTask);
+    console.log("OLD TASK");
+    console.log(this.task);
+  }
+  saveEditing(){
+    this.editMode = false;
+    // if(JSON.stringify(this.tempTask) === JSON.stringify(this.task)){
+    //   return;
+    // }
+    console.log("OLD TASK");
+    console.log(this.tempTask);
+    console.log("NEW TASK");
+    console.log(this.task);
   }
   // private getBasicUserInfo(login: string) {
   //   this.appUserService.getBasicUserInfo(login)

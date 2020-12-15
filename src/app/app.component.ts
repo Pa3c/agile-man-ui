@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.login = this.userService.getUserFromLocalCache().name;
+    this.login = this.userService.getUserFromLocalCache().login;
   }
   logOut(){
     this.userService.logOut();
