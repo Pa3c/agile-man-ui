@@ -23,9 +23,6 @@ export class TaskComponent implements OnInit {
   tempTask: Task = null;
   editMode = false;
 
-  techLabels: string[] = [];
-  labels: string[] = [];
-
   observers: number = 0;
   likes: number = 0;
   executors: BasicUserInfo[] = [];
@@ -39,12 +36,15 @@ export class TaskComponent implements OnInit {
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
   executorsCtrl = new FormControl();
+  techLabelsCtrl = new FormControl();
   labelsCtrl = new FormControl();
 
+  tempLabels = [];
+  tempTechnologies = [];
 
   filteredUsers: BasicUserInfo[];
   filteredLabels: Label[];
-
+  filteredTechLabels: Label[];
 
 
   constructor(private userService: UserService, private route: ActivatedRoute,
@@ -76,7 +76,27 @@ export class TaskComponent implements OnInit {
         console.log(this.filteredUsers);
       });
 
-    //LABELS
+    //TECHNOLOGIES
+    this.techLabelsCtrl.valueChanges.pipe(
+      debounceTime(500),
+      tap(() => {
+        this.filteredTechLabels = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => {
+        if (typeof value == "object") {
+          return [];
+        }
+        return this.labelService.getFilteredLabelsOfProject(this.task.projectId,Type.TECHNOLOGY,value)
+          .pipe(
+            finalize(() => { this.isLoading = false; })
+          );
+      }
+      )).subscribe(data => {
+        this.filteredTechLabels = data;
+      });
+
+          //LABELS
     this.labelsCtrl.valueChanges.pipe(
       debounceTime(500),
       tap(() => {
@@ -84,7 +104,6 @@ export class TaskComponent implements OnInit {
         this.isLoading = true;
       }),
       switchMap(value => {
-        console.log(value);
         if (typeof value == "object") {
           return [];
         }
@@ -95,7 +114,6 @@ export class TaskComponent implements OnInit {
       }
       )).subscribe(data => {
         this.filteredLabels = data;
-        console.log(this.filteredLabels);
       });
 
     this.loadTask();
@@ -105,7 +123,9 @@ export class TaskComponent implements OnInit {
     this.taskService.get(this.task.id).subscribe(success => {
       this.task = success;
       //this.getBasicUserInfo(this.task.createdBy);
-      this.loadLabels();
+      console.log(this.task);
+      this.tempLabels = (this.task.labels.length==0) ?[]:this.task.labels.split(",");
+      this.tempTechnologies =(this.task.technologies.length==0) ?[]:this.task.technologies.split(",");
     }, error => {
       console.log(error);
     });
@@ -148,21 +168,12 @@ export class TaskComponent implements OnInit {
 
   }
 
-
-  loadLabels() {
-    this.labelService.getLabelsOfProject(this.task.projectId).subscribe(success => {
-      this.labels = success.filter(x => x.type == Type.LABEL).map(x => x.name);
-      this.techLabels = success.filter(x => x.type == Type.TECHNOLOGY).map(x => x.name);
-    }, error => {
-      console.log(error);
-    });
-  }
   reorderSteps(event: CdkDragDrop<Step[]>) {
     moveItemInArray(this.task.steps, event.previousIndex, event.currentIndex);
+
     this.task.steps.forEach((step, index) => {
       step.order = index + 1;
     });
-
   }
 
   observe() {
@@ -289,20 +300,39 @@ export class TaskComponent implements OnInit {
   }
 
   removeLabel(label: string) {
-    const labels = this.task.labels.split(",");
-    labels.splice(this.task.labels.indexOf(label),1);
-    this.task.labels = labels.toString();
-    console.log(this.task.labels);
-
+    const index = this.tempLabels.indexOf(label);
+    this.tempLabels.splice(index,1);
+    this.tempTask.labels = this.tempLabels.toString();
+    console.log(this.tempTask.labels);
   }
+
   selectedLabel(event: any) {
-    console.log(event.option.value);
-    const labels = this.task.labels.split(",");
-    labels.push(event.option.value);
-    this.task.labels = labels.toString();
-    console.log(this.task.labels);
+    const value = event.option.value;
+    if(this.tempLabels.includes(value)){
+      return;
+    }
+    this.tempLabels.push(value);
+    this.tempTask.labels = this.tempLabels.toString();
+    console.log(this.tempTask.technologies);
   }
 
+  removeTechLabel(label: string) {
+    const index = this.tempTechnologies.indexOf(label);
+    this.tempTechnologies.splice(index,1);
+    console.log(this.tempTechnologies);
+    this.tempTask.technologies = this.tempTechnologies.toString();
+    console.log(this.tempTask.technologies);
+  }
+
+  selectedTechLabel(event: any) {
+    const value = event.option.value;
+    if(this.tempTechnologies.includes(value)){
+      return;
+    }
+    this.tempTechnologies.push(value);
+    this.tempTask.technologies = this.tempTechnologies.toString();
+    console.log(this.tempTask.technologies);
+  }
 
   beginEditing() {
     this.editMode = true;
@@ -312,11 +342,6 @@ export class TaskComponent implements OnInit {
   cancelEditing() {
     this.editMode = false;
     this.tempTask = null;
-
-    console.log("NEW TASK");
-    console.log(this.tempTask);
-    console.log("OLD TASK");
-    console.log(this.task);
   }
   saveEditing() {
     this.editMode = false;
@@ -328,13 +353,27 @@ export class TaskComponent implements OnInit {
     console.log("NEW TASK");
     console.log(this.task);
   }
-  // private getBasicUserInfo(login: string) {
-  //   this.appUserService.getBasicUserInfo(login)
-  //     .subscribe((user: BasicUserInfo) => {
-  //       console.log(user);
-  //     }, error => {
-  //       console.log(error);
-  //     })
-  // }
+  addStep(){
+    const step = new Step();
+    step.done = false;
+    step.order = this.tempTask.steps.length+1;
+    step.description = "Step "+step.order
+    this.tempTask.steps.push(step);
+    console.log(this.tempTask.steps);
 
+  }
+  removeStep(stepOrder: number){
+    this.tempTask.steps.splice(stepOrder-1,1);
+    console.log(this.tempTask.steps);
+
+    this.tempTask.steps.forEach((step, index) => {
+      step.order = index + 1;
+    });
+
+  }
+
+  addSolution(){
+    console.log("TO DO");
+
+  }
 }

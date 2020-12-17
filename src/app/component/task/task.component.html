@@ -126,15 +126,14 @@
             </mat-chip-list>
           </div>
 
-          <mat-form-field *ngIf="editMode">
+          <div *ngIf="editMode">
             <mat-chip-list #labelList>
-              <mat-chip *ngFor='let label of task.labels.split(",")' [removable]="true"
-                (removed)="removeLabel(label)">
+              <mat-chip *ngFor='let label of tempLabels' [removable]="true" (removed)="removeLabel(label)">
                 {{label}}
                 <mat-icon matChipRemove>cancel</mat-icon>
               </mat-chip>
-              <input placeholder="Labels" #labelInput [formControl]="labelsCtrl" [matAutocomplete]="autoLabel"
-                [matChipInputFor]="labelList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+              <input #labelInput [formControl]="labelsCtrl" [matAutocomplete]="autoLabel" [matChipInputFor]="labelList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
             </mat-chip-list>
 
             <mat-autocomplete #autoLabel="matAutocomplete" (optionSelected)="selectedLabel($event)">
@@ -143,13 +142,13 @@
                 <i style="text-align: center;" class="fa fa-spinner fa-spin"></i>
               </mat-option>
               <ng-container *ngIf="!isLoading">
-                <mat-option style="background-color: yellowgreen;" *ngFor="let label of filteredLabels" [value]="label">
+                <mat-option style="background-color: yellowgreen;" *ngFor="let label of filteredLabels"
+                  [value]="label.name">
                   {{label.name}}
                 </mat-option>
               </ng-container>
             </mat-autocomplete>
-
-          </mat-form-field>
+          </div>
 
         </div>
 
@@ -161,6 +160,30 @@
             <mat-chip-list>
               <mat-chip *ngFor='let label of task.technologies.split(",")'>{{label}}</mat-chip>
             </mat-chip-list>
+          </div>
+
+          <div *ngIf="editMode">
+            <mat-chip-list #techList>
+              <mat-chip *ngFor='let label of tempTechnologies' [removable]="true" (removed)="removeTechLabel(label)">
+                {{label}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+              <input #labelInput [formControl]="techLabelsCtrl" [matAutocomplete]="autoLabel"
+                [matChipInputFor]="techList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+            </mat-chip-list>
+
+            <mat-autocomplete #autoLabel="matAutocomplete" (optionSelected)="selectedTechLabel($event)">
+              <mat-option style="text-align: center;background-color: yellowgreen;" *ngIf="isLoading"
+                class="is-loading">
+                <i style="text-align: center;" class="fa fa-spinner fa-spin"></i>
+              </mat-option>
+              <ng-container *ngIf="!isLoading">
+                <mat-option style="background-color: yellowgreen;" *ngFor="let label of filteredTechLabels"
+                  [value]="label.name">
+                  {{label.name}}
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
           </div>
         </div>
 
@@ -220,9 +243,12 @@
       <span>
         Steps:
       </span>
-      <div>
-        <div cdkDropList class="example-list" (cdkDropListDropped)="reorderSteps($event)">
-          <div class="example-box" *ngFor="let step of task.steps" cdkDrag>
+      <mat-icon [inline]=true style="text-align: center;" (click)="addStep()" *ngIf="editMode">
+        add_circle_outline
+      </mat-icon>
+      <div *ngIf="!editMode">
+        <div class="example-list">
+          <div class="example-box" *ngFor="let step of task.steps">
             <span>
               {{step.order}}
             </span>
@@ -230,8 +256,28 @@
               {{step.description}}
             </span>
             <span>
-              {{step.done}}
+              <mat-icon *ngIf="step.done" (click)="step.done=false">
+                close
+              </mat-icon>
+              <mat-icon *ngIf="!step.done" (click)="step.done=true">
+                check
+              </mat-icon>
             </span>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="editMode">
+        <div cdkDropList class="example-list" (cdkDropListDropped)="reorderSteps($event)">
+          <div class="example-box" *ngFor="let step of tempTask.steps" cdkDrag>
+            <span>
+              {{step.order}}
+            </span>
+            <span contenteditable="editMode">
+              {{step.description}}
+            </span>
+            <mat-icon (click)="removeStep(step.order)">
+              delete_forever
+            </mat-icon>
           </div>
         </div>
       </div>
@@ -243,7 +289,10 @@
           Solution:
         </span>
         <div>
-          <textarea class="description">{{task.solution}}</textarea>
+          <textarea class="description" >{{task.solution}}</textarea>
+        </div>
+        <div class="submit-solution" (click)="addSolution()">
+          Submit
         </div>
       </div>
     </div>
