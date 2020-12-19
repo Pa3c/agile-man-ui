@@ -6,7 +6,7 @@ id: number;
 taskContainerId;
 title: string;
 state: string;
-solution: number;
+solution: string;
 labels: string;
 technologies: string;
 description: string;

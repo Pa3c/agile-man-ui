@@ -48,7 +48,7 @@
             {{task.majority}}
           </span>
           <span *ngIf="editMode">
-            <input class="editable-input" [(ngModel)]="task.majority" type="number" min="0" max="4" />
+            <input class="editable-input" [(ngModel)]="tempTask.majority" type="number" min="0" max="4" />
           </span>
         </div>
         <div>
@@ -59,7 +59,7 @@
             {{task.complexity}}
           </span>
           <span *ngIf="editMode">
-            <input class="editable-input" [(ngModel)]="task.complexity" type="number" min="0" max="10" />
+            <input class="editable-input" [(ngModel)]="tempTask.complexity" type="number" min="0" max="10" />
           </span>
         </div>
         <div>
@@ -70,7 +70,7 @@
             {{task.storyPoints}}
           </span>
           <span *ngIf="editMode">
-            <input class="editable-input" [(ngModel)]="task.storyPoints" type="number" min="0" max="100" />
+            <input class="editable-input" [(ngModel)]="tempTask.storyPoints" type="number" min="0" max="100" />
           </span>
         </div>
         <div style="margin-bottom: 1rem">
@@ -235,7 +235,8 @@
         Description:
       </span>
       <div>
-        <textarea class="description" [disabled]="!editMode" [(ngModel)]="task.description"></textarea>
+        <textarea class="description" *ngIf="!editMode" [(ngModel)]="task.description" disabled></textarea>
+        <textarea class="description" *ngIf="editMode" [(ngModel)]="tempTask.description"></textarea>
       </div>
     </div>
 
@@ -252,7 +253,7 @@
             <span>
               {{step.order}}
             </span>
-            <span contenteditable="editMode">
+            <span>
               {{step.description}}
             </span>
             <span>
@@ -272,9 +273,7 @@
             <span>
               {{step.order}}
             </span>
-            <span contenteditable="editMode">
-              {{step.description}}
-            </span>
+            <input class="editable-input" style="text-align: center;" type="text" [(ngModel)]="step.description"/>
             <mat-icon (click)="removeStep(step.order)">
               delete_forever
             </mat-icon>
@@ -288,12 +287,13 @@
         <span>
           Solution:
         </span>
-        <div>
-          <textarea class="description" >{{task.solution}}</textarea>
-        </div>
-        <div class="submit-solution" (click)="addSolution()">
-          Submit
-        </div>
+        <form #solutionForm="ngForm" (ngSubmit)="addSolution(solutionForm.value.solution)">
+          <div>
+            <textarea name="solution" [ngModel]=task.solution #solution="ngModel" class="description" required>
+              </textarea>
+          </div>
+        <button [disabled]="solutionForm.invalid  || task.solution == solutionForm.value.solution"  type="submit" class="btn btn-dark w-100 submit-solution">Submit</button>
+        </form>
       </div>
     </div>
 

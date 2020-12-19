@@ -345,19 +345,14 @@ export class TaskComponent implements OnInit {
   }
   saveEditing() {
     this.editMode = false;
-    // if(JSON.stringify(this.tempTask) === JSON.stringify(this.task)){
-    //   return;
-    // }
-    console.log("OLD TASK");
-    console.log(this.tempTask);
-    console.log("NEW TASK");
-    console.log(this.task);
+    this.updateTask();
   }
   addStep(){
     const step = new Step();
     step.done = false;
     step.order = this.tempTask.steps.length+1;
     step.description = "Step "+step.order
+    step.taskId= this.task.id;
     this.tempTask.steps.push(step);
     console.log(this.tempTask.steps);
 
@@ -372,8 +367,17 @@ export class TaskComponent implements OnInit {
 
   }
 
-  addSolution(){
-    console.log("TO DO");
+  addSolution(solution :string){
 
+    this.task.solution = solution;
+   this.updateTask();
+  }
+  updateTask() {
+    this.taskService.update(this.task).subscribe(success=>{
+      console.log(success);
+      this.task = success;
+    },error=>{
+      console.log(error);
+    })
   }
 }

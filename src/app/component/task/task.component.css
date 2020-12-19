@@ -91,7 +91,7 @@ mat-chip {
   padding: 0.5vh 0.5vw;
 }
 
-div.submit-solution {
+.submit-solution {
   text-align: center;
   margin-top: 1vh;
   background-color: yellowgreen;
@@ -99,7 +99,7 @@ div.submit-solution {
   padding: 1vh;
   color: #222222;
 }
-div.submit-solution:hover{
+.submit-solution:hover{
 cursor: pointer;
 color: ghostwhite;
 background-color: #111;
