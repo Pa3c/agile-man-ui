@@ -95,7 +95,7 @@ import { TaskContainerCommentService } from './service/task-container-comment.se
     MatNativeDateModule,
     MatSelectModule
   ],
-  entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent,DeleteColumnComponent],
+  entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent,DeleteColumnComponent,TeamComponent],
   providers: [MainProjectsViewComponent,
     UserService, ProjectService,AuthenticationGuard,
     LabelService,TaskCommentService,ProjectCommentService,TaskContainerCommentService,

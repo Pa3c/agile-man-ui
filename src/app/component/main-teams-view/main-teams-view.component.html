@@ -1,6 +1,6 @@
 <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="teams" multiTemplateDataRows
     class="mat-elevation-z8">
-    
+
     <!-- Pattern for columns for not clicked row -->
 	<ng-container matColumnDef="title">
 		<th mat-header-cell *matHeaderCellDef  mat-sort-header="title">
@@ -22,8 +22,8 @@
 			</span>
 			<a class="row-action-icons" href='{{this.resourceUrl}}/{{element.id}}'><mat-icon>forward</mat-icon></a>
         </td>
-	</ng-container> 
-  
+	</ng-container>
+
 
 	<!-- Pattern for columns for clicked row -->
 	<ng-container matColumnDef="detailedColumn">

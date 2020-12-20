@@ -1,6 +1,6 @@
 import { BaseModel, Identifable } from '../common/CommonModule';
 import { UserProject } from '../ProjectModule';
-import { User } from '../user/UserModule';
+import { RoleBasicUser, User } from '../user/UserModule';
 
 export class Team extends BaseModel implements Identifable {
     id: number;
@@ -8,10 +8,14 @@ export class Team extends BaseModel implements Identifable {
     description: string;
 }
 export class UserTeam extends Team{
+    teamRole: string;
     projects: Set<UserProject>;
 }
-export class CreateTeam extends Team {
-    users :User[];
+export class TeamWithUsers extends Team {
+    users :RoleBasicUser[];
 }
-
+export enum TeamRole {
+  BASIC = "TEAM_BASIC",
+  ADMIN = "TEAM_ADMIN",
+}
 

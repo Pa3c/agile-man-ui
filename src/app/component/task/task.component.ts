@@ -3,7 +3,6 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 import { debounceTime, finalize, switchMap, tap } from 'rxjs/operators';
 import { Label, Type } from 'src/app/model/label/LabelModule';
 import { Step, Task, TaskRelationType, TaskType, TaskUser } from 'src/app/model/task/TaskModule';

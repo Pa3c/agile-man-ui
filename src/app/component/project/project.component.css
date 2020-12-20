@@ -27,6 +27,8 @@
   border: none;
   margin-bottom: 0.5rem;
   padding: 0.2rem;
+  float: right;
+  width: fit-content;
 }
 .team-select:focus{
   outline: none;

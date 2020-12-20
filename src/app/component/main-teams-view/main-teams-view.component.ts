@@ -6,6 +6,7 @@ import { UserService } from 'src/app/service/user.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CreateTeamComponent } from '../dialogs/create-team/create-team.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { UserProject } from 'src/app/model/ProjectModule';
 
 @Component({
   selector: 'main-teams-view',
@@ -13,7 +14,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./main-teams-view.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0', display: 'none' })),
+      state('collapsed', style({ height: '0px', minHeight: '0', display: 'none',"font-size": "0"})),
       state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
@@ -22,9 +23,9 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 export class MainTeamsViewComponent implements OnInit {
   teams: UserTeam[];
   columnsToDisplay = ['title', 'id'];
-  columnsForDetails = ['description', 'projects'];
+  columnsForDetails = ['description', 'projects','teamRole'];
   resourceUrl = "teams";
-  expandedElement: any;
+  expandedElement: UserProject;
   private dialogRef: MatDialogRef<any>;
 
   constructor(private teamService: TeamService,
@@ -69,7 +70,7 @@ export class MainTeamsViewComponent implements OnInit {
     if(object==null){
       return object;
     }
-    object.forEach(x => {
+    object.forEach((x: UserProject) => {
       resolvedUserProject = resolvedUserProject.concat("&nbsp;&nbsp;&nbsp;Title: " + x.title)
         .concat("<br/>&nbsp;&nbsp;&nbsp;Roles: " + x.roles + "<br/>");
     });

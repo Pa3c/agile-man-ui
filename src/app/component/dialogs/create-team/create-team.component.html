@@ -23,6 +23,11 @@
             Name: {{user.name}}<br>
             Surname: {{user.surname}}
           </div>
+          Role:
+          <select (change)="setTypeOfAddedUser($event.target.value,user.login)">
+            <option value="TEAM_BASIC">BASIC</option>
+            <option value="TEAM_ADMIN">ADMINISTRATOR</option>
+          </select>
           <div>
             <mat-icon (click)="removeUser(user.login)">
               remove
@@ -50,7 +55,7 @@
           Surname: {{user.surname}}
         </div>
         <div>
-          <mat-icon (click)="addUser(user.login,user.name,user.surname)">
+          <mat-icon (click)="addUser(user.login,user.name,user.surname,user.role)">
             add
           </mat-icon>
         </div>

@@ -17,3 +17,7 @@ export class BasicUserInfo {
   public surname: string){
   }
 }
+export class RoleBasicUser {
+  constructor(public login: string,public name: string,public surname: string,public role: string){
+  }
+}

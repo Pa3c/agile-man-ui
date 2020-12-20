@@ -1,0 +1,55 @@
+.container {
+  padding: 0.5rem 0;
+  font-size: 2vh;
+  min-width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.editable-input {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+textarea.description {
+  background-color: transparent;
+  color: ghostwhite;
+  border-color: black;
+  min-height: 10em;
+  flex-grow: 1;
+  padding: 0;
+}
+
+mat-chip {
+  font-size: inherit;
+  padding: 0.5vh 0.5vw;
+}
+
+mat-icon:hover {
+  color: greenyellow;
+}
+
+input.user-search {
+  padding-top: 1rem;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+  color: ghostwhite;
+  width: 100%;
+}
+input.user-search:focus {
+outline: none;
+}
+.user-table{
+  margin-top: 0.5rem;
+}
+ th.user-table {
+  padding: 0.5rem;
+}
+td.user-table {
+  padding: 0.5rem;
+}

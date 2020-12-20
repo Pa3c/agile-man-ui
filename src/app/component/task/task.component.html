@@ -78,7 +78,7 @@
             Deadline:
           </span>
           <span *ngIf="task.deadline">
-            <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;">
+            <mat-chip>
               {{task.deadline | date: 'yyyy-MM-dd HH:mm'}}
             </mat-chip>
           </span>
@@ -87,7 +87,7 @@
         <div style="margin-bottom: 1rem">
           <span>
             Assigned:
-            <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;" (click)="addMeAsExecutor()">Add me
+            <mat-chip (click)="addMeAsExecutor()">Add me
             </mat-chip>
           </span>
           <div>
@@ -132,7 +132,8 @@
                 {{label}}
                 <mat-icon matChipRemove>cancel</mat-icon>
               </mat-chip>
-              <input #labelInput [formControl]="labelsCtrl" [matAutocomplete]="autoLabel" [matChipInputFor]="labelList"
+              <input #labelInput [formControl]="labelsCtrl"
+               [matAutocomplete]="autoLabel" [matChipInputFor]="labelList"
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
             </mat-chip-list>
 
@@ -209,25 +210,30 @@
           </span>
         </div>
         <div>
-          Modified by: <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;">{{task.modifiedBy}}
+          Modified by: <mat-chip *ngIf="task.modifiedBy">{{task.modifiedBy}}
           </mat-chip>
         </div>
         <div>
-          Created by: <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;"> {{task.createdBy}}
+          Created by: <mat-chip *ngIf="task.createdBy"> {{task.createdBy}}
           </mat-chip>
         </div>
         <div>
           Modification date:
-          <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;">
+          <mat-chip *ngIf="task.modificationDate">
             {{task.modificationDate | date: 'yyyy-MM-dd HH:mm'}}
           </mat-chip>
         </div>
         <div>
           Creation date:
-          <mat-chip style="margin-top: 5px; padding-top: 0; padding-bottom: 0;">
+          <mat-chip *ngIf="task.creationDate">
             {{task.creationDate | date: 'yyyy-MM-dd HH:mm'}}
           </mat-chip>
         </div>
+        <mat-chip-list>
+          <mat-chip *ngIf="task.creationDate">
+            {{task.creationDate | date: 'yyyy-MM-dd HH:mm'}}
+          </mat-chip>
+        </mat-chip-list>
       </div>
     </div>
     <div style="margin-bottom: 1rem">
@@ -273,7 +279,7 @@
             <span>
               {{step.order}}
             </span>
-            <input class="editable-input" style="text-align: center;" type="text" [(ngModel)]="step.description"/>
+            <input class="editable-input" style="text-align: center;" type="text" [(ngModel)]="step.description" />
             <mat-icon (click)="removeStep(step.order)">
               delete_forever
             </mat-icon>
@@ -292,7 +298,8 @@
             <textarea name="solution" [ngModel]=task.solution #solution="ngModel" class="description" required>
               </textarea>
           </div>
-        <button [disabled]="solutionForm.invalid  || task.solution == solutionForm.value.solution"  type="submit" class="btn btn-dark w-100 submit-solution">Submit</button>
+          <button [disabled]="solutionForm.invalid  || task.solution == solutionForm.value.solution" type="submit"
+            class="btn btn-dark w-100 submit-solution">Submit</button>
         </form>
       </div>
     </div>
