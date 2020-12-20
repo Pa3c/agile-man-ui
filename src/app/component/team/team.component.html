@@ -61,7 +61,7 @@
           </mat-autocomplete>
         </div>
           <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="teamWithUsers.users"
-            class="mat-elevation-z8 user-table">
+            class="mat-elevation-z8">
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef mat-sort-header="name" class="user-table">
                 <span style="text-transform: capitalize;">
@@ -79,18 +79,18 @@
               <td mat-cell *matCellDef="let element" class="user-table">{{element.surname}}</td>
             </ng-container>
             <ng-container matColumnDef="login">
-              <th mat-header-cell *matHeaderCellDef class="user-table" class="user-table">
+              <th mat-header-cell *matHeaderCellDef class="user-table">
                 Login
               </th>
-              <td mat-cell *matCellDef="let element" class="user-table" class="user-table">
-                {{element.login}}
+              <td mat-cell *matCellDef="let element" class="user-table">
+                  {{element.login}}
               </td>
             </ng-container>
             <ng-container matColumnDef="role">
-              <th mat-header-cell *matHeaderCellDef class="user-table" class="user-table">
-                Team Role
+              <th mat-header-cell *matHeaderCellDef class="user-table">
+                  Team Role
               </th>
-              <td mat-cell *matCellDef="let element" class="user-table" class="user-table">
+              <td mat-cell *matCellDef="let element" class="user-table">
                 {{element.role}}
               </td>
             </ng-container>

@@ -2,9 +2,10 @@
   padding: 0.5rem 0;
   font-size: 2vh;
   min-width: 100%;
-  overflow-x: hidden;
+  overflow-x: auto;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .editable-input {
@@ -52,4 +53,9 @@ outline: none;
 }
 td.user-table {
   padding: 0.5rem;
+}
+td , th {
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 200px;
 }

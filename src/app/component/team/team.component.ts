@@ -105,7 +105,11 @@ export class TeamComponent implements OnInit {
   }
 
   deleteUser(login: string){
-    console.log("deleting user of id "+login);
+    this.teamService.deleteUser(this.teamWithUsers.id,login).subscribe(success=>{
+      console.log(success);
+    },error=>{
+      console.log(error);
+    })
     }
   forward(login: string){
     this.router.navigateByUrl(`/${this.resourceUrl}/${login}`);

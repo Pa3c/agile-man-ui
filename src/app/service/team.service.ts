@@ -10,6 +10,7 @@ import { RoleBasicUser } from '../model/user/UserModule';
 })
 export class TeamService {
 
+
   public host = environment.backendAddress;
   constructor(private http: HttpClient) { }
 
@@ -20,6 +21,9 @@ export class TeamService {
     return this.http.get<TeamWithUsers>(`${environment.backendAddress}/team/${id}/user`);
   }
 
+  deleteUser(id: number, login: string): Observable<any> {
+    return this.http.delete<TeamWithUsers>(`${environment.backendAddress}/team/${id}/user/${login}`);
+  }
 
   public getTeamsOfUser(login: string): Observable<UserTeam[]>{
     return this.http.get<UserTeam[]>(`${environment.backendAddress}/user/${login}/team`);
