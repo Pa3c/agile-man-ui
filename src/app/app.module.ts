@@ -52,9 +52,9 @@ import { ProjectCommentService } from './service/project-comment.service';
 import { TaskContainerCommentService } from './service/task-container-comment.service';
 import { ProjectContainersComponent } from './component/project-containers/project-containers.component';
 import { ProjectLabelsComponent } from './component/project-labels/project-labels.component';
-import { ProjectTeamRolesComponent } from './component/project-team-roles/project-team-roles.component';
 import { ProjectDocumentationComponent } from './component/project-documentation/project-documentation.component';
 import { ProjectInfoComponent } from './component/project-info/project-info.component';
+import { ProjectUsersComponent } from './component/project-users/project-users.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +76,7 @@ import { ProjectInfoComponent } from './component/project-info/project-info.comp
     ProfileComponent,
     ProjectContainersComponent,
     ProjectLabelsComponent,
-    ProjectTeamRolesComponent,
+    ProjectUsersComponent,
     ProjectDocumentationComponent,
     ProjectInfoComponent
   ],
@@ -116,7 +116,7 @@ import { ProjectInfoComponent } from './component/project-info/project-info.comp
     ProjectCommentService,
     ProjectContainersComponent,
     ProjectDocumentationComponent,
-    ProjectTeamRolesComponent,
+    ProjectUsersComponent,
     ProjectLabelsComponent,
     ProjectInfoComponent,
     TaskContainerCommentService,
