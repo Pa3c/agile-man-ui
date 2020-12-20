@@ -1,10 +1,10 @@
 import { BaseModel, Identifable } from './common/CommonModule';
 import { TaskContainer } from './task-container/TaskContainerModule';
 
-export class Project implements Identifable{
+export class Project extends BaseModel{
     id :number;
     title :string;
-    description :string; 
+    description :string;
 }
 export class UserProject {
     roles: Set<string> = new Set();

@@ -1,0 +1,55 @@
+<div *ngIf=project class="container">
+
+  <div class="column" style="width: fit-content;">
+    <div style="display: flex; flex-direction: row;">
+      <h5 *ngIf="!editMode" style="width: fit-content;">
+        {{project.title}}
+      </h5>
+      <h5 *ngIf="editMode" contenteditable="true" [(textContent)]="tempProject.title"
+        (input)="tempProject.title = $event.target.innerText">
+      </h5>
+      <div class="editable" *ngIf="!editMode" style="display: flex; flex-direction: column;">
+        <mat-icon (click)="beginEditing()">
+          edit
+        </mat-icon>
+      </div>
+      <div class="editable" *ngIf="editMode" style="display: flex; flex-direction: column;">
+        <mat-icon class="editable" (click)="saveEditing()">
+          done
+        </mat-icon>
+        <mat-icon class="editable" (click)="cancelEditing()">
+          cancel
+        </mat-icon>
+      </div>
+    </div>
+    <div>
+      Modified by:<br>
+      <mat-chip *ngIf="project.modifiedBy">{{project.modifiedBy}}
+      </mat-chip>
+    </div>
+    <div>
+      Created by:<br>
+      <mat-chip *ngIf="project.createdBy"> {{project.createdBy}}
+      </mat-chip>
+    </div>
+    <div>
+      Modification date:<br>
+      <mat-chip *ngIf="project.modificationDate">
+        {{project.modificationDate | date: 'yyyy-MM-dd HH:mm'}}
+      </mat-chip>
+    </div>
+    <div>
+      Creation date:<br>
+      <mat-chip *ngIf="project.creationDate">
+        {{project.creationDate | date: 'yyyy-MM-dd HH:mm'}}
+      </mat-chip>
+    </div>
+  </div>
+
+  <div class="column" style="flex-grow: 1;">
+    <textarea class="description" style="border: none;" *ngIf="!editMode" [(ngModel)]="project.description"
+      disabled></textarea>
+    <textarea class="description" *ngIf="editMode" [(ngModel)]="tempProject.description"></textarea>
+  </div>
+</div>
+<mat-chip-list></mat-chip-list>

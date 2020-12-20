@@ -1,14 +1,14 @@
 <div class="menu">
-  <button mat-raised-button (click)='currentView="task_containers"'>
+  <button mat-raised-button (click)='currentView= (currentView=="task_containers")? null:"task_containers"'>
     Task Containers
   </button>
-  <button mat-raised-button (click)='currentView="labels"'>
+  <button mat-raised-button (click)='currentView= (currentView=="labels")? null:"labels"'>
     Labels
   </button>
-  <button mat-raised-button (click)='currentView="team_roles"'>
+  <button mat-raised-button (click)='currentView= (currentView=="team_roles")? null:"team_roles"'>
     Roles
   </button>
-  <button mat-raised-button (click)='currentView="documentation"'>
+  <button mat-raised-button (click)='currentView = (currentView=="documentation")? null:"documentation"'>
     Documentation
   </button>
 </div>
@@ -20,3 +20,5 @@
 </project-team-roles>
 <project-documentation *ngIf='currentView=="documentation"'>
 </project-documentation>
+<project-info *ngIf='!currentView'>
+</project-info>

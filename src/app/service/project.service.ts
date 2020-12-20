@@ -22,6 +22,13 @@ public host = environment.backendAddress;
     return this.http.post<Project>(`${environment.backendAddress}/project`,project);
   }
 
+  update(project: Project) :Observable<Project> {
+    return this.http.put<Project>(`${environment.backendAddress}/project/${project.id}`,project);
+   }
+
+   get(id: number) :Observable<Project> {
+     return this.http.get<Project>(`${environment.backendAddress}/project/${id}`);
+   }
 
   public getUserProjects(login: string): Observable<Project[]> {
     return this.http.get<Project[]>(`${environment.backendAddress}/user/${login}/project`);

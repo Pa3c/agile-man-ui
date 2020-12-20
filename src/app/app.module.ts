@@ -54,6 +54,7 @@ import { ProjectContainersComponent } from './component/project-containers/proje
 import { ProjectLabelsComponent } from './component/project-labels/project-labels.component';
 import { ProjectTeamRolesComponent } from './component/project-team-roles/project-team-roles.component';
 import { ProjectDocumentationComponent } from './component/project-documentation/project-documentation.component';
+import { ProjectInfoComponent } from './component/project-info/project-info.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { ProjectDocumentationComponent } from './component/project-documentation
     ProjectContainersComponent,
     ProjectLabelsComponent,
     ProjectTeamRolesComponent,
-    ProjectDocumentationComponent
+    ProjectDocumentationComponent,
+    ProjectInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -116,6 +118,7 @@ import { ProjectDocumentationComponent } from './component/project-documentation
     ProjectDocumentationComponent,
     ProjectTeamRolesComponent,
     ProjectLabelsComponent,
+    ProjectInfoComponent,
     TaskContainerCommentService,
     RegisterService,TeamService,
     TaskService,StateService,

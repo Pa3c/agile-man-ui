@@ -372,7 +372,7 @@ export class TaskComponent implements OnInit {
    this.updateTask();
   }
   updateTask() {
-    this.taskService.update(this.task).subscribe(success=>{
+    this.taskService.update(this.tempTask).subscribe(success=>{
       console.log(success);
       this.task = success;
     },error=>{

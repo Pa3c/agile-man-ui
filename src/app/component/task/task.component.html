@@ -4,8 +4,8 @@
       <h5 style="width: fit-content;" *ngIf="!editMode">
         {{task.title}}
       </h5>
-      <h5 *ngIf="editMode" contenteditable="true" [(textContent)]="task.title"
-        (input)="task.title = $event.target.innerText">
+      <h5 *ngIf="editMode" contenteditable="true" [(textContent)]="tempTask.title"
+        (input)="tempTask.title = $event.target.innerText">
       </h5>
 
       <div class="editable" *ngIf="!editMode" style="display: flex; flex-direction: column;">
@@ -229,11 +229,6 @@
             {{task.creationDate | date: 'yyyy-MM-dd HH:mm'}}
           </mat-chip>
         </div>
-        <mat-chip-list>
-          <mat-chip *ngIf="task.creationDate">
-            {{task.creationDate | date: 'yyyy-MM-dd HH:mm'}}
-          </mat-chip>
-        </mat-chip-list>
       </div>
     </div>
     <div style="margin-bottom: 1rem">
