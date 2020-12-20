@@ -27,7 +27,7 @@
           </ng-container>
         </mat-autocomplete>
       </div>
-      <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="projectTeams" class="mat-elevation-z8">
+      <table style="width: 100%; margin-top: 1rem;" mat-table matSort (matSortChange)="sortData($event)" [dataSource]="projectTeams" class="mat-elevation-z8">
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header="id" class="team-table">
             <span style="text-transform: capitalize;">

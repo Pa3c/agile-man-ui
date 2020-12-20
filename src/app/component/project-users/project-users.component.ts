@@ -75,6 +75,7 @@ selectedProjectType: ProjectType = ProjectType.KANBAN;
       this.projectTeams.push(newProjectTeam);
       console.log(newProjectTeam);
       console.log(success);
+      this.refreshProjectTeamsTable();
     },error=>{
       console.log(error);
     });
@@ -98,10 +99,15 @@ selectedProjectType: ProjectType = ProjectType.KANBAN;
       return compare(a[column], b[column], isAsc);
     }).slice();
   }
+  refreshProjectTeamsTable(){
+    this.projectTeams = this.projectTeams.slice();
+  }
 
   deleteTeam(id: number){
     this.projectService.removeTeam(this.projectId,id).subscribe(success=>{
       console.log(success);
+      this.projectTeams.splice(this.projectTeams.findIndex(x=>x.id==id),1);
+      this.refreshProjectTeamsTable();
     },error=>{
       console.log(error);
     })

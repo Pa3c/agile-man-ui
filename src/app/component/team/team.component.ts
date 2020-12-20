@@ -80,10 +80,14 @@ export class TeamComponent implements OnInit {
     this.teamService.addUserToTeam(this.teamWithUsers.id, roleBasicUser)
     .subscribe((success:RoleBasicUser) =>{
       this.teamWithUsers.users.push(success);
+      this.refreshTeamWithUsersUsers();
       console.log(success);
     },error=>{
       console.log(error);
     });
+  }
+  refreshTeamWithUsersUsers() {
+    this.teamWithUsers.users = this.teamWithUsers.users.slice();
   }
   clearSearchInput(trigger: MatAutocompleteTrigger, auto: MatAutocomplete) {
     auto.options.forEach((item) => {
@@ -107,6 +111,8 @@ export class TeamComponent implements OnInit {
   deleteUser(login: string){
     this.teamService.deleteUser(this.teamWithUsers.id,login).subscribe(success=>{
       console.log(success);
+      this.teamWithUsers.users.splice( this.teamWithUsers.users.findIndex(x=>x.login==login,1));
+      this.refreshTeamWithUsersUsers();
     },error=>{
       console.log(error);
     })

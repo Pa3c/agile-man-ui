@@ -90,7 +90,7 @@ export class MainProjectsViewComponent implements OnInit {
   addToProjects(result: Project) {
     console.log(result);
     this.projects.push(result);
-    this.changeDetectorRefs.detectChanges();
+    this.projects = this.projects.slice();
   }
 }
 

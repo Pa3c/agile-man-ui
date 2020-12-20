@@ -14,7 +14,7 @@ import { UserProject } from 'src/app/model/ProjectModule';
   styleUrls: ['./main-teams-view.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0', display: 'none',"font-size": "0"})),
+      state('collapsed', style({ height: '0px', minHeight: '0', display: 'none', "font-size": "0" })),
       state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
@@ -23,14 +23,14 @@ import { UserProject } from 'src/app/model/ProjectModule';
 export class MainTeamsViewComponent implements OnInit {
   teams: UserTeam[];
   columnsToDisplay = ['title', 'id'];
-  columnsForDetails = ['description', 'projects','teamRole'];
+  columnsForDetails = ['description', 'projects', 'teamRole'];
   resourceUrl = "teams";
   expandedElement: UserProject;
   private dialogRef: MatDialogRef<any>;
 
   constructor(private teamService: TeamService,
-     private userService: UserService,
-     public dialog: MatDialog,private changeDetectorRefs: ChangeDetectorRef) { }
+    private userService: UserService,
+    public dialog: MatDialog, private changeDetectorRefs: ChangeDetectorRef) { }
 
   ngOnInit() {
     const login = this.userService.getUserFromLocalCache().login;
@@ -67,7 +67,7 @@ export class MainTeamsViewComponent implements OnInit {
       return object;
     }
     let resolvedUserProject = "projects: <br/>";
-    if(object==null){
+    if (object == null) {
       return object;
     }
     object.forEach((x: UserProject) => {
@@ -81,23 +81,23 @@ export class MainTeamsViewComponent implements OnInit {
     console.log("Delete team of id " + id);
   }
 
-  createTeam(){
-    if(this.dialogRef!=null){
+  createTeam() {
+    if (this.dialogRef != null) {
       return;
     }
-    this.dialogRef = this.dialog.open(CreateTeamComponent,{
+    this.dialogRef = this.dialog.open(CreateTeamComponent, {
       panelClass: 'custom-dialog-container',
       width: '90%'
     });
 
     this.dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      this.ngOnInit();
       this.dialogRef = null;
     });
   }
-  deleteTeam(id: number){
-    console.log("deleting team of id "+id);
-    }
+  deleteTeam(id: number) {
+    console.log("deleting team of id " + id);
+  }
 }
 
 

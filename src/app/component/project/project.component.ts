@@ -15,7 +15,7 @@ interface Animal {
 
 })
 export class ProjectComponent implements OnInit {
-  currentView :string = "labels";
+  currentView :string = null;
 
 
   constructor(private projectContainers: ProjectContainersComponent,
