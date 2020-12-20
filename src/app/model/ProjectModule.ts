@@ -1,5 +1,6 @@
 import { BaseModel, Identifable } from './common/CommonModule';
 import { TaskContainer } from './task-container/TaskContainerModule';
+import { MultiRoleBasicUser } from './user/UserModule';
 
 export class Project extends BaseModel{
     id :number;
@@ -31,4 +32,7 @@ export enum ProjectType {
     SCRUM = 'SCRUM',
     KANBAN= 'KANBAN'
 }
-
+export class ProjectUserRolesInfo {
+  projectType: string;
+  users: MultiRoleBasicUser[];
+}

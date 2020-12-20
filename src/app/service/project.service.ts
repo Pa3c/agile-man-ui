@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { BaseProjectTeam, DetailedUserProject, Project } from '../model/ProjectModule';
+import { BaseProjectTeam, DetailedUserProject, Project, ProjectUserRolesInfo } from '../model/ProjectModule';
 import { TitleName } from '../model/common/CommonModule';
 import { Label } from '../model/label/LabelModule';
 
@@ -10,7 +10,6 @@ import { Label } from '../model/label/LabelModule';
   providedIn: 'root'
 })
 export class ProjectService {
-
 
 public host = environment.backendAddress;
   constructor(private http: HttpClient) { }
@@ -58,4 +57,7 @@ public host = environment.backendAddress;
     .get<BaseProjectTeam[]>(`${environment.backendAddress}/project/${projectId}/team`);
   }
 
+  getTeamProjectUsersRoles(projectId: number, teamId: number): Observable<ProjectUserRolesInfo> {
+    return this.http.get<ProjectUserRolesInfo>(`${environment.backendAddress}/project/${projectId}/team/${teamId}/user`);
+  }
 }

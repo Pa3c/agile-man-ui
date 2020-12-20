@@ -115,10 +115,13 @@ selectedProjectType: ProjectType = ProjectType.KANBAN;
   forward(login: string){
     this.router.navigateByUrl(`/${this.resourceUrl}/${login}`);
   }
-  showTeamUsers(teamId: number){
-    //TODO PROBABLY NEED TO CHANGE TeamSI#getTeamWithUsers FUNCTIONS
+  showProjectTeamUsers(teamId: number){
+   this.projectService.getTeamProjectUsersRoles(this.projectId,teamId).subscribe(success=>{
+    console.log(success);
+   },error=>{
+     console.log(error);
+   })
   }
-
 }
 function compare(a: number | string, b: number | string, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);

@@ -21,3 +21,7 @@ export class RoleBasicUser {
   constructor(public login: string,public name: string,public surname: string,public role: string){
   }
 }
+export class MultiRoleBasicUser {
+  constructor(public login: string,public name: string,public surname: string,public roles: string[]){
+  }
+}
