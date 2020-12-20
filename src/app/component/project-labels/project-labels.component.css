@@ -1,0 +1,49 @@
+.label-list {
+  margin-top: 1rem;
+  border: solid 1px black;
+  min-height: 60px;
+  display: block;
+  background: #222222;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.label-box {
+  padding: 20px 10px;
+  border-bottom: solid 1px black;
+  color: ghostwhite;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: #222222;
+  font-size: 14px;
+}
+input.label-search {
+  padding-top: 1rem;
+
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+  color: ghostwhite;
+  width: 50%;
+}
+input.label-search:focus {
+outline: none;
+}
+select.label-search-type{
+  padding-top: 1rem;
+  padding-bottom: 2px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+  width: fit-content;
+  text-align: end;
+}
+select.label-search-type:focus {
+  outline: none;
+}
+.editable:hover{
+  color: yellowgreen;
+}

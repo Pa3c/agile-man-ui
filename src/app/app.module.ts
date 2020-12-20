@@ -51,6 +51,9 @@ import { TaskCommentService } from './service/task-comment.service';
 import { ProjectCommentService } from './service/project-comment.service';
 import { TaskContainerCommentService } from './service/task-container-comment.service';
 import { ProjectContainersComponent } from './component/project-containers/project-containers.component';
+import { ProjectLabelsComponent } from './component/project-labels/project-labels.component';
+import { ProjectTeamRolesComponent } from './component/project-team-roles/project-team-roles.component';
+import { ProjectDocumentationComponent } from './component/project-documentation/project-documentation.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +73,10 @@ import { ProjectContainersComponent } from './component/project-containers/proje
     TaskComponent,
     TeamComponent,
     ProfileComponent,
-    ProjectContainersComponent
+    ProjectContainersComponent,
+    ProjectLabelsComponent,
+    ProjectTeamRolesComponent,
+    ProjectDocumentationComponent
   ],
   imports: [
     BrowserModule,
@@ -98,10 +104,23 @@ import { ProjectContainersComponent } from './component/project-containers/proje
     MatSelectModule
   ],
   entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent,DeleteColumnComponent,TeamComponent],
-  providers: [MainProjectsViewComponent,
-    UserService, ProjectService,AuthenticationGuard,
-    LabelService,TaskCommentService,ProjectCommentService,TaskContainerCommentService,
-    RegisterService,TeamService,TaskService,StateService,MatDialogModule,ProjectContainersComponent,
+  providers: [
+    MainProjectsViewComponent,
+    UserService,
+    ProjectService,
+    AuthenticationGuard,
+    LabelService,
+    TaskCommentService,
+    ProjectCommentService,
+    ProjectContainersComponent,
+    ProjectDocumentationComponent,
+    ProjectTeamRolesComponent,
+    ProjectLabelsComponent,
+    TaskContainerCommentService,
+    RegisterService,TeamService,
+    TaskService,StateService,
+    MatDialogModule,
+
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

@@ -5,7 +5,7 @@
   <button mat-raised-button (click)='currentView="labels"'>
     Labels
   </button>
-  <button mat-raised-button (click)='currentView="roles"'>
+  <button mat-raised-button (click)='currentView="team_roles"'>
     Roles
   </button>
   <button mat-raised-button (click)='currentView="documentation"'>
@@ -14,3 +14,9 @@
 </div>
 <project-containers *ngIf='currentView=="task_containers"'>
 </project-containers>
+<project-labels *ngIf='currentView=="labels"'>
+</project-labels>
+<project-team-roles *ngIf='currentView=="team_roles"'>
+</project-team-roles>
+<project-documentation *ngIf='currentView=="documentation"'>
+</project-documentation>

@@ -4,17 +4,14 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { DetailedUserProject, Project } from '../model/ProjectModule';
 import { TitleName } from '../model/common/CommonModule';
+import { Label } from '../model/label/LabelModule';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
 
-
-
-
-
-  public host = environment.backendAddress;
+public host = environment.backendAddress;
   constructor(private http: HttpClient) { }
 
   addTeamToProject(projectId: number, teamId: number,projectType: string) :Observable<Project>{
@@ -37,5 +34,10 @@ export class ProjectService {
   getProjectTeamOfUser(login: string, projectId: number, teamId: number) {
     return this.http
       .get<DetailedUserProject>(`${environment.backendAddress}/user/${login}/project/${projectId}/team/${teamId}`);
+  }
+
+  getProjectLabels(projectId: number) {
+    return this.http
+      .get<Label[]>(`${environment.backendAddress}/project/${projectId}/label`);
   }
 }
