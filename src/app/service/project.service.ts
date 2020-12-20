@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { DetailedUserProject, Project } from '../model/ProjectModule';
+import { BaseProjectTeam, DetailedUserProject, Project } from '../model/ProjectModule';
 import { TitleName } from '../model/common/CommonModule';
 import { Label } from '../model/label/LabelModule';
 
@@ -11,11 +11,16 @@ import { Label } from '../model/label/LabelModule';
 })
 export class ProjectService {
 
+
 public host = environment.backendAddress;
   constructor(private http: HttpClient) { }
 
   addTeamToProject(projectId: number, teamId: number,projectType: string) :Observable<Project>{
     return this.http.put<Project>(`${environment.backendAddress}/project/${projectId}/team/${teamId}/type/${projectType}`,null);
+  }
+
+  removeTeam(projectId: number, teamId: number) {
+    return this.http.delete<Observable<any>>(`${environment.backendAddress}/project/${projectId}/team/${teamId}`);
   }
 
   create(project: Project) {
@@ -47,4 +52,10 @@ public host = environment.backendAddress;
     return this.http
       .get<Label[]>(`${environment.backendAddress}/project/${projectId}/label`);
   }
+
+  getTeams(projectId: number): Observable<BaseProjectTeam[]> {
+    return this.http
+    .get<BaseProjectTeam[]>(`${environment.backendAddress}/project/${projectId}/team`);
+  }
+
 }

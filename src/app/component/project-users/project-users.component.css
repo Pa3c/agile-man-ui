@@ -1,0 +1,62 @@
+.container {
+  padding: 0.5rem 0.5rem;
+  font-size: 2vh;
+  min-width: 100%;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: row;
+}
+
+.team-management {
+  flex-grow: 0.3;
+}
+
+.user-role-management {
+  flex-grow: 0.7;
+}
+
+input.team-search {
+  padding-top: 1rem;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+  color: ghostwhite;
+  width: 100%;
+}
+
+input.team-search:focus {
+  outline: none;
+}
+
+.team-table {
+  margin-top: 0.5rem;
+}
+
+th.team-table {
+  padding: 0.5rem;
+}
+
+td.team-table {
+  padding: 0.5rem;
+}
+
+td, th {
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 200px;
+}
+select.label-search-type{
+  padding-top: 1rem;
+  padding-bottom: 2px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+  width: fit-content;
+  text-align: left;
+}
+select.label-search-type:focus {
+  outline: none;
+}
+.editable:hover{
+  color: yellowgreen;
+}

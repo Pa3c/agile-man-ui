@@ -1,1 +1,64 @@
-<p>project-team-roles works!</p>
+<div class="container">
+  <div class="team-management">
+    <div class="add-team" style="text-align: center;">
+      Add Team
+    </div>
+    <div class="team-list-container">
+      <div>
+        <div style="display: flex;flex-direction: row;">
+          <select class="label-search-type" [(ngModel)]=selectedProjectType>
+            <option value="KANBAN">KANBAN</option>
+            <option value="SCRUM">SCRUM</option>
+            <option value="XP">XP</option>
+          </select>
+          <input class="team-search" #trigger="matAutocompleteTrigger" [formControl]="teamFormControl"
+            [matAutocomplete]="autoTeam">
+        </div>
+
+        <mat-autocomplete #autoTeam="matAutocomplete"
+          (optionSelected)="selectedTeam($event.option.value, trigger, autoTeam)">
+          <mat-option style="text-align: center;background-color: yellowgreen;" *ngIf="isLoading" class="is-loading">
+            <i style="text-align: center;" class="fa fa-spinner fa-spin"></i>
+          </mat-option>
+          <ng-container *ngIf="!isLoading">
+            <mat-option style="background-color: yellowgreen;" *ngFor="let team of filteredTeams" [value]=team>
+              {{team.id}} {{team.title}}
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+      </div>
+      <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="projectTeams" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="id" class="team-table">
+            <span style="text-transform: capitalize;">
+              Id
+            </span>
+          </th>
+          <td mat-cell *matCellDef="let element">{{element.id}}</td>
+        </ng-container>
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header="title" class="team-table">
+            <span style="text-transform: capitalize;">
+              Title
+            </span>
+          </th>
+          <td mat-cell *matCellDef="let element" class="team-table">{{element.title}}</td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>
+          </th>
+          <td mat-cell *matCellDef="let element" style="text-align: end;">
+            <mat-icon (click)="deleteTeam(element.id)">delete_forever</mat-icon>
+            <mat-icon (click)="forward(element.id)">forward</mat-icon>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef=columnsToDisplay></tr>
+        <tr mat-row (click)="showTeamUsers(element.id)" *matRowDef="let element; columns: columnsToDisplay;"
+          class="element-row"></tr>
+      </table>
+    </div>
+  </div>
+  <div class="user-role-management">
+
+  </div>
+</div>

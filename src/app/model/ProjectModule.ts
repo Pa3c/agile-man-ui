@@ -11,6 +11,12 @@ export class UserProject {
     title: String = "";
 }
 
+export class BaseProjectTeam {
+  public id: number;
+  public title: string;
+  public type: ProjectType;
+}
+
 export class DetailedUserProject extends BaseModel implements Identifable{
     id: number;
     teamInProjectId: number;
@@ -21,6 +27,8 @@ export class DetailedUserProject extends BaseModel implements Identifable{
     taskContainers: TaskContainer[];
 }
 export enum ProjectType {
-    XP,SCRUM,KANBAN
+    XP = 'XP',
+    SCRUM = 'SCRUM',
+    KANBAN= 'KANBAN'
 }
 

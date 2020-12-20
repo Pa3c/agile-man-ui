@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { TitleName } from '../model/common/CommonModule';
 import { TeamWithUsers, Team, UserTeam } from '../model/team/TeamModule';
 import { RoleBasicUser } from '../model/user/UserModule';
 
@@ -9,8 +10,6 @@ import { RoleBasicUser } from '../model/user/UserModule';
   providedIn: 'root'
 })
 export class TeamService {
-
-
   public host = environment.backendAddress;
   constructor(private http: HttpClient) { }
 
@@ -36,5 +35,15 @@ export class TeamService {
   addUserToTeam(teamId: number,roleBasicUser:RoleBasicUser) :Observable<RoleBasicUser>{
     return this.http.post<RoleBasicUser>(`${environment.backendAddress}/team/${teamId}/user`,roleBasicUser);
   }
+
+  getFilteredBasicTeam(value: any) {
+    if(value == null){
+      value = "a";
+    }
+    console.log(value);
+
+    return this.http.get<TitleName[]>(`${environment.backendAddress}/team/basic/filtered?value=${value}`);
+  }
+
 
 }
