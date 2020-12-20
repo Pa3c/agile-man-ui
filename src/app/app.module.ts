@@ -50,6 +50,7 @@ import { LabelService } from './service/label.service';
 import { TaskCommentService } from './service/task-comment.service';
 import { ProjectCommentService } from './service/project-comment.service';
 import { TaskContainerCommentService } from './service/task-container-comment.service';
+import { ProjectContainersComponent } from './component/project-containers/project-containers.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { TaskContainerCommentService } from './service/task-container-comment.se
     CreateTaskComponent,
     TaskComponent,
     TeamComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProjectContainersComponent
   ],
   imports: [
     BrowserModule,
@@ -99,7 +101,7 @@ import { TaskContainerCommentService } from './service/task-container-comment.se
   providers: [MainProjectsViewComponent,
     UserService, ProjectService,AuthenticationGuard,
     LabelService,TaskCommentService,ProjectCommentService,TaskContainerCommentService,
-    RegisterService,TeamService,TaskService,StateService,MatDialogModule,
+    RegisterService,TeamService,TaskService,StateService,MatDialogModule,ProjectContainersComponent,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
