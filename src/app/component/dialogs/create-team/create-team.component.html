@@ -17,22 +17,29 @@
       </div>
       <ng-template #addedTeams>
       <div class="added-team-container">
-        <div *ngFor="let user of addedUsers" class="user-div">
+        <div *ngFor="let user of addedUsers;index as i;" class="user-div">
           <div style="flex-grow: 1;">
             ID: {{user.login}}<br>
             Name: {{user.name}}<br>
             Surname: {{user.surname}}
           </div>
           Role:
-          <select (change)="setTypeOfAddedUser($event.target.value,user.login)">
-            <option value="TEAM_BASIC">BASIC</option>
-            <option value="TEAM_ADMIN">ADMINISTRATOR</option>
-          </select>
-          <div>
-            <mat-icon (click)="removeUser(user.login)">
-              remove
-            </mat-icon>
-          </div>
+          <ng-container *ngIf="i>0;else adminUserSelect;">
+            <select (change)="setTypeOfAddedUser($event.target.value,user.login)">
+              <option value="TEAM_BASIC">BASIC</option>
+              <option value="TEAM_ADMIN">ADMINISTRATOR</option>
+            </select>
+            <div>
+              <mat-icon (click)="removeUser(user.login)">
+                remove
+              </mat-icon>
+            </div>
+          </ng-container>
+          <ng-template #adminUserSelect>
+            <select disabled>
+              <option value="TEAM_ADMIN">ADMINISTRATOR</option>
+            </select>
+          </ng-template>
         </div>
       </div>
     </ng-template>

@@ -1,11 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, finalize, switchMap, tap } from 'rxjs/operators';
-import { TeamWithUsers, TeamRole } from 'src/app/model/team/TeamModule';
+import { TeamWithUsers, TeamRole, Team } from 'src/app/model/team/TeamModule';
 import { BasicUserInfo, RoleBasicUser, User } from 'src/app/model/user/UserModule';
 import { AppUserService } from 'src/app/service/app-user.service';
 import { TeamService } from 'src/app/service/team.service';
@@ -13,16 +12,20 @@ import { TeamService } from 'src/app/service/team.service';
 @Component({
   selector: 'app-team',
   templateUrl: './team.component.html',
-  styleUrls: ['./team.component.css']
+  styleUrls: ['./team.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class TeamComponent implements OnInit {
 
+  teamRoles = Object.values(TeamRole);
   teamWithUsers = new TeamWithUsers();
-  editMode: boolean = false;
+  editedTeam: Team = null;
   isLoading: boolean = false;
+  editRoleIndex: number = -1;
 
   filteredUsers: BasicUserInfo[] = [];
   userFormControl = new FormControl();
+  roles = new FormControl();
 
   columnsToDisplay = ['name', 'surname','login','role','action'];
   resourceUrl = "users";
@@ -39,7 +42,6 @@ export class TeamComponent implements OnInit {
     }, error => {
       console.log(error);
     })
-
     this.userFormControl.valueChanges.pipe(
       debounceTime(500),
       tap(() => {
@@ -61,16 +63,42 @@ export class TeamComponent implements OnInit {
       });
   }
 
-  saveEditing() {
-    console.log("TODO ");
-  }
-  beginEditing() {
-    console.log("TODO ");
-  }
-  cancelEditing() {
-    console.log("TODO ");
+  saveEditTeam() {
+    this.teamService.update(this.teamWithUsers.id,this.editedTeam).subscribe((success:Team)=>{
+      this.teamWithUsers.title = success.title;
+      this.teamWithUsers.description = success.description;
 
+    },error=>console.log(error),
+    ()=>this.cancelEditTeam());
   }
+  startEditTeam() {
+   this.editedTeam = new Team();
+   this.editedTeam.description = this.teamWithUsers.description;
+   this.editedTeam.title = this.teamWithUsers.title;
+  }
+  cancelEditTeam() {
+    this.editedTeam = null;
+  }
+  startEditRole(index: number){
+    this.editRoleIndex = index;
+  }
+  saveEditRole() {
+    if(this.roles.value==null){
+      return;
+    }
+    const tempUser = this.teamWithUsers.users[this.editRoleIndex];
+    tempUser.role = this.roles.value;
+
+    this.teamService.updateUserRole(this.teamWithUsers.id,tempUser).subscribe((success:RoleBasicUser)=>{
+      this.teamWithUsers.users[this.editRoleIndex].role = success.role;
+    },error=>console.log(error)
+    ,()=>this.cancelEditRole());
+  }
+  cancelEditRole() {
+    this.editRoleIndex = -1;
+  }
+
+
   selectedUser(event: BasicUserInfo, trigger: MatAutocompleteTrigger, auto: MatAutocomplete) {
     const roleBasicUser = new RoleBasicUser(event.login, event.name, event.surname, TeamRole.BASIC.toString());
     this.clearSearchInput(trigger, auto);

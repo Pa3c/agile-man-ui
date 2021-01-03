@@ -16,6 +16,19 @@
   border: none;
 }
 
+.title {
+  width: fit-content;
+  padding-left: 0.5rem;
+}
+
+.showable {
+  color: #222;
+}
+
+.showable:hover {
+  color: ghostwhite;
+}
+
 textarea.description {
   background-color: transparent;
   color: ghostwhite;
@@ -42,20 +55,38 @@ input.user-search {
   color: ghostwhite;
   width: 100%;
 }
+
 input.user-search:focus {
-outline: none;
+  outline: none;
 }
-.user-table{
+
+.user-table {
   margin-top: 0.5rem;
 }
- th.user-table {
+
+th.user-table {
   padding: 0.5rem;
 }
+
 td.user-table {
   padding: 0.5rem;
 }
-td , th {
+
+td, th {
   white-space: normal;
   word-wrap: break-word;
   max-width: 200px;
+}
+.custom-mat-select.mat-select-panel {
+  background: #222;
+  color: ghostwhite;
+  font-size: 1vh;
+  width: fit-content;
+}
+.basic {
+  color: ghostwhite;
+  background-color: #222;
+}
+.info-chip{
+  margin-top: 0.2rem;
 }

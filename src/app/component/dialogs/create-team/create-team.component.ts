@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { TeamWithUsers, Team } from 'src/app/model/team/TeamModule';
+import { TeamWithUsers, Team, TeamRole } from 'src/app/model/team/TeamModule';
 import { BasicUserInfo, RoleBasicUser, User } from 'src/app/model/user/UserModule';
 import { AppUserService } from 'src/app/service/app-user.service';
 import { TeamService } from 'src/app/service/team.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-create-team',
@@ -18,13 +19,15 @@ export class CreateTeamComponent implements OnInit {
   filteredUsers: RoleBasicUser[] = [];
   addedUsers: RoleBasicUser[] = [];
   constructor(private dialogRef: MatDialogRef<CreateTeamComponent>, private appUserService: AppUserService,
-    private teamService: TeamService) {
+    private teamService: TeamService,private userService:UserService) {
 
   }
 
   ngOnInit(): void {
+    const user = this.userService.getUserFromLocalCache();
+    this.addedUsers.push(new RoleBasicUser(user.login,user.name,user.surname,TeamRole.ADMIN))
     this.appUserService.getUsers().subscribe(success => {
-      const mappedSuccess = success.map(x=>new RoleBasicUser(x.login,x.name,x.surname,"TEAM_BASIC"));
+      const mappedSuccess = success.map(x=>new RoleBasicUser(x.login,x.name,x.surname,TeamRole.BASIC));
       this.users = mappedSuccess;
       this.filteredUsers = mappedSuccess;
     }, error => {

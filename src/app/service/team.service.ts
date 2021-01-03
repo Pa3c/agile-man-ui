@@ -10,8 +10,16 @@ import { RoleBasicUser } from '../model/user/UserModule';
   providedIn: 'root'
 })
 export class TeamService {
+  updateUserRole(id: number, user: RoleBasicUser): Observable<RoleBasicUser> {
+    return this.http.put<RoleBasicUser>(`${environment.backendAddress}/team/${id}/role`,user);
+  }
+
   public host = environment.backendAddress;
   constructor(private http: HttpClient) { }
+
+  update(id: number, team: Team): Observable<Team> {
+    return this.http.put<Team>(`${environment.backendAddress}/team/${id}`,team);
+  }
 
   createWithUsers(createTeam: TeamWithUsers) {
     return this.http.post<TeamWithUsers>(`${environment.backendAddress}/team/user`,createTeam);
