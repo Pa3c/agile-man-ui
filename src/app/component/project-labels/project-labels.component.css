@@ -16,7 +16,6 @@
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  cursor: move;
   background: #222222;
   font-size: 14px;
 }
@@ -44,6 +43,10 @@ select.label-search-type{
 select.label-search-type:focus {
   outline: none;
 }
-.editable:hover{
-  color: yellowgreen;
+
+.label-box-detail {
+  width: 20%;
+}
+.deletable:hover {
+  color: red;
 }

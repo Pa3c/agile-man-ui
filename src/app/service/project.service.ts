@@ -5,11 +5,13 @@ import { Observable } from 'rxjs';
 import { BaseProjectTeam, DetailedUserProject, Project, ProjectUserRolesInfo } from '../model/ProjectModule';
 import { TitleName } from '../model/common/CommonModule';
 import { Label } from '../model/label/LabelModule';
+import { MultiRoleBasicUser } from '../model/user/UserModule';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
+
 
 public host = environment.backendAddress;
   constructor(private http: HttpClient) { }
@@ -59,5 +61,9 @@ public host = environment.backendAddress;
 
   getTeamProjectUsersRoles(projectId: number, teamId: number): Observable<ProjectUserRolesInfo> {
     return this.http.get<ProjectUserRolesInfo>(`${environment.backendAddress}/project/${projectId}/team/${teamId}/user`);
+  }
+
+  updateProjectUserRoles(projectId: number, teamId: number, login: string, roles: string[]):Observable<MultiRoleBasicUser> {
+    return this.http.put<MultiRoleBasicUser>(`${environment.backendAddress}/project/${projectId}/team/${teamId}/user/${login}/role`,roles);
   }
 }

@@ -88,7 +88,7 @@ export class ProjectContainersComponent implements OnInit {
   }
 
   deleteElement(id: number) {
-    console.log("Delete team of id " + id);
+    console.log("Delete task container of id " + id);
   }
 
   public toggleElement(element) {

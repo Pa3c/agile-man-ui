@@ -9,7 +9,11 @@ html {
 body {
   height: 100%;
 }
-
+.custom-modalbox {
+  background-color: #222;
+  min-width: 50vh;
+  text-align: center;
+}
 .delete-column-container-dialog-container {
   min-width: 220px;
   background-color: yellowgreen;
@@ -39,4 +43,10 @@ body {
 
 mat-icon:hover {
   cursor: pointer;
+}
+.flex-row {
+  display:flex; flex-direction: row;
+}
+.flex-column {
+  display:flex; flex-direction: column;
 }

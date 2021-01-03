@@ -1,18 +1,29 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, finalize, switchMap, tap } from 'rxjs/operators';
 import { TitleName } from 'src/app/model/common/CommonModule';
-import { BaseProjectTeam, ProjectType } from 'src/app/model/ProjectModule';
+import { BaseProjectTeam, ProjectType, ProjectUserRolesInfo } from 'src/app/model/ProjectModule';
+import { MultiRoleBasicUser } from 'src/app/model/user/UserModule';
 import { ProjectService } from 'src/app/service/project.service';
 import { TeamService } from 'src/app/service/team.service';
+import { EditProjectRoleComponent } from '../dialogs/edit-project-role/edit-project-role.component';
 
 @Component({
   selector: 'project-team-roles',
   templateUrl: './project-users.component.html',
-  styleUrls: ['./project-users.component.css']
+  styleUrls: ['./project-users.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class ProjectUsersComponent implements OnInit {
 projectId :number;
@@ -22,11 +33,14 @@ isLoading: boolean = false;
 filteredTeams: TitleName[] = [];
 teamFormControl = new FormControl();
 
-columnsToDisplay = ['id', 'title','action'];
+columnsToDisplay = ['title','action'];
 resourceUrl = "teams";
 selectedProjectType: ProjectType = ProjectType.KANBAN;
 
-  constructor(private router: Router,private projectService: ProjectService,private teamService: TeamService,
+detailedTeam: ProjectUserRolesInfo = null;
+detailedTeamId: number = null;
+
+  constructor(private dialog: MatDialog,  private router: Router,private projectService: ProjectService,private teamService: TeamService,
     private route: ActivatedRoute) {
       this.route.params.subscribe(params => this.projectId = params['id']);
       projectService.getTeams(this.projectId).subscribe(success=>{
@@ -116,11 +130,42 @@ selectedProjectType: ProjectType = ProjectType.KANBAN;
     this.router.navigateByUrl(`/${this.resourceUrl}/${login}`);
   }
   showProjectTeamUsers(teamId: number){
-   this.projectService.getTeamProjectUsersRoles(this.projectId,teamId).subscribe(success=>{
+    if(this.detailedTeamId==teamId){
+      this.detailedTeamId = null;
+      this.detailedTeam = null;
+      return;
+    }
+   this.projectService.getTeamProjectUsersRoles(this.projectId,teamId).subscribe( (success: ProjectUserRolesInfo)=>{
     console.log(success);
-   },error=>{
+    this.detailedTeamId = teamId;
+    this.detailedTeam = success;
+  },error=>{
      console.log(error);
    })
+  }
+
+  editUserRoles(user :MultiRoleBasicUser){
+    let dialogRef = this.dialog.open(EditProjectRoleComponent,{
+      data: {
+        projectType: this.detailedTeam.projectType,
+        roles: user.roles
+      },
+      panelClass: 'custom-modalbox'
+    })
+    dialogRef.afterClosed().subscribe((roles:string[])=>{
+     if(roles===undefined){
+       return;
+     }
+     this.projectService
+     .updateProjectUserRoles(this.projectId,this.detailedTeamId,user.login,roles).subscribe((success:MultiRoleBasicUser)=>{
+
+      const index = this.detailedTeam.users.findIndex(x=>x.login==user.login);
+      this.detailedTeam.users[index]=success;
+      console.log(success);
+     },error=>{
+      console.log(error);
+     })
+    })
   }
 }
 function compare(a: number | string, b: number | string, isAsc: boolean) {

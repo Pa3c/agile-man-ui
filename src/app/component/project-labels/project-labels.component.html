@@ -26,14 +26,14 @@
     </div>
     <div class="label-list">
       <div class="label-box" *ngFor="let label of projectLabels">
-        <div style="width: 20%;">
+        <div class="label-box-detail" >
           {{label.type}}
         </div>
-        <div style="width: 20%;">
+        <div class="label-box-detail" >
           {{label.name}}
         </div>
-        <div style="width: 20%;">
-          <mat-icon class="editable" (click)="removeLabelFromProject(label)">
+        <div class="label-box-detail" >
+          <mat-icon class="deletable" (click)="removeLabelFromProject(label)">
             delete_forever
           </mat-icon>
         </div>

@@ -55,6 +55,8 @@ import { ProjectLabelsComponent } from './component/project-labels/project-label
 import { ProjectDocumentationComponent } from './component/project-documentation/project-documentation.component';
 import { ProjectInfoComponent } from './component/project-info/project-info.component';
 import { ProjectUsersComponent } from './component/project-users/project-users.component';
+import { EditProjectRoleComponent } from './component/dialogs/edit-project-role/edit-project-role.component';
+import { ProjectRoleService } from './service/project-role.service';
 
 @NgModule({
   declarations: [
@@ -78,7 +80,8 @@ import { ProjectUsersComponent } from './component/project-users/project-users.c
     ProjectLabelsComponent,
     ProjectUsersComponent,
     ProjectDocumentationComponent,
-    ProjectInfoComponent
+    ProjectInfoComponent,
+    EditProjectRoleComponent
   ],
   imports: [
     BrowserModule,
@@ -123,7 +126,7 @@ import { ProjectUsersComponent } from './component/project-users/project-users.c
     RegisterService,TeamService,
     TaskService,StateService,
     MatDialogModule,
-
+    ProjectRoleService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

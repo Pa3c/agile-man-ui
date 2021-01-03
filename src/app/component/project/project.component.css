@@ -1,26 +1,30 @@
 .menu{
   width: 100%;
+  padding: 0 0.5rem;
+  padding-top: 0.5rem;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
-div.menu>button{
-  flex: 1;
+div.menu div{
+  flex: 0.25;
   text-align: center;
-  z-index: 1;
   margin-left: 0.5rem;
   background-color: #222222;
   color: ghostwhite;
   padding: 1rem 0;
-  font-size: 3vh;
+  font-size: 2vh;
+  white-space: normal;
 }
-div.menu>button:hover{
+div.menu div:first-child{
+  margin-left: 0;
+}
+div.menu>div:hover{
   color: yellowgreen;
+  cursor: pointer;
   outline: #222222;
 }
-div.menu>button:focus{
+div.menu>div:focus{
   outline: #222222;
-}
-div.menu>button:last-child{
-  margin-right: 0.5rem;
 }
 

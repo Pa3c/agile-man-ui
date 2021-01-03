@@ -27,39 +27,62 @@
           </ng-container>
         </mat-autocomplete>
       </div>
-      <table style="width: 100%; margin-top: 1rem;" mat-table matSort (matSortChange)="sortData($event)" [dataSource]="projectTeams" class="mat-elevation-z8">
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header="id" class="team-table">
-            <span style="text-transform: capitalize;">
-              Id
-            </span>
-          </th>
-          <td mat-cell *matCellDef="let element">{{element.id}}</td>
-        </ng-container>
+      <table style="width: 100%; margin-top: 1rem;" multiTemplateDataRows mat-table matSort
+        (matSortChange)="sortData($event)" [dataSource]="projectTeams" class="mat-elevation-z8">
+
         <ng-container matColumnDef="title">
           <th mat-header-cell *matHeaderCellDef mat-sort-header="title" class="team-table">
             <span style="text-transform: capitalize;">
               Title
             </span>
           </th>
-          <td mat-cell *matCellDef="let element" class="team-table">{{element.title}}</td>
+          <td mat-cell *matCellDef="let team" class="team-table">{{team.title}}</td>
         </ng-container>
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef>
           </th>
-          <td mat-cell *matCellDef="let element" style="text-align: end;">
-            <mat-icon class="editable" (click)="showProjectTeamUsers(element.id)">people</mat-icon>
-            <mat-icon class="editable" (click)="deleteTeam(element.id)">delete_forever</mat-icon>
-            <mat-icon class="editable" (click)="forward(element.id)">forward</mat-icon>
+          <td mat-cell *matCellDef="let team" style="text-align: end;">
+            <mat-icon class="editable" (click)="showProjectTeamUsers(team.id)">people</mat-icon>
+            <mat-icon class="editable" (click)="deleteTeam(team.id)">delete_forever</mat-icon>
+            <mat-icon class="editable" (click)="forward(team.id)">forward</mat-icon>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="detailedTeamContainer">
+          <td mat-cell *matCellDef="let team" [attr.colspan]="columnsToDisplay.length">
+            <div class="flex-row detailed-team-users" *ngIf="detailedTeam!=null"
+              [@detailExpand]="detailedTeam!=null && team.id == detailedTeamId ? 'expanded' : 'collapsed'">
+
+              <div *ngFor="let user of detailedTeam.users"
+              class="flex-column mat-elevation-z2 detailed-team-user">
+                <div class="detailed-team-user-name">
+                  Login: {{user.login}} <br>
+                  Name: {{user.name}}<br>
+                  Surname: {{user.surname}}<br>
+                </div>
+                <div class="flex-row" style="padding: 0 0.2rem;">
+                  <div>
+                    Roles
+                  </div>
+                  <div style="flex-grow: 1;">
+
+                  </div>
+                  <mat-icon class="edtiable" [inline]=true (click)="editUserRoles(user)">
+                    edit
+                  </mat-icon>
+                </div>
+                <div class="detailed-team-user-roles">
+                  <div *ngFor="let role of user.roles" class="flex-column" >
+                    {{role.replace("_"," ")}}
+                  </div>
+                </div>
+              </div>
+            </div>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef=columnsToDisplay></tr>
-        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
-          class="element-row"></tr>
+        <tr mat-row *matRowDef="let team; columns: columnsToDisplay;" class="element-row"></tr>
+        <tr class="detailed-row" mat-row *matRowDef="let team; columns: ['detailedTeamContainer'];"></tr>
       </table>
     </div>
-  </div>
-  <div class="user-role-management">
-
   </div>
 </div>

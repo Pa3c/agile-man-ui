@@ -32,6 +32,9 @@ export enum ProjectType {
     SCRUM = 'SCRUM',
     KANBAN= 'KANBAN'
 }
+export class ProjectRole{
+  name: string;
+}
 export class ProjectUserRolesInfo {
   projectType: string;
   users: MultiRoleBasicUser[];

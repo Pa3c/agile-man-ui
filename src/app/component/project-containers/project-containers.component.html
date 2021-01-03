@@ -15,12 +15,9 @@
       </div>
   </div>
   <div class="detailed-project-content">
-      <div *ngIf="noContainers; else contentTable" class="no-containers-info-wrapper">
+      <div *ngIf="!this.detailedProject; else contentTable" class="no-containers-info-wrapper">
           <div class="no-containers-info">
-              <h5>NO TASK TABLES AVAILABLE</h5>
-              <h5><mat-icon [inline]="true" style="font-size: 10vh;" (click)="createTaskContainer()" >
-                  add_circle_outline
-              </mat-icon></h5>
+              <h5>PLEASE ADD YOUR TEAM TO PROJECT</h5>
           </div>
       </div>
       <ng-template #contentTable>
