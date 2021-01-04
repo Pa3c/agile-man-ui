@@ -12,6 +12,7 @@ import { MultiRoleBasicUser } from 'src/app/model/user/UserModule';
 import { ProjectService } from 'src/app/service/project.service';
 import { TeamService } from 'src/app/service/team.service';
 import { EditProjectRoleComponent } from '../dialogs/edit-project-role/edit-project-role.component';
+import { IProjectModule } from '../project/project.component';
 
 @Component({
   selector: 'project-team-roles',
@@ -26,7 +27,7 @@ import { EditProjectRoleComponent } from '../dialogs/edit-project-role/edit-proj
   ],
   encapsulation: ViewEncapsulation.None,
 })
-export class ProjectUsersComponent implements OnInit {
+export class ProjectUsersComponent implements OnInit,IProjectModule {
 projectId :number;
 projectTeams: BaseProjectTeam[] = [];
 isLoading: boolean = false;

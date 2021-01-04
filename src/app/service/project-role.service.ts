@@ -13,6 +13,7 @@ export class ProjectRoleService {
   constructor(private http: HttpClient) { }
 
   getRolesByProjectType(projectType: string):Observable<ProjectRole[]>{
+    console.log("Invoked getRolesByProjectType");
     return this.http.get<ProjectRole[]>(`${environment.backendAddress}/projectrole/type/${projectType}`);
   }
 }

@@ -6,6 +6,7 @@ import { debounceTime, finalize, switchMap, tap } from 'rxjs/operators';
 import { Label, Type } from 'src/app/model/label/LabelModule';
 import { LabelService } from 'src/app/service/label.service';
 import { ProjectService } from 'src/app/service/project.service';
+import { IProjectModule } from '../project/project.component';
 
 @Component({
   selector: 'project-labels',
@@ -13,7 +14,7 @@ import { ProjectService } from 'src/app/service/project.service';
   styleUrls: ['./project-labels.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ProjectLabelsComponent implements OnInit {
+export class ProjectLabelsComponent implements OnInit,IProjectModule {
 projectId;
 projectLabels: Label[] = [];
 

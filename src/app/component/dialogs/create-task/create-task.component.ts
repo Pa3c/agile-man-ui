@@ -9,6 +9,8 @@ import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { LabelService } from 'src/app/service/label.service';
 import { Label, Type } from 'src/app/model/label/LabelModule';
+import { DatePipe } from '@angular/common';
+import { Constants } from 'src/app/model/common/CommonModule';
 
 @Component({
   selector: 'app-create-task',
@@ -47,7 +49,7 @@ export class CreateTaskComponent implements OnInit {
 
 
 
-  constructor(private dialogRef: MatDialogRef<CreateTaskComponent>,
+  constructor(private datepipe: DatePipe, private dialogRef: MatDialogRef<CreateTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,private labelService: LabelService) {
     this.labelsByTypes = new Map();
     this.labelsByTypes.set("label", []);
@@ -178,6 +180,7 @@ export class CreateTaskComponent implements OnInit {
     let techString = this.makeStringFromTable(this.taskTechnologies);
     this.task.technologies = techString;
     this.task.labels = labelString;
+    this.task.deadline = this.datepipe.transform(this.task.deadline,Constants.dtFormat);
     console.log(this.task);
     this.dialogRef.close(this.task);
   }

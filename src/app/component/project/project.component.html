@@ -1,24 +1,15 @@
 <div class="menu">
-  <div class="mat-elevation-z4" (click)='currentView= (currentView=="task_containers")? null:"task_containers"'>
+  <div class="mat-elevation-z4" (click)="initializeModule('ProjectContainersComponent')">
     Task Tables
   </div>
-  <div class="mat-elevation-z4" (click)='currentView= (currentView=="labels")? null:"labels"'>
+  <div class="mat-elevation-z4" (click)="initializeModule('ProjectLabelsComponent')">
     Labels
   </div>
-  <div class="mat-elevation-z4" (click)='currentView= (currentView=="team_roles")? null:"team_roles"'>
+  <div class="mat-elevation-z4" (click)="initializeModule('ProjectUsersComponent')">
     Users
   </div>
-  <div class="mat-elevation-z4" (click)='currentView = (currentView=="documentation")? null:"documentation"'>
+  <div class="mat-elevation-z4" (click)="initializeModule('ProjectDocumentationComponent')">
     Documentation
   </div>
 </div>
-<project-containers *ngIf='currentView=="task_containers"'>
-</project-containers>
-<project-labels *ngIf='currentView=="labels"'>
-</project-labels>
-<project-team-roles *ngIf='currentView=="team_roles"'>
-</project-team-roles>
-<project-documentation *ngIf='currentView=="documentation"'>
-</project-documentation>
-<project-info *ngIf='!currentView'>
-</project-info>
+<template #projectModule></template>

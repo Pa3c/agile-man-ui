@@ -17,21 +17,26 @@ export class LabelService {
   public host = environment.backendAddress;
   constructor(private http: HttpClient) { }
   getAll(): Observable<Label[]> {
+    console.log("Invoked getAll");
     return this.http.get<Label[]>(`${environment.backendAddress}/label`)
   }
 
   getAllFiltered(value: string, selectedType: Type): Observable<Label[]>  {
+    console.log("Invoked getAllFiltered");
     return this.http.get<Label[]>(`${environment.backendAddress}/label/type/${selectedType}/filtered?value=${value}`);
   }
 
   getLabelsOfProject(projectId: number): Observable<Label[]> {
+    console.log("Invoked getLabelsOfProject");
     return this.http.get<Label[]>(`${environment.backendAddress}/project/${projectId}/label`);
   }
 
   addLabelsToProject(projectId: number, projectLabels: Label[]) {
+    console.log("Invoked addLabelsToProject");
     return this.http.put<Label[]>(`${environment.backendAddress}/project/${projectId}/label`,projectLabels);
   }
   removeLabelFromProject(projectId: any, name: string) {
+    console.log("Invoked removeLabelFromProject");
     return this.http.delete<any>(`${environment.backendAddress}/project/${projectId}/label/${name}`);
   }
 }

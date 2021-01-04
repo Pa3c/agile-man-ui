@@ -12,14 +12,17 @@ export class AppUserService {
 
   constructor(private http: HttpClient) { }
   getUsers(): Observable<User[]> {
+    console.log("Invoked getUsers");
     return this.http.get<User[]>(`${environment.backendAddress}/user`);
   }
 
   getBasicUserInfo(login :string):Observable<BasicUserInfo>{
+    console.log("Invoked getUsers");
     return this.http.get<BasicUserInfo>(`${environment.backendAddress}/user/${login}/basic`);
   }
 
   getFilteredBasicUserInfo(login :string):Observable<BasicUserInfo[]>{
+    console.log("Invoked getFilteredBasicUserInfo");
     if(login == null){
       login = "a";
     }

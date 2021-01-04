@@ -14,7 +14,11 @@ storyPoints: number;
 majority: number;
 likes: number;
 complexity: number;
+
 deadline: string;
+reopened: string;
+closed: string;
+
 type: string;
 projectId: number;
 steps: Step[] = [];

@@ -229,6 +229,18 @@
             {{task.creationDate | date: 'yyyy-MM-dd HH:mm'}}
           </mat-chip>
         </div>
+        <div *ngIf="task.closed!=null">
+         Closed:
+          <mat-chip>
+            {{task.closed | date: 'yyyy-MM-dd HH:mm'}}
+          </mat-chip>
+        </div>
+        <div *ngIf="task.reopened!=null">
+          Reopened:
+          <mat-chip>
+            {{task.reopened | date: 'yyyy-MM-dd HH:mm'}}
+          </mat-chip>
+        </div>
       </div>
     </div>
     <div style="margin-bottom: 1rem">
@@ -297,6 +309,10 @@
             class="btn btn-dark w-100 submit-solution">Submit</button>
         </form>
       </div>
+      <button *ngIf="task.closed==null || task.reopened!=null" (click)="closeTask()"
+      class="btn btn-dark w-100 submit-solution">Close</button>
+      <button *ngIf="task.closed!=null && task.reopened==null" (click)="reopenTask()"
+      class="btn btn-dark w-100 submit-solution">Reopen</button>
     </div>
 
   </div>

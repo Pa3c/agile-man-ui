@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Project } from 'src/app/model/ProjectModule';
 import { ProjectService } from 'src/app/service/project.service';
+import { IProjectModule } from '../project/project.component';
 
 @Component({
   selector: 'project-info',
   templateUrl: './project-info.component.html',
   styleUrls: ['./project-info.component.css']
 })
-export class ProjectInfoComponent implements OnInit {
+export class ProjectInfoComponent implements OnInit,IProjectModule {
 project: Project;
 tempProject: Project;
 editMode: boolean = false;

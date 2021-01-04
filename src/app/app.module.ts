@@ -57,6 +57,7 @@ import { ProjectInfoComponent } from './component/project-info/project-info.comp
 import { ProjectUsersComponent } from './component/project-users/project-users.component';
 import { EditProjectRoleComponent } from './component/dialogs/edit-project-role/edit-project-role.component';
 import { ProjectRoleService } from './service/project-role.service';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -127,6 +128,7 @@ import { ProjectRoleService } from './service/project-role.service';
     TaskService,StateService,
     MatDialogModule,
     ProjectRoleService,
+    DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

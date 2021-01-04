@@ -1,9 +1,11 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { DatePipe } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { debounceTime, finalize, switchMap, tap } from 'rxjs/operators';
+import { Constants } from 'src/app/model/common/CommonModule';
 import { Label, Type } from 'src/app/model/label/LabelModule';
 import { Step, Task, TaskRelationType, TaskType, TaskUser } from 'src/app/model/task/TaskModule';
 import { BasicUserInfo } from 'src/app/model/user/UserModule';
@@ -46,7 +48,7 @@ export class TaskComponent implements OnInit {
   filteredTechLabels: Label[];
 
 
-  constructor(private userService: UserService, private route: ActivatedRoute,
+  constructor(private datePipe: DatePipe, private userService: UserService, private route: ActivatedRoute,
     private taskService: TaskService, private labelService: LabelService,
     private appUserService: AppUserService) {
     this.route.params.subscribe(params => this.task.id = params['id']);
@@ -367,12 +369,25 @@ export class TaskComponent implements OnInit {
   }
 
   addSolution(solution :string){
-
-    this.task.solution = solution;
+   this.task.solution = solution;
    this.updateTask();
   }
   updateTask() {
-    this.taskService.update(this.tempTask).subscribe(success=>{
+    this.sendTaskUpdate(this.tempTask);
+  }
+
+  closeTask(){
+    this.task.closed = this.datePipe.transform(new Date(),Constants.dtFormat);
+    this.sendTaskUpdate(this.task);
+  }
+
+  reopenTask(){
+    this.task.reopened = this.datePipe.transform(new Date(),Constants.dtFormat);
+    this.sendTaskUpdate(this.task);
+  }
+
+  sendTaskUpdate(task: Task){
+    this.taskService.update(task).subscribe(success=>{
       console.log(success);
       this.task = success;
     },error=>{

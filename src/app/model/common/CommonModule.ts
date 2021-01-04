@@ -12,3 +12,6 @@ export class BaseModel {
     createdBy: string;
     modifiedBy: string;
 }
+export class Constants {
+  public static readonly dtFormat = "yyyy-MM-dd'T'HH:mm:ss";
+}

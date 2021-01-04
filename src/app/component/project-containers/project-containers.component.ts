@@ -10,6 +10,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CreateTaskContainerComponent } from '../dialogs/create-task-container/create-task-container.component';
 import { TaskContainer, Type } from 'src/app/model/task-container/TaskContainerModule';
 import { TaskContainerService } from 'src/app/service/task-container.service';
+import { IProjectModule } from '../project/project.component';
 
 @Component({
   selector: 'project-containers',
@@ -23,7 +24,7 @@ import { TaskContainerService } from 'src/app/service/task-container.service';
     ]),
   ]
 })
-export class ProjectContainersComponent implements OnInit {
+export class ProjectContainersComponent implements OnInit,IProjectModule {
   projectTeams: TitleName[] = [];
   detailedProject: DetailedUserProject;
   columnsToDisplay = ['title', 'id'];
