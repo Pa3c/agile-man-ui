@@ -66,4 +66,8 @@ public host = environment.backendAddress;
   updateProjectUserRoles(projectId: number, teamId: number, login: string, roles: string[]):Observable<MultiRoleBasicUser> {
     return this.http.put<MultiRoleBasicUser>(`${environment.backendAddress}/project/${projectId}/team/${teamId}/user/${login}/role`,roles);
   }
+
+  delete(id: number) {
+    return this.http.delete(`${environment.backendAddress}/project/${id}`);
+  }
 }

@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,6 +24,7 @@ import { EditProjectRoleComponent } from '../dialogs/edit-project-role/edit-proj
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ProjectUsersComponent implements OnInit {
 projectId :number;

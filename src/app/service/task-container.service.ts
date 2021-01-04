@@ -8,9 +8,10 @@ import { DetailedTaskContainer, TaskContainer } from '../model/task-container/Ta
   providedIn: 'root'
 })
 export class TaskContainerService {
+
   constructor(private http: HttpClient) { }
-  
-  
+
+
   get(id: number):  Observable<DetailedTaskContainer>{
     return this.http.get<DetailedTaskContainer>(`${environment.backendAddress}/taskcontainer/${id}`);
   }
@@ -18,5 +19,9 @@ export class TaskContainerService {
   create(taskContainer: TaskContainer): Observable<TaskContainer>{
     return this.http.post<DetailedTaskContainer>(`${environment.backendAddress}/taskcontainer`,taskContainer);
   }
-  
+
+  delete(id: number) {
+    return this.http.delete(`${environment.backendAddress}/taskcontainer/${id}`);
+  }
+
 }

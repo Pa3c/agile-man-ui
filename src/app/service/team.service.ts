@@ -53,5 +53,7 @@ export class TeamService {
     return this.http.get<TitleName[]>(`${environment.backendAddress}/team/basic/filtered?value=${value}`);
   }
 
-
+  delete(id: number) {
+    return this.http.delete(`${environment.backendAddress}/team/${id}`);
+  }
 }

@@ -76,11 +76,6 @@ export class MainTeamsViewComponent implements OnInit {
     });
     return resolvedUserProject;
   }
-
-  deleteElement(id: number) {
-    console.log("Delete team of id " + id);
-  }
-
   createTeam() {
     if (this.dialogRef != null) {
       return;
@@ -96,7 +91,7 @@ export class MainTeamsViewComponent implements OnInit {
     });
   }
   deleteTeam(id: number) {
-    console.log("deleting team of id " + id);
+    this.teamService.delete(id).subscribe(success=>this.ngOnInit(),error=>console.log(error));
   }
 }
 

@@ -1,16 +1,16 @@
-<div class="container" style="font-size: 2vh;">
-  <div style="text-align: center;">
+<div class="labels-container">
     <div style="width: 100%;">
-
       <div>
         <input class="label-search" #trigger="matAutocompleteTrigger" [formControl]="labelsFormControl"
         [matAutocomplete]="autoUser">
-      <select class="label-search-type" [(ngModel)]=selectedType>
-        <option value="LABEL">LABEL</option>
-        <option value="TECHNOLOGY">TECHNOLOGY</option>
-      </select>
+      <mat-select [(ngModel)]=selectedType panelClass="custom-mat-select" style="width: 5rem;">
+        <mat-select-trigger class="basic">
+         {{selectedType}}
+        </mat-select-trigger>
+        <mat-option value="LABEL" class="basic"> LABEL</mat-option>
+        <mat-option value="TECHNOLOGY" class="basic">TECHNOLOGY</mat-option>
+      </mat-select>
       </div>
-
       <mat-autocomplete #autoUser="matAutocomplete" style="width: 100%;"
         (optionSelected)="selectedLabel($event.option.value, trigger, autoUser)">
         <mat-option style="text-align: center;background-color: yellowgreen;" *ngIf="isLoading" class="is-loading">
@@ -22,9 +22,7 @@
           </mat-option>
         </ng-container>
       </mat-autocomplete>
-
-    </div>
-    <div class="label-list">
+    <div class="label-list mat-elevation-z8" >
       <div class="label-box" *ngFor="let label of projectLabels">
         <div class="label-box-detail" >
           {{label.type}}
@@ -39,5 +37,4 @@
         </div>
       </div>
     </div>
-  </div>
 </div>

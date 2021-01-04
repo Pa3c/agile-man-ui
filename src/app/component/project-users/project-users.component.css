@@ -1,10 +1,10 @@
 .container {
   padding: 0.5rem 0.5rem;
-  font-size: 2vh;
   min-width: 100%;
   overflow-x: hidden;
   display: flex;
   flex-direction: row;
+  font-size: 2vh;
 }
 
 .team-management {
@@ -12,12 +12,11 @@
 }
 
 input.team-search {
-  padding-top: 1rem;
   background-color: transparent;
   border: none;
   border-bottom: 1px solid black;
   color: ghostwhite;
-  width: 100%;
+  width: 50%;
 }
 
 input.team-search:focus {
@@ -35,21 +34,6 @@ th.team-table {
 td.team-table {
   padding: 0.5rem;
 }
-
-select.label-search-type {
-  padding-top: 1rem;
-  padding-bottom: 2px;
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid black;
-  width: fit-content;
-  text-align: left;
-}
-
-select.label-search-type:focus {
-  outline: none;
-}
-
 .editable:hover {
   color: yellowgreen;
 }
@@ -87,4 +71,18 @@ select.label-search-type:focus {
   background-color: rgba(2, 2, 2, 0.5);
   border-radius: 4px;
 }
-
+.custom-mat-select.mat-select-panel {
+  background: #222;
+  color: ghostwhite;
+  font-size: 1vh;
+}
+.mat-select-value {
+  text-align: center;
+}
+.mat-option.mat-active{
+  color: ghostwhite !important;
+}
+.basic {
+  color: ghostwhite;
+  background-color: #222;
+}

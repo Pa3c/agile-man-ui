@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { ActivatedRoute } from '@angular/router';
@@ -10,7 +10,8 @@ import { ProjectService } from 'src/app/service/project.service';
 @Component({
   selector: 'project-labels',
   templateUrl: './project-labels.component.html',
-  styleUrls: ['./project-labels.component.css']
+  styleUrls: ['./project-labels.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ProjectLabelsComponent implements OnInit {
 projectId;

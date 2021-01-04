@@ -1,4 +1,10 @@
+.labels-container{
+  text-align: center;
+  justify-content: center;
+  font-size: 2vh;
+}
 .label-list {
+  margin: 0 0.5rem;
   margin-top: 1rem;
   border: solid 1px black;
   min-height: 60px;
@@ -21,7 +27,6 @@
 }
 input.label-search {
   padding-top: 1rem;
-
   background-color: transparent;
   border: none;
   border-bottom: 1px solid black;
@@ -31,22 +36,22 @@ input.label-search {
 input.label-search:focus {
 outline: none;
 }
-select.label-search-type{
-  padding-top: 1rem;
-  padding-bottom: 2px;
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid black;
-  width: fit-content;
-  text-align: end;
-}
-select.label-search-type:focus {
-  outline: none;
-}
 
 .label-box-detail {
   width: 20%;
 }
 .deletable:hover {
   color: red;
+}
+.custom-mat-select.mat-select-panel {
+  background: #222;
+  color: ghostwhite;
+  font-size: 1vh;
+}
+.mat-option.mat-active{
+  color: ghostwhite !important;
+}
+.basic {
+  color: ghostwhite;
+  background-color: #222;
 }

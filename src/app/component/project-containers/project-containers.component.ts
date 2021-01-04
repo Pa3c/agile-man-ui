@@ -34,8 +34,8 @@ export class ProjectContainersComponent implements OnInit {
   expandedElement: any;
   private dialogRef: MatDialogRef<any>;
 
-  constructor(public dialog: MatDialog,private projectService: ProjectService, private userService: UserService,
-    private route: ActivatedRoute,private taskContainerService: TaskContainerService) {
+  constructor(public dialog: MatDialog, private projectService: ProjectService, private userService: UserService,
+    private route: ActivatedRoute, private taskContainerService: TaskContainerService) {
     let projectId: number;
     this.route.params.subscribe(params => projectId = params['id']);
     const login = this.userService.getUserFromLocalCache().login;
@@ -88,10 +88,16 @@ export class ProjectContainersComponent implements OnInit {
   }
 
   deleteElement(id: number) {
-    console.log("Delete task container of id " + id);
-  }
+    console.log(id);
 
-  public toggleElement(element) {
+    this.taskContainerService.delete(id)
+      .subscribe(success => {
+        const index = this.detailedProject.taskContainers.findIndex(x=>x.id);
+        this.detailedProject.taskContainers.splice(index,0);
+        this.refreshTaskContainers();
+      }, error => console.log(error))
+  }
+  toggleElement(element) {
     if (this.expandedElement == element) {
       this.expandedElement = null;
       return;
@@ -113,16 +119,16 @@ export class ProjectContainersComponent implements OnInit {
     return object;
   }
 
-  createTaskContainer(){
-    if(this.dialogRef!=null){
+  createTaskContainer() {
+    if (this.dialogRef != null) {
       return;
     }
-    this.dialogRef = this.dialog.open(CreateTaskContainerComponent,{
+    this.dialogRef = this.dialog.open(CreateTaskContainerComponent, {
       panelClass: 'custom-dialog-container'
     });
 
     this.dialogRef.afterClosed().subscribe(result => {
-      if(result!=null){
+      if (result != null) {
         this.addToDetailedUserProjectContainer(result);
       }
       this.dialogRef = null;
@@ -130,7 +136,7 @@ export class ProjectContainersComponent implements OnInit {
   }
 
   private addToDetailedUserProjectContainer(result: string) {
-    if(result==null || result.length==0){
+    if (result == null || result.length == 0) {
       return
     }
     const taskContainer = new TaskContainer()
@@ -138,11 +144,15 @@ export class ProjectContainersComponent implements OnInit {
     taskContainer.type = Type.COMMON
     taskContainer.teamInProjectId = this.detailedProject.teamInProjectId;
     console.log(taskContainer);
-    this.taskContainerService.create(taskContainer).subscribe(success=>{
-      console.log(success);
-    },error=>{
+    this.taskContainerService.create(taskContainer).subscribe(success => {
+      this.refreshTaskContainers();
+    }, error => {
       console.log(error);
     });
+  }
+
+  refreshTaskContainers(){
+    this.detailedProject.taskContainers = this.detailedProject.taskContainers;
   }
 
 }

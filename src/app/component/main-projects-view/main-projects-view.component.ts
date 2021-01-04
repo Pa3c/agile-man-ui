@@ -69,7 +69,7 @@ export class MainProjectsViewComponent implements OnInit {
   }
 
   deleteElement(id: number){
-    console.log("Delete project of id "+id);
+    this.projectService.delete(id).subscribe(success=>this.ngOnInit(),error=>console.log(error));
   }
 
   createProject(){

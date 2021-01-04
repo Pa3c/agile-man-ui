@@ -2,7 +2,8 @@ import { Input } from '@angular/core';
 import { BaseModel, Identifable } from '../common/CommonModule';
 import { Task } from '../task/TaskModule';
 
-export class TaskContainer extends BaseModel{
+export class TaskContainer extends BaseModel implements Identifable{
+    id: number;
     teamInProjectId: number;
     title: string;
     type: string;

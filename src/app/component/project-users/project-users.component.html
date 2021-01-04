@@ -1,19 +1,19 @@
 <div class="container">
   <div class="team-management">
-    <div class="add-team" style="text-align: center;">
-      Add Team
-    </div>
     <div class="team-list-container">
-      <div>
-        <div style="display: flex;flex-direction: row;">
-          <select class="label-search-type" [(ngModel)]=selectedProjectType>
-            <option value="KANBAN">KANBAN</option>
-            <option value="SCRUM">SCRUM</option>
-            <option value="XP">XP</option>
-          </select>
+      <div style="width: 100%;padding-top: 0.5rem;">
+        <div class="flex-row" style="justify-content: center;">
           <input class="team-search" #trigger="matAutocompleteTrigger" [formControl]="teamFormControl"
             [matAutocomplete]="autoTeam">
-        </div>
+             <mat-select [(ngModel)]=selectedProjectType panelClass="custom-mat-select" style="width: 5rem;">
+              <mat-select-trigger class="basic" style="text-align: center;">
+                {{selectedProjectType}}
+               </mat-select-trigger>
+              <mat-option value="KANBAN" class="basic">KANBAN</mat-option>
+              <mat-option value="SCRUM" class="basic">SCRUM</mat-option>
+              <mat-option value="XP" class="basic">XP</mat-option>
+            </mat-select>
+       </div>
 
         <mat-autocomplete #autoTeam="matAutocomplete"
           (optionSelected)="selectedTeam($event.option.value, trigger, autoTeam)">
@@ -81,7 +81,7 @@
         </ng-container>
         <tr mat-header-row *matHeaderRowDef=columnsToDisplay></tr>
         <tr mat-row *matRowDef="let team; columns: columnsToDisplay;" class="element-row"></tr>
-        <tr class="detailed-row" mat-row *matRowDef="let team; columns: ['detailedTeamContainer'];"></tr>
+        <tr class="detailed-row" style="height: 0;" mat-row *matRowDef="let team; columns: ['detailedTeamContainer'];"></tr>
       </table>
     </div>
   </div>
