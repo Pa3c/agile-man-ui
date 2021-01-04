@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DetailedTaskContainer, State } from 'src/app/model/task-container/TaskContainerModule';
+import { DetailedTaskContainer, PlaceTaskActions, State } from 'src/app/model/task-container/TaskContainerModule';
 import { TaskContainerService } from 'src/app/service/task-container.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Task } from 'src/app/model/task/TaskModule';
@@ -9,6 +9,9 @@ import { StateService } from 'src/app/service/state.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeleteColumnComponent } from '../dialogs/delete-column/delete-column.component';
 import { CreateTaskComponent } from '../dialogs/create-task/create-task.component';
+import { CopyMoveTaskComponent } from '../dialogs/copy-move-task/copy-move-task.component';
+import { CopyMoveActionData } from '../dialogs/copy-move-task/copy-move-action-module';
+
 
 @Component({
   selector: 'app-main-task-table-view',
@@ -16,6 +19,7 @@ import { CreateTaskComponent } from '../dialogs/create-task/create-task.componen
   styleUrls: ['./main-task-table-view.component.css']
 })
 export class MainTaskTableViewComponent implements OnInit {
+  readonly placeTaskActions = PlaceTaskActions;
   detailedTaskContainer: DetailedTaskContainer;
   headerEdit: boolean = false;
   newColumnName = "";
@@ -23,8 +27,7 @@ export class MainTaskTableViewComponent implements OnInit {
   private dialogRef: MatDialogRef<any>;
   projectId :number;
 
-
-  constructor(public taskDialog: MatDialog,private taskService: TaskService,
+  constructor(public matDialog: MatDialog,private taskService: TaskService,
     private taskContainerService: TaskContainerService,
     private stateService: StateService,
     private route: ActivatedRoute,
@@ -203,7 +206,7 @@ export class MainTaskTableViewComponent implements OnInit {
     if(this.dialogRef!=null){
       return;
     }
-    this.dialogRef = this.taskDialog.open(CreateTaskComponent,{
+    this.dialogRef = this.matDialog.open(CreateTaskComponent,{
       data: {
         state: state,
         projectId: this.projectId
@@ -221,10 +224,37 @@ export class MainTaskTableViewComponent implements OnInit {
       this.taskService.create(task).subscribe(success=>{
       this.detailedTaskContainer.tasks[success.state].push(success);
       },error=>{
-
+        console.log(error);
       })
       this.dialogRef = null;
     });
   }
 
+  placeTask(task:Task){
+    const dialogRef = this.matDialog.open(CopyMoveTaskComponent,
+      {
+        data: {
+          teamId:this.detailedTaskContainer.teamId,
+          projectId:this.detailedTaskContainer.projectId,
+          containerId: this.detailedTaskContainer.id
+        },
+        panelClass: 'custom-modalbox'
+      })
+    dialogRef.afterClosed().subscribe((result: any)=>{
+      this.updateOrMoveTask(task,result);
+    });
+  }
+  updateOrMoveTask(task: Task, data: CopyMoveActionData) {
+    if(data.action == PlaceTaskActions.COPY){
+      console.log("COPY ENTITY");
+      console.log(task);
+      this.taskService.copy(task.id,data.taskContainerId).subscribe(success=>console.log(success),error=>console.log(error));
+    }else{
+      console.log("UPDATE ENTITY");
+      console.log(task);
+      task.taskContainerId = data.taskContainerId;
+      this.taskService.move(task).subscribe(success=>console.log(success),error=>console.log(error));
+    }
+   // this.getDetailedTaskContainer(this.detailedTaskContainer.id);
+  }
 }

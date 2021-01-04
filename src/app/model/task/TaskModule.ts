@@ -1,7 +1,6 @@
 import { BaseModel, Identifable } from '../common/CommonModule';
 
 export class Task extends BaseModel implements Identifable{
-
 id: number;
 taskContainerId;
 title: string;

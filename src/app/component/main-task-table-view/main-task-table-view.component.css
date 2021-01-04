@@ -7,8 +7,6 @@
   flex-direction: column;
 }
 
-.edit-panel {}
-
 .flex-table-container {
   flex-grow: 0.95;
   overflow-x: auto;
@@ -69,6 +67,13 @@
   border-radius: 20px;
   margin-top: 10px;
   background-color: rgba(2, 2, 2, 0.5);
+}
+.task-done{
+  background-color: yellowgreen;
+  border-color: yellowgreen;
+}
+.task-done a:hover{
+  color: #222;
 }
 
 .task-list-add {
@@ -135,4 +140,10 @@
 
 .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.custom-editable:hover{
+  color: ghostwhite;
+}
+.custom-editable {
+  color: transparent;
 }

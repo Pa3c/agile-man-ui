@@ -6,6 +6,7 @@ import { BaseProjectTeam, DetailedUserProject, Project, ProjectUserRolesInfo } f
 import { TitleName } from '../model/common/CommonModule';
 import { Label } from '../model/label/LabelModule';
 import { MultiRoleBasicUser } from '../model/user/UserModule';
+import { TaskContainer } from '../model/task-container/TaskContainerModule';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +61,12 @@ public host = environment.backendAddress;
     return this.http
       .get<DetailedUserProject>(`${environment.backendAddress}/user/${login}/project/${projectId}/team/${teamId}`);
   }
+
+  getTaskContainers(projectId: number, teamId: number): Observable<TaskContainer[]> {
+    return this.http
+    .get<TaskContainer[]>(`${environment.backendAddress}/project/${projectId}/team/${teamId}/taskcontainer`);
+  }
+
 
   getProjectLabels(projectId: number) {
     console.log("Invoked getProjectLabels");

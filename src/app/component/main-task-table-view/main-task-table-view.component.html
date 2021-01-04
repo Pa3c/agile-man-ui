@@ -36,11 +36,17 @@
         <div cdkDropList id={{state.name}} [cdkDropListData]='detailedTaskContainer.tasks[state.name]' class="task-list"
           (cdkDropListDropped)="drop($event,state.name)" [cdkDropListConnectedTo]="getConnectedList()">
 
-          <div class="task-box" [cdkDragData]="state.name" *ngFor="let item of detailedTaskContainer.tasks[state.name]"
+          <div class="task-box" [class.task-done]="item.closed" [cdkDragData]="state.name" *ngFor="let item of detailedTaskContainer.tasks[state.name]"
             cdkDrag>
             <a class="editable task-editable" routerLink="/tasks/{{item.id}}">
               {{item.title}}
             </a>
+            <span class="custom-editable" style="flex-grow: 1;text-align: end;">
+              <mat-icon class="editable" (click)="placeTask(item)">
+                content_copy
+              </mat-icon>
+            </span>
+
           </div>
         </div>
         <div class="task-box task-box-add" (click)="createTask(state)">

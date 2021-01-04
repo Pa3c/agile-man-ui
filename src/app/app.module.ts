@@ -58,6 +58,7 @@ import { ProjectUsersComponent } from './component/project-users/project-users.c
 import { EditProjectRoleComponent } from './component/dialogs/edit-project-role/edit-project-role.component';
 import { ProjectRoleService } from './service/project-role.service';
 import { DatePipe } from '@angular/common';
+import { CopyMoveTaskComponent } from './component/dialogs/copy-move-task/copy-move-task.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { DatePipe } from '@angular/common';
     ProjectUsersComponent,
     ProjectDocumentationComponent,
     ProjectInfoComponent,
-    EditProjectRoleComponent
+    EditProjectRoleComponent,
+    CopyMoveTaskComponent
   ],
   imports: [
     BrowserModule,

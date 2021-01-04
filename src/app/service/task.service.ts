@@ -9,6 +9,20 @@ import { Task } from '../model/task/TaskModule';
   providedIn: 'root'
 })
 export class TaskService {
+
+
+  updateStatus(id: number,status:string):Observable<Task> {
+   return this.http.put<Task>(`${environment.backendAddress}/task/${id}/status/${status}`,null);
+  }
+
+  move(task: Task):Observable<Task> {
+    return this.http.put<Task>(`${environment.backendAddress}/task/${task.id}/taskcontainer/${task.taskContainerId}`,null);
+   }
+
+  copy(id: number, taskContainerId: number) {
+    return this.http.post<Task>(`${environment.backendAddress}/task/${id}/taskcontainer/${taskContainerId}`,null);
+  }
+
   create(task: Task) :Observable<Task>{
     return this.http.post<Task>(`${environment.backendAddress}/task`,task);
   }

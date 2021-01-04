@@ -270,10 +270,10 @@
               {{step.description}}
             </span>
             <span>
-              <mat-icon *ngIf="step.done" (click)="step.done=false">
+              <mat-icon *ngIf="step.done" (click)="updateStep(step,false)">
                 close
               </mat-icon>
-              <mat-icon *ngIf="!step.done" (click)="step.done=true">
+              <mat-icon *ngIf="!step.done" (click)="updateStep(step,true)">
                 check
               </mat-icon>
             </span>
@@ -309,12 +309,11 @@
             class="btn btn-dark w-100 submit-solution">Submit</button>
         </form>
       </div>
-      <button *ngIf="task.closed==null || task.reopened!=null" (click)="closeTask()"
+      <button *ngIf="task.closed==null || (task.reopened!=null && task.closed==null)" (click)="closeTask()"
       class="btn btn-dark w-100 submit-solution">Close</button>
-      <button *ngIf="task.closed!=null && task.reopened==null" (click)="reopenTask()"
+      <button *ngIf="task.closed!=null" (click)="reopenTask()"
       class="btn btn-dark w-100 submit-solution">Reopen</button>
     </div>
 
   </div>
-
 </div>

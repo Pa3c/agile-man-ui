@@ -21,6 +21,8 @@ export class BaseProjectTeam {
 export class DetailedUserProject extends BaseModel implements Identifable{
     id: number;
     teamInProjectId: number;
+    teamId: number;
+    projectId: number;
     title: string;
     description: string;
     type: string;
