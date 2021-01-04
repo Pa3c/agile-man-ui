@@ -370,12 +370,11 @@ export class TaskComponent implements OnInit {
 
   addSolution(solution :string){
    this.task.solution = solution;
-   this.updateTask();
+   this.sendTaskUpdate(this.task);
   }
   updateTask() {
     this.sendTaskUpdate(this.tempTask);
   }
-
   closeTask(){
     this.task.closed = this.datePipe.transform(new Date(),Constants.dtFormat);
     this.sendTaskUpdate(this.task);
