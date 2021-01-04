@@ -31,7 +31,9 @@ input.label-search {
   border: none;
   border-bottom: 1px solid black;
   color: ghostwhite;
-  width: 50%;
+  min-width: 20%;
+  width: 20%;
+  max-width: 50%;
 }
 input.label-search:focus {
 outline: none;

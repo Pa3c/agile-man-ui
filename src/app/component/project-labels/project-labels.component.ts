@@ -61,15 +61,23 @@ selectedType:Type = Type.LABEL ;
     if (this.projectLabels.findIndex(x => x.name == event.name) != -1) {
       return;
     }
+    this.addLabelToProject(event);
+  }
 
+  addLabelFromInput(value:string){
+    this.addLabelToProject(new Label(value,this.selectedType));
+  }
+
+
+  addLabelToProject(event: Label){
     this.labelService.addLabelsToProject(this.projectId,[event]).subscribe(success=>{
       console.log(success);
       this.projectLabels.push(event);
     },error=>{
       console.log(error);
     });
-
   }
+
   clearSearchInput(trigger: MatAutocompleteTrigger, auto: MatAutocomplete) {
     auto.options.forEach((item) => {
       item.deselect()

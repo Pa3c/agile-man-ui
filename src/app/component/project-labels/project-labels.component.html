@@ -1,40 +1,47 @@
 <div class="labels-container">
-    <div style="width: 100%;">
-      <div>
-        <input class="label-search" #trigger="matAutocompleteTrigger" [formControl]="labelsFormControl"
+  <div style="width: 100%;">
+    <div style="margin: 0 auto;">
+      <mat-icon [inline]=true
+      *ngIf="labelInput.value.length>0" matSuffix
+      style="padding-right: 0.25rem;"
+      (click)="addLabelFromInput(labelInput.value)"
+      >
+        add_circle_outline</mat-icon>
+      <input #labelInput class="label-search" #trigger="matAutocompleteTrigger" [formControl]="labelsFormControl"
         [matAutocomplete]="autoUser">
       <mat-select [(ngModel)]=selectedType panelClass="custom-mat-select" style="width: 5rem;">
         <mat-select-trigger class="basic">
-         {{selectedType}}
+          {{selectedType}}
         </mat-select-trigger>
         <mat-option value="LABEL" class="basic"> LABEL</mat-option>
         <mat-option value="TECHNOLOGY" class="basic">TECHNOLOGY</mat-option>
       </mat-select>
-      </div>
-      <mat-autocomplete #autoUser="matAutocomplete" style="width: 100%;"
-        (optionSelected)="selectedLabel($event.option.value, trigger, autoUser)">
-        <mat-option style="text-align: center;background-color: yellowgreen;" *ngIf="isLoading" class="is-loading">
-          <i style="text-align: center;" class="fa fa-spinner fa-spin"></i>
-        </mat-option>
-        <ng-container *ngIf="!isLoading">
-          <mat-option style="background-color: yellowgreen;" *ngFor="let label of filteredLabels" [value]=label>
-            {{label.name}}
-          </mat-option>
-        </ng-container>
-      </mat-autocomplete>
-    <div class="label-list mat-elevation-z8" >
-      <div class="label-box" *ngFor="let label of projectLabels">
-        <div class="label-box-detail" >
-          {{label.type}}
-        </div>
-        <div class="label-box-detail" >
+    </div>
+    <mat-autocomplete #autoUser="matAutocomplete" style="width: 100%;"
+      (optionSelected)="selectedLabel($event.option.value, trigger, autoUser)">
+      <mat-option style="text-align: center;background-color: yellowgreen;" *ngIf="isLoading" class="is-loading">
+        <i style="text-align: center;" class="fa fa-spinner fa-spin"></i>
+      </mat-option>
+      <ng-container *ngIf="!isLoading">
+        <mat-option style="background-color: yellowgreen;" *ngFor="let label of filteredLabels" [value]=label>
           {{label.name}}
-        </div>
-        <div class="label-box-detail" >
-          <mat-icon class="deletable" (click)="removeLabelFromProject(label)">
-            delete_forever
-          </mat-icon>
-        </div>
+        </mat-option>
+      </ng-container>
+    </mat-autocomplete>
+  </div>
+  <div class="label-list mat-elevation-z8">
+    <div class="label-box" *ngFor="let label of projectLabels">
+      <div class="label-box-detail">
+        {{label.type}}
+      </div>
+      <div class="label-box-detail">
+        {{label.name}}
+      </div>
+      <div class="label-box-detail">
+        <mat-icon class="deletable" (click)="removeLabelFromProject(label)">
+          delete_forever
+        </mat-icon>
       </div>
     </div>
+  </div>
 </div>
