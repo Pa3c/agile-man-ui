@@ -8,7 +8,7 @@
 }
 
 .flex-table-container {
-  flex-grow: 0.95;
+  flex-grow:1;
   overflow-x: auto;
   display: flex;
   flex-direction: row;
@@ -16,14 +16,19 @@
   margin: 0;
 }
 
-
+.filterOpened {
+  width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
 
 .column-container {
   display: flex;
-  min-width: 18%;
-  max-width: 18%;
+  min-width: 150px;
+  width: 20%;
   flex-direction: column;
-  margin: 0 0.5vw;
+  margin: 0 0.5vh;
 }
 
 .column-container ::-webkit-scrollbar {

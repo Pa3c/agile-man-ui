@@ -46,7 +46,8 @@ export class TaskComponent implements OnInit {
   filteredTechLabels: Label[];
 
 
-  constructor(private userService: UserService, private route: ActivatedRoute,
+  constructor(
+    private userService: UserService, private route: ActivatedRoute,
     private taskService: TaskService, private labelService: LabelService,
     private appUserService: AppUserService) {
     this.route.params.subscribe(params => this.task.id = params['id']);

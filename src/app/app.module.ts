@@ -60,6 +60,7 @@ import { ProjectRoleService } from './service/project-role.service';
 import { DatePipe } from '@angular/common';
 import { CopyMoveTaskComponent } from './component/dialogs/copy-move-task/copy-move-task.component';
 import { CloseContainerComponent } from './component/dialogs/close-container/close-container.component';
+import { TaskFilterComponent } from './component/task-filter/task-filter.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { CloseContainerComponent } from './component/dialogs/close-container/clo
     ProjectInfoComponent,
     EditProjectRoleComponent,
     CopyMoveTaskComponent,
-    CloseContainerComponent
+    CloseContainerComponent,
+    TaskFilterComponent
   ],
   imports: [
     BrowserModule,
@@ -133,6 +135,7 @@ import { CloseContainerComponent } from './component/dialogs/close-container/clo
     MatDialogModule,
     ProjectRoleService,
     DatePipe,
+    TaskFilterComponent,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

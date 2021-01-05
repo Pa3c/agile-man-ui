@@ -11,6 +11,7 @@ import { DeleteColumnComponent } from '../dialogs/delete-column/delete-column.co
 import { CreateTaskComponent } from '../dialogs/create-task/create-task.component';
 import { CopyMoveTaskComponent } from '../dialogs/copy-move-task/copy-move-task.component';
 import { CopyMoveActionData } from '../dialogs/copy-move-task/copy-move-action-module';
+import { TaskFilterComponent } from '../task-filter/task-filter.component';
 
 
 @Component({
@@ -20,18 +21,28 @@ import { CopyMoveActionData } from '../dialogs/copy-move-task/copy-move-action-m
 })
 export class MainTaskTableViewComponent implements OnInit {
   readonly placeTaskActions = PlaceTaskActions;
+  filterOpened = false;
   detailedTaskContainer: DetailedTaskContainer;
   headerEdit: boolean = false;
   newColumnName = "";
   oldColumnName = "";
   private dialogRef: MatDialogRef<any>;
-  projectId :number;
+  projectId: number;
 
-  constructor(public matDialog: MatDialog,private taskService: TaskService,
+  constructor(
+    private taskFilter: TaskFilterComponent,
+    public matDialog: MatDialog, private taskService: TaskService,
     private taskContainerService: TaskContainerService,
     private stateService: StateService,
     private route: ActivatedRoute,
-    public dialog: MatDialog) {
+    public dialog: MatDialog) { }
+
+    filterTasks(event: any){
+      console.log(event);
+    }
+
+
+  ngOnInit() {
     this.route.params.subscribe(params => this.projectId = params['project_id']);
     let taskContainerId: number;
     this.route.params.subscribe(params => taskContainerId = params['table_id']);
@@ -45,13 +56,6 @@ export class MainTaskTableViewComponent implements OnInit {
     }, error => {
       console.log(error);
     });
-  }
-
-  ngOnInit() {
-  }
-
-  log(x) {
-    console.log(x);
   }
 
   dropColumn(event: CdkDragDrop<string[]>) {
@@ -81,7 +85,11 @@ export class MainTaskTableViewComponent implements OnInit {
 
   }
 
-  drop(event: CdkDragDrop<string[]>, newState: string) {
+  taskColumnChange(event: CdkDragDrop<string[]>, newState: string) {
+    if (this.detailedTaskContainer.closed) {
+      // alert dialog
+      return;
+    }
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -127,16 +135,16 @@ export class MainTaskTableViewComponent implements OnInit {
   }
 
   deleteColumn(name: string) {
-    let dialogRef = this.dialog.open(DeleteColumnComponent,{ panelClass: ['delete-column-container-dialog-container','delete-column-mat-dialog-actions']});
+    let dialogRef = this.dialog.open(DeleteColumnComponent, { panelClass: ['delete-column-container-dialog-container', 'delete-column-mat-dialog-actions'] });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != true) {
         return;
       }
-      const state :State = this.detailedTaskContainer.states.filter(x => x.name == name)[0];
+      const state: State = this.detailedTaskContainer.states.filter(x => x.name == name)[0];
       const index = this.detailedTaskContainer.states.indexOf(state);
       this.detailedTaskContainer.states.splice(index, 1);
-      this.stateService.delete(state.id).subscribe(success=>this.getDetailedTaskContainer(this.detailedTaskContainer.id));
+      this.stateService.delete(state.id).subscribe(success => this.getDetailedTaskContainer(this.detailedTaskContainer.id));
       this.getDetailedTaskContainer(this.detailedTaskContainer.id);
     });
 
@@ -148,8 +156,8 @@ export class MainTaskTableViewComponent implements OnInit {
       return;
     }
     let states: State[] = this.detailedTaskContainer.states.filter(x => x.name == this.oldColumnName);
-    if(states.length!=1){
-      console.log('Columns should have unique names \n'+states);
+    if (states.length != 1) {
+      console.log('Columns should have unique names \n' + states);
       return;
     }
     console.log(states[0]);
@@ -202,11 +210,11 @@ export class MainTaskTableViewComponent implements OnInit {
     this.headerEdit = toggle;
   }
 
-  createTask(state: State){
-    if(this.dialogRef!=null){
+  createTask(state: State) {
+    if (this.dialogRef != null) {
       return;
     }
-    this.dialogRef = this.matDialog.open(CreateTaskComponent,{
+    this.dialogRef = this.matDialog.open(CreateTaskComponent, {
       data: {
         state: state,
         projectId: this.projectId
@@ -216,48 +224,48 @@ export class MainTaskTableViewComponent implements OnInit {
 
     this.dialogRef.afterClosed().subscribe(task => {
       console.log(task);
-      if(task==undefined || task == null || task == ''){
+      if (task == undefined || task == null || task == '') {
         this.dialogRef = null;
         return;
       }
       task.taskContainerId = this.detailedTaskContainer.id;
-      this.taskService.create(task).subscribe(success=>{
+      this.taskService.create(task).subscribe(success => {
         console.log(this.detailedTaskContainer.tasks[success.state]);
 
-      this.detailedTaskContainer.tasks[success.state].push(success);
-      },error=>{
+        this.detailedTaskContainer.tasks[success.state].push(success);
+      }, error => {
         console.log(error);
       })
       this.dialogRef = null;
     });
   }
 
-  placeTask(task:Task){
+  placeTask(task: Task) {
     const dialogRef = this.matDialog.open(CopyMoveTaskComponent,
       {
         data: {
-          teamId:this.detailedTaskContainer.teamId,
-          projectId:this.detailedTaskContainer.projectId,
+          teamId: this.detailedTaskContainer.teamId,
+          projectId: this.detailedTaskContainer.projectId,
           containerId: this.detailedTaskContainer.id
         },
         panelClass: 'custom-modalbox'
       })
-    dialogRef.afterClosed().subscribe((result: any)=>{
-      this.updateOrMoveTask(task,result);
+    dialogRef.afterClosed().subscribe((result: any) => {
+      this.updateOrMoveTask(task, result);
     });
   }
-  updateOrMoveTask(task: Task, data: CopyMoveActionData) {
-    if(data.action == PlaceTaskActions.COPY){
+  private updateOrMoveTask(task: Task, data: CopyMoveActionData) {
+    if (data.action == PlaceTaskActions.COPY) {
       console.log("COPY ENTITY");
-      this.taskService.copy(task.id,data.taskContainerId).subscribe(success=>{
-        if(data.taskContainerId==this.detailedTaskContainer.id){
+      this.taskService.copy(task.id, data.taskContainerId).subscribe(success => {
+        if (data.taskContainerId == this.detailedTaskContainer.id) {
           this.detailedTaskContainer.tasks[success.state].push(success);
         }
-      },error=>console.log(error));
-    }else{
+      }, error => console.log(error));
+    } else {
       console.log("UPDATE ENTITY");
       task.taskContainerId = data.taskContainerId;
-      this.taskService.move(task).subscribe(success=>console.log(success),error=>console.log(error));
+      this.taskService.move(task).subscribe(success => console.log(success), error => console.log(error));
     }
   }
 }

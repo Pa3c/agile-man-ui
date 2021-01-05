@@ -2,7 +2,7 @@ import { BaseModel, Identifable } from '../common/CommonModule';
 
 export class Task extends BaseModel implements Identifable{
 id: number;
-taskContainerId;
+taskContainerId: number;
 title: string;
 state: string;
 solution: string;
@@ -53,4 +53,26 @@ export enum TaskRelationType {
   OBSERVER = "OBSERVER",
   LIKER = "LIKER",
   DISLIKER = "DISLIKER"
+}
+export class TaskSearchProperties {
+  list: TypeProp[] = [];
+  constructor(){
+    this.list.push(new TypeProp("title","string"))
+    this.list.push(new TypeProp("state","string"))
+    this.list.push(new TypeProp("labels","string"))
+    this.list.push(new TypeProp("technologies","string"))
+    this.list.push(new TypeProp("description","string"))
+    this.list.push(new TypeProp("story_points","number"))
+    this.list.push(new TypeProp("majority","number"))
+    this.list.push(new TypeProp("likes","number"))
+    this.list.push(new TypeProp("complexity","number"))
+    this.list.push(new TypeProp("deadline","date"))
+    this.list.push(new TypeProp("reopened","date"))
+    this.list.push(new TypeProp("closed","date"))
+  }
+}
+
+export class TypeProp {
+  constructor(public name: string,public type: string) {
+  }
 }
