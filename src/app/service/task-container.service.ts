@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { DetailedTaskContainer, TaskContainer } from '../model/task-container/TaskContainerModule';
+import { Identifable } from '../model/common/CommonModule';
+import { DetailedTaskContainer, TaskContainer, TaskContainerStatus } from '../model/task-container/TaskContainerModule';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskContainerService {
+
 
 
   constructor(private http: HttpClient) { }
@@ -18,11 +20,29 @@ export class TaskContainerService {
   }
 
   create(taskContainer: TaskContainer): Observable<TaskContainer>{
-    return this.http.post<DetailedTaskContainer>(`${environment.backendAddress}/taskcontainer`,taskContainer);
+    return this.http.post<TaskContainer>(`${environment.backendAddress}/taskcontainer`,taskContainer);
+  }
+
+  update(id: number, taskContainer: TaskContainer):Observable<TaskContainer> {
+    return this.http.put<TaskContainer>(`${environment.backendAddress}/taskcontainer/${id}`,taskContainer);
   }
 
   delete(id: number) {
     return this.http.delete(`${environment.backendAddress}/taskcontainer/${id}`);
+  }
+
+  copy(id:number,taskContainer: TaskContainer): Observable<TaskContainer>{
+    return this.http.post<TaskContainer>(`${environment.backendAddress}/taskcontainer/${id}`,taskContainer);
+  }
+
+  changeStatus(id:number,taskContainerStatus: TaskContainerStatus,identifable:Identifable): Observable<TaskContainer>{
+    return this.http.post<TaskContainer>(`${environment.backendAddress}/taskcontainer/${id}/status?status=${taskContainerStatus}
+    `,identifable,{
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
 }

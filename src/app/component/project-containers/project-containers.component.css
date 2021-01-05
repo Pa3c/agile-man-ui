@@ -64,3 +64,10 @@ select {
   color: ghostwhite;
   width: 100%;
 }
+mat-icon.editable{
+  font-size: 2.5vh;
+}
+mat-icon.editable:hover{
+  color: black;
+}
+

@@ -3,18 +3,39 @@
     <span style="font-size: 2vw;" mat-dialog-title>Create Task Container</span>
     <form id="createForm" #createForm="ngForm">
       <input name="title" class="form-control black-focus" style="font-size: 2vw;" required type="text" ngModel required
-        [(ngModel)]="containerTitle" #title="ngModel" placeholder="Title" />
+        [(ngModel)]="taskContainer.title" #title="ngModel" placeholder="Title" />
       <div *ngIf="title.invalid && title.touched" class="home-form-alert">
         Title is required.
       </div>
+
+      <ng-container *ngIf="this.data.projectType=='SCRUM';then dateModule"></ng-container>
+
+
       <i *ngIf="requestInProgress" class="fa fa-spinner fa-spin" style="font-size:24px"></i>&nbsp;&nbsp;
       <span *ngIf="requestInProgress">Loading...</span>
 
       <div class="button-holder">
         <button mat-dialog-close class="btn btn-dark w-100">Cancel</button>
         <button [disabled]="createForm.invalid || requestInProgress" *ngIf="!requestInProgress" type="submit"
-        class="btn btn-dark w-100" [mat-dialog-close]="containerTitle">Create</button>
+          class="btn btn-dark w-100" [mat-dialog-close]="taskContainer">{{data.confirmButton}}</button>
       </div>
     </form>
   </div>
 </div>
+
+
+<ng-template #dateModule>
+  <div class="flex-column w-100" style="justify-items: end;">
+    <div class="flex-row date-submodule">
+      <input placeholder="Start Date" class="date-input" matInput [matDatepicker]="openPicker" [(ngModel)]="taskContainer.openDate">
+      <mat-datepicker-toggle matSuffix [for]="openPicker" style="padding: 0;"></mat-datepicker-toggle>
+      <mat-datepicker #openPicker></mat-datepicker>
+    </div>
+    <div class="flex-row date-submodule">
+      <input placeholder="Close Date" class="date-input"  matInput [matDatepicker]="closePicker" [(ngModel)]="taskContainer.closeDate">
+      <mat-datepicker-toggle matSuffix [for]="closePicker" style="padding: 0;"></mat-datepicker-toggle>
+      <mat-datepicker #closePicker></mat-datepicker>
+    </div>
+  </div>
+
+</ng-template>

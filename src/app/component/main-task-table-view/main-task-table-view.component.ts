@@ -37,14 +37,13 @@ export class MainTaskTableViewComponent implements OnInit {
     this.route.params.subscribe(params => taskContainerId = params['table_id']);
     this.getDetailedTaskContainer(taskContainerId);
   }
+
   getDetailedTaskContainer(taskContainerId: number) {
     this.taskContainerService.get(taskContainerId).subscribe(success => {
       this.detailedTaskContainer = success;
       console.log(success);
     }, error => {
       console.log(error);
-    }, () => {
-
     });
   }
 
@@ -112,8 +111,10 @@ export class MainTaskTableViewComponent implements OnInit {
     state.taskContainerId = this.detailedTaskContainer.id;
 
     this.stateService.create(state).subscribe(success => {
-      console.log(success);
+      console.log(state.name);
       this.detailedTaskContainer.states.push(success);
+      this.detailedTaskContainer.tasks[state.name] = [];
+      console.log(this.detailedTaskContainer.tasks);
     }, error => {
       console.log(error);
     });
@@ -135,9 +136,8 @@ export class MainTaskTableViewComponent implements OnInit {
       const state :State = this.detailedTaskContainer.states.filter(x => x.name == name)[0];
       const index = this.detailedTaskContainer.states.indexOf(state);
       this.detailedTaskContainer.states.splice(index, 1);
-      this.stateService.delete(state.id).subscribe(success=>{
-        console.log(success);
-      })
+      this.stateService.delete(state.id).subscribe(success=>this.getDetailedTaskContainer(this.detailedTaskContainer.id));
+      this.getDetailedTaskContainer(this.detailedTaskContainer.id);
     });
 
   }
@@ -156,7 +156,7 @@ export class MainTaskTableViewComponent implements OnInit {
     let stateIndex = this.detailedTaskContainer.states.indexOf(states[0]);
 
     this.updateStateName(states[0]);
-
+    this.headerEdit = false;
   }
 
   resetChanges(id: number) {
@@ -222,6 +222,8 @@ export class MainTaskTableViewComponent implements OnInit {
       }
       task.taskContainerId = this.detailedTaskContainer.id;
       this.taskService.create(task).subscribe(success=>{
+        console.log(this.detailedTaskContainer.tasks[success.state]);
+
       this.detailedTaskContainer.tasks[success.state].push(success);
       },error=>{
         console.log(error);
@@ -247,14 +249,15 @@ export class MainTaskTableViewComponent implements OnInit {
   updateOrMoveTask(task: Task, data: CopyMoveActionData) {
     if(data.action == PlaceTaskActions.COPY){
       console.log("COPY ENTITY");
-      console.log(task);
-      this.taskService.copy(task.id,data.taskContainerId).subscribe(success=>console.log(success),error=>console.log(error));
+      this.taskService.copy(task.id,data.taskContainerId).subscribe(success=>{
+        if(data.taskContainerId==this.detailedTaskContainer.id){
+          this.detailedTaskContainer.tasks[success.state].push(success);
+        }
+      },error=>console.log(error));
     }else{
       console.log("UPDATE ENTITY");
-      console.log(task);
       task.taskContainerId = data.taskContainerId;
       this.taskService.move(task).subscribe(success=>console.log(success),error=>console.log(error));
     }
-   // this.getDetailedTaskContainer(this.detailedTaskContainer.id);
   }
 }

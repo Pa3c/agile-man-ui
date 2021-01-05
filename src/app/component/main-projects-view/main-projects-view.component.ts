@@ -81,10 +81,10 @@ export class MainProjectsViewComponent implements OnInit {
     });
 
     this.dialogRef.afterClosed().subscribe(result => {
-      if(result!=null){
+      this.dialogRef = null;
+      if(result==null){
         this.addToProjects(result);
       }
-      this.dialogRef = null;
     });
   }
   addToProjects(result: Project) {

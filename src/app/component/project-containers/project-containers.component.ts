@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TitleName } from 'src/app/model/common/CommonModule';
-import { DetailedUserProject } from 'src/app/model/ProjectModule';
+import { Constants, Identifable, TitleName } from 'src/app/model/common/CommonModule';
+import { DetailedUserProject, ProjectType } from 'src/app/model/ProjectModule';
 import { ProjectService } from 'src/app/service/project.service';
 import { UserService } from 'src/app/service/user.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Sort } from '@angular/material/sort';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CreateTaskContainerComponent } from '../dialogs/create-task-container/create-task-container.component';
-import { TaskContainer, Type } from 'src/app/model/task-container/TaskContainerModule';
+import { TaskContainer, TaskContainerStatus, Type } from 'src/app/model/task-container/TaskContainerModule';
 import { TaskContainerService } from 'src/app/service/task-container.service';
 import { IProjectModule } from '../project/project.component';
+import { DatePipe } from '@angular/common';
+import { create } from 'lodash';
+import { CloseContainerComponent } from '../dialogs/close-container/close-container.component';
+import { CloseContainerAnswer } from '../dialogs/close-container/close-container-module';
 
 @Component({
   selector: 'project-containers',
@@ -24,7 +28,7 @@ import { IProjectModule } from '../project/project.component';
     ]),
   ]
 })
-export class ProjectContainersComponent implements OnInit,IProjectModule {
+export class ProjectContainersComponent implements OnInit, IProjectModule {
   projectTeams: TitleName[] = [];
   detailedProject: DetailedUserProject;
   columnsToDisplay = ['title', 'id'];
@@ -35,7 +39,7 @@ export class ProjectContainersComponent implements OnInit,IProjectModule {
   expandedElement: any;
   private dialogRef: MatDialogRef<any>;
 
-  constructor(public dialog: MatDialog, private projectService: ProjectService, private userService: UserService,
+  constructor(private datePipe: DatePipe, public dialog: MatDialog, private projectService: ProjectService, private userService: UserService,
     private route: ActivatedRoute, private taskContainerService: TaskContainerService) {
     let projectId: number;
     this.route.params.subscribe(params => projectId = params['id']);
@@ -93,8 +97,10 @@ export class ProjectContainersComponent implements OnInit,IProjectModule {
 
     this.taskContainerService.delete(id)
       .subscribe(success => {
-        const index = this.detailedProject.taskContainers.findIndex(x=>x.id);
-        this.detailedProject.taskContainers.splice(index,0);
+        console.log(success);
+
+        const index = this.detailedProject.taskContainers.findIndex(x => x.id);
+        this.detailedProject.taskContainers.splice(index,1);
         this.refreshTaskContainers();
       }, error => console.log(error))
   }
@@ -125,35 +131,116 @@ export class ProjectContainersComponent implements OnInit,IProjectModule {
       return;
     }
     this.dialogRef = this.dialog.open(CreateTaskContainerComponent, {
-      panelClass: 'custom-dialog-container'
+      panelClass: 'custom-dialog-container',
+      data: {
+        projectType: this.detailedProject.type,
+        confirmButton: "Create"
+      }
     });
 
-    this.dialogRef.afterClosed().subscribe(result => {
-      if (result != null) {
-        this.addToDetailedUserProjectContainer(result);
-      }
+    this.dialogRef.afterClosed().subscribe((result: TaskContainer) => {
       this.dialogRef = null;
+      this.buildAndCreateTaskContainer(result);
     });
   }
 
-  private addToDetailedUserProjectContainer(result: string) {
-    if (result == null || result.length == 0) {
+  copyTaskContainer(id: number,title:string) {
+    if (this.dialogRef != null) {
+      return;
+    }
+    this.dialogRef = this.dialog.open(CreateTaskContainerComponent, {
+      panelClass: 'custom-dialog-container',
+      data: {
+        projectType: this.detailedProject.type,
+        title: title,
+        confirmButton: "Copy"
+      }
+    });
+
+    this.dialogRef.afterClosed().subscribe((result: TaskContainer) => {
+      this.dialogRef = null;
+      this.buildAndCopyTaskContainer(id,result);
+    });
+  }
+
+  closeTaskContainer(index: number){
+    this.dialogRef = this.dialog.open(CloseContainerComponent, {
+      panelClass: 'custom-modalbox',
+      data: {
+        containers: this.detailedProject.taskContainers
+      }
+    });
+
+    this.dialogRef.afterClosed().subscribe((result: CloseContainerAnswer) => {
+      this.dialogRef = null;
+      console.log(result);
+      if(result){
+        this.changeTaskContainerStatus(index,TaskContainerStatus.CLOSE,{id:result.containerId});
+      }
+    });
+  }
+  openTaskContainer(index: number){
+    this.changeTaskContainerStatus(index,TaskContainerStatus.OPEN,null);
+  }
+  changeTaskContainerStatus(index,taskContainerStatus:TaskContainerStatus,identifable: Identifable){
+    const taskContainer: TaskContainer = this.detailedProject.taskContainers[index];
+    this.taskContainerService.changeStatus(taskContainer.id,taskContainerStatus,identifable).subscribe(success=>{
+      this.detailedProject.taskContainers[index] = success;
+      console.log(this.detailedProject.taskContainers[index]);
+      this.refreshTaskContainers();
+    },error=>console.log(error));
+  }
+
+  private buildAndCreateTaskContainer(result: TaskContainer) {
+    if (result == null || result.title.length == 0) {
       return
     }
-    const taskContainer = new TaskContainer()
-    taskContainer.title = result;
-    taskContainer.type = Type.COMMON
-    taskContainer.teamInProjectId = this.detailedProject.teamInProjectId;
+    const taskContainer = this.buildTaskContainer(result);
     console.log(taskContainer);
+    this.sendCreation(taskContainer);
+  }
+
+  private buildAndCopyTaskContainer(id:number,result: TaskContainer) {
+    if (result == null || result.title.length == 0) {
+      return
+    }
+    const taskContainer = this.buildTaskContainer(result);
+    console.log(taskContainer);
+    this.sendCopy(id,taskContainer);
+  }
+
+  private sendCreation(taskContainer: TaskContainer) {
     this.taskContainerService.create(taskContainer).subscribe(success => {
+      this.detailedProject.taskContainers.push(success);
       this.refreshTaskContainers();
     }, error => {
       console.log(error);
     });
   }
 
-  refreshTaskContainers(){
-    this.detailedProject.taskContainers = this.detailedProject.taskContainers;
+  private sendCopy(id:number,taskContainer: TaskContainer) {
+    this.taskContainerService.copy(id,taskContainer).subscribe((success: TaskContainer) => {
+      this.detailedProject.taskContainers.push(success);
+      this.refreshTaskContainers();
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  private buildTaskContainer(container: TaskContainer) {
+    const taskContainer = new TaskContainer();
+    taskContainer.title = container.title;
+    if (this.detailedProject.type === ProjectType.SCRUM) {
+      taskContainer.openDate = this.datePipe.transform(new Date(container.openDate), Constants.dtFormat);
+      taskContainer.closeDate = this.datePipe.transform(new Date(container.closeDate), Constants.dtFormat);
+    }
+    taskContainer.type = Type.COMMON
+    taskContainer.teamInProjectId = this.detailedProject.teamInProjectId;
+    return taskContainer;
+  }
+
+  refreshTaskContainers() {
+    this.detailedProject.taskContainers = this.detailedProject.taskContainers.slice();
   }
 
 }

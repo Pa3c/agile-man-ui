@@ -6,6 +6,10 @@ export class TaskContainer extends BaseModel implements Identifable{
     teamInProjectId: number;
     title: string;
     type: string;
+
+    openDate: string;
+    closeDate: string;
+
     closed: boolean;
     overContainer: TaskContainer;
 }
@@ -32,4 +36,8 @@ export enum Type {
 export enum PlaceTaskActions{
   COPY = "COPY",
   MOVE = "MOVE"
+}
+export enum TaskContainerStatus{
+  CLOSE = "CLOSE",
+  OPEN = "OPEN"
 }
