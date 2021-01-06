@@ -17,7 +17,6 @@ export class TaskFilterComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   @Output() onFiltersApply: EventEmitter<any> = new EventEmitter<any>();
   filters = new FormControl();
-  searchProps: TypeProp[];
   allProperties: TaskSearchProperties = new TaskSearchProperties();
 
   propValueList = new Map<string, string[]>();
@@ -70,21 +69,19 @@ export class TaskFilterComponent implements OnInit {
     }
   }
 
-  handleRemove(value:TypeProp){
-    const index = (this.filters.value as string[]).indexOf(value.name);
-    if(index!=-1){
+  handleRemove(value:TypeProp,event: any){
+    const index = (this.filters.value as TypeProp[]).findIndex(x=>value.name==x.name);
+    if(index==-1){
       return;
     }
-    console.log(value);
-
-    if(value.type='string'){
+    if(value.type=='string'){
       this.propValueList[value.name]=undefined
     }
-    if(value.type='date'){
+    if(value.type=='date'){
       this.propDate[value.name]=undefined
     }
-    if(value.type='number'){
-      this.propNumberRange[value.name]=undefined
+    if(value.type=='number'){
+      this.propNumberRange[value.name]=undefined;
     }
   }
 
