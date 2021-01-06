@@ -18,4 +18,9 @@ export enum TeamRole {
   BASIC = "TEAM_BASIC",
   ADMIN = "TEAM_ADMIN",
 }
+export class FromTo<T> {
+  constructor(public from: T, public to: T){
+
+  }
+}
 

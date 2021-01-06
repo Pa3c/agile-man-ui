@@ -4,11 +4,15 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Identifable } from '../model/common/CommonModule';
 import { DetailedTaskContainer, TaskContainer, TaskContainerStatus } from '../model/task-container/TaskContainerModule';
+import { Task } from '../model/task/TaskModule';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskContainerService {
+  filter(id: number, filter: any):Observable<Map<string,Task[]>> {
+    return this.http.post<Map<string,Task[]>>(`${environment.backendAddress}/taskcontainer/${id}/filter`,filter);
+  }
 
 
 

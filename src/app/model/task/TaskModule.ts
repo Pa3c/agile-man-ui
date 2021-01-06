@@ -69,6 +69,8 @@ export class TaskSearchProperties {
     this.list.push(new TypeProp("deadline","date"))
     this.list.push(new TypeProp("reopened","date"))
     this.list.push(new TypeProp("closed","date"))
+    this.list.push(new TypeProp("observer","user"))
+    this.list.push(new TypeProp("executor","user"))
   }
 }
 

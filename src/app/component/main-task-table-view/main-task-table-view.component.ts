@@ -30,7 +30,6 @@ export class MainTaskTableViewComponent implements OnInit {
   projectId: number;
 
   constructor(
-    private taskFilter: TaskFilterComponent,
     public matDialog: MatDialog, private taskService: TaskService,
     private taskContainerService: TaskContainerService,
     private stateService: StateService,
@@ -38,7 +37,9 @@ export class MainTaskTableViewComponent implements OnInit {
     public dialog: MatDialog) { }
 
     filterTasks(event: any){
-      console.log(event);
+      this.taskContainerService.filter(this.detailedTaskContainer.id,event).subscribe(success=>{
+        this.detailedTaskContainer.tasks = success;
+      },error=>console.log(error));
     }
 
 
@@ -254,6 +255,7 @@ export class MainTaskTableViewComponent implements OnInit {
       this.updateOrMoveTask(task, result);
     });
   }
+
   private updateOrMoveTask(task: Task, data: CopyMoveActionData) {
     if (data.action == PlaceTaskActions.COPY) {
       console.log("COPY ENTITY");
