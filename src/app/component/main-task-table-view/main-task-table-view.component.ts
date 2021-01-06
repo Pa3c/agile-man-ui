@@ -86,7 +86,7 @@ export class MainTaskTableViewComponent implements OnInit {
 
   }
 
-  taskColumnChange(event: CdkDragDrop<string[]>, newState: string) {
+  taskColumnChange(event: CdkDragDrop<Task[]>, newState: string) {
     if (this.detailedTaskContainer.closed) {
       // alert dialog
       return;
@@ -99,11 +99,11 @@ export class MainTaskTableViewComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
-    const state: State = this.detailedTaskContainer.states[event.currentIndex];
-    const task = JSON.parse(JSON.stringify(event.container.data[0]));
+    let task = event.container.data[event.currentIndex];
+    console.log(event);
+    console.log(task);
     task.state = newState;
-    this.taskService.update(task).subscribe(x => {
-      console.log(x);
+    this.taskService.update(task).subscribe((success: Task) => {
     }, error => {
       console.log(error);
     });
