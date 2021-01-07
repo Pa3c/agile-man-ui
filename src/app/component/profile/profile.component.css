@@ -54,7 +54,6 @@ textarea.description {
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  cursor: move;
   background: #222222;
   font-size: 2vh;
 }

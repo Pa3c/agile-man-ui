@@ -96,7 +96,7 @@
         <div class="w-100"style="text-align:center">
           About Me
         </div>
-        <textarea *ngIf="!editMode" class="description" [ngModel]="user.description" disabled></textarea>
+        <textarea *ngIf="!editMode" class="description" [ngModel]="user.description" disabled style="outline: none;border: none;"></textarea>
         <textarea *ngIf="editMode"  class="description" [(ngModel)]="tempUser.description"></textarea>
       </div>
       <div class="skills w-100">
