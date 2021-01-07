@@ -261,8 +261,8 @@
         add_circle_outline
       </mat-icon>
       <div *ngIf="!editMode">
-        <div class="example-list">
-          <div class="example-box" *ngFor="let step of task.steps">
+        <div class="step-list">
+          <div class="step-box" *ngFor="let step of task.steps">
             <span>
               {{step.order}}
             </span>
@@ -281,8 +281,8 @@
         </div>
       </div>
       <div *ngIf="editMode">
-        <div cdkDropList class="example-list" (cdkDropListDropped)="reorderSteps($event)">
-          <div class="example-box" *ngFor="let step of tempTask.steps" cdkDrag>
+        <div cdkDropList class="step-list" (cdkDropListDropped)="reorderSteps($event)">
+          <div class="step-box" *ngFor="let step of tempTask.steps" cdkDrag>
             <span>
               {{step.order}}
             </span>

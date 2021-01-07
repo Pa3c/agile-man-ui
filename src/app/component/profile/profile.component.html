@@ -1,1 +1,146 @@
-<p>profile works!</p>
+<div class="flex-column w-100" style="align-items: center;font-size: 2vh;">
+  <div class="user-info-wrapper" style="min-width: 50%;">
+    <div class="profile-photo w-100">
+      <div class="w-100" style="text-align: end;">
+        <mat-icon *ngIf="!editMode" [inline]=true (click)="showEditMode()">
+          edit
+        </mat-icon>
+        <div style="text-align: end;" *ngIf="editMode">
+          <mat-icon [inline]=true (click)="saveEditMode()">
+            done
+          </mat-icon>
+          <mat-icon [inline]=true (click)="cancelEditMode()">
+            cancel
+          </mat-icon>
+        </div>
+      </div>
+      <input type="file" #fileInput (change)="updateProfilePicture($event.target.files)" hidden  accept="image/*">
+      <div class="w-100" style="text-align: center;">
+        <div class="w-100" style="text-align: center;">
+          <ng-container>
+            <mat-icon class="ordinar-photo"  *ngIf=!editMode style="transform: scale(2);">
+              person_outline
+            </mat-icon>
+            <mat-icon *ngIf=editMode  class="clickable-photo" style="transform: scale(2);" (click)="fileInput.click()">
+              person_outline
+            </mat-icon>
+          </ng-container>
+          <!-- <img *ngIf="user.photo!=null && user.photo!=undefined && !editMode"
+                [src]=user.photo> -->
+        </div>
+        <div class="basic-info">
+          <div class="name w-100" *ngIf="!editMode">
+            {{user.name}} {{user.surname}}
+          </div>
+          <div class="flex-row name w-100" *ngIf="editMode" style="justify-content: center;">
+            <div contenteditable="true" (input)="tempUser.name = $event.target.innerText">
+              {{user.name}}
+            </div>
+            &nbsp;
+            <div contenteditable="true" (input)="tempUser.surname = $event.target.innerText">
+              {{user.surname}}
+            </div>
+          </div>
+          <div class="login w-100">
+            {{user.login}}
+          </div>
+        </div>
+      </div>
+      <div class="contact-info w-100 flex-column">
+        <div class="flex-row contact-detail">
+          <mat-icon [inline]=true>
+            cake
+          </mat-icon>
+          <div *ngIf="!editMode">
+            {{user.birthday | date:'dd-MMM-YYYY'}}
+          </div>
+          <div *ngIf="editMode">
+            <input matInput [matDatepicker]="picker" class="basic" (dateChange)="tempUser.birthday=$event.target.value">
+            <mat-datepicker-toggle matSuffix [for]="picker" class="basic"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
+        </div>
+        <div class="flex-row contact-detail">
+          <i class="fa fa-skype" aria-hidden="true"></i>
+          <span *ngIf=!editMode>
+            {{user.skype}}
+          </span>
+          <div *ngIf=editMode>
+            <input type="text" [(ngModel)]="tempUser.skype">
+          </div>
+        </div>
+        <div class="flex-row contact-detail">
+          <mat-icon [inline]=true>
+            alternate_email
+          </mat-icon>
+          <span *ngIf=!editMode>
+            {{user.email}}
+          </span>
+          <div *ngIf=editMode>
+            <input type="email" [(ngModel)]="tempUser.email">
+          </div>
+        </div>
+        <div class="flex-row contact-detail">
+          <mat-icon [inline]=true>
+            smartphone
+          </mat-icon>
+          <span *ngIf=!editMode>
+            {{user.phoneNumber}}
+          </span>
+          <div *ngIf=editMode>
+            <input type="tel" [(ngModel)]="tempUser.phoneNumber">
+          </div>
+        </div>
+      </div>
+      <div class="description w-100">
+        <div class="w-100"style="text-align:center">
+          About Me
+        </div>
+        <textarea *ngIf="!editMode" class="description" [ngModel]="user.description" disabled></textarea>
+        <textarea *ngIf="editMode"  class="description" [(ngModel)]="tempUser.description"></textarea>
+      </div>
+      <div class="skills w-100">
+        <input #specInput [formControl]="specsCtrl"
+         [matAutocomplete]="autoLabel" class="w-100"
+         placeholder="My Skills"
+         style="text-align: center;"
+          >
+          <mat-autocomplete class="w-100" #autoLabel="matAutocomplete" (optionSelected)="selectedSpec($event)">
+            <mat-option style="text-align: center;background-color: yellowgreen;" *ngIf="isLoading"
+              class="is-loading">
+              <i style="text-align: center;" class="fa fa-spinner fa-spin"></i>
+            </mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option style="background-color: yellowgreen;" *ngFor="let spec of filteredSpecs"
+                [value]="spec">
+                {{spec.id}}
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+      <div class="spec-list" style="overflow-y: auto;">
+        <div class="spec-box" *ngFor="let spec of specializations;let specIndex =index">
+          <span>
+            {{spec.id}}
+          </span>
+          <span style="flex-grow: 1;">
+          </span>
+          <span>
+            <ng-container *ngFor="let item of [].constructor(5); let i = index">
+              <mat-icon [inline]=true [class.star-achieved]="i+1<=spec.skill" (click)="updateSpec(i+1,specIndex)">
+                star
+              </mat-icon>
+            </ng-container>
+
+          </span>
+          <span>
+            <mat-icon class="deletable" [inline]=true (click)="deleteUserSpecialization(spec)">
+              delete_forever
+            </mat-icon>
+          </span>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+

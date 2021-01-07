@@ -17,7 +17,7 @@ mat-icon:hover {
   color: greenyellow;
 }
 
-.example-list {
+.step-list {
   min-width: 50%;
   width: 100%;
   max-width: 100%;
@@ -42,7 +42,7 @@ textarea.description:focus {
   outline: none;
 }
 
-.example-box {
+.step-box {
   padding: 20px 10px;
   border-bottom: solid 1px black;
   color: ghostwhite;
@@ -70,11 +70,11 @@ textarea.description:focus {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.example-box:last-child {
+.step-box:last-child {
   border: none;
 }
 
-.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+.step-list.cdk-drop-list-dragging .step-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 

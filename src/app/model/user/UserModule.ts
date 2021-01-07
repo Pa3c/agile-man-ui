@@ -10,6 +10,9 @@ export class User {
   public phoneNumber: string;
   public birthday: string;
   public skype: string;
+  public description: string;
+  public photo: any;
+
 }
 export class BasicUserInfo {
   constructor(public login: string,
@@ -24,4 +27,8 @@ export class RoleBasicUser {
 export class MultiRoleBasicUser {
   constructor(public login: string,public name: string,public surname: string,public roles: string[]){
   }
+}
+export class UserSpecialization {
+  id: string;
+  skill: number;
 }

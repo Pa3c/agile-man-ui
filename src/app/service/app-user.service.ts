@@ -8,7 +8,15 @@ import { BasicUserInfo, User } from '../model/user/UserModule';
   providedIn: 'root'
 })
 export class AppUserService {
+  get(login: string): Observable<User> {
+    return this.http.get<User>(`${environment.backendAddress}/user/${login}`);
+  }
 
+  update(user: User): Observable<User> {
+    return this.http.put<User>(`${environment.backendAddress}/user/${user.login}`,user,{headers: {
+      "Content-Type":"application/json; charset=UTF-8"
+   }});
+  }
 
   constructor(private http: HttpClient) { }
   getUsers(): Observable<User[]> {

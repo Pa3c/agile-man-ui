@@ -61,6 +61,7 @@ import { DatePipe } from '@angular/common';
 import { CopyMoveTaskComponent } from './component/dialogs/copy-move-task/copy-move-task.component';
 import { CloseContainerComponent } from './component/dialogs/close-container/close-container.component';
 import { TaskFilterComponent } from './component/task-filter/task-filter.component';
+import { UserSpecializationService } from './service/user-specialization.service';
 
 @NgModule({
   declarations: [
@@ -136,6 +137,7 @@ import { TaskFilterComponent } from './component/task-filter/task-filter.compone
     ProjectRoleService,
     DatePipe,
     TaskFilterComponent,
+    UserSpecializationService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
