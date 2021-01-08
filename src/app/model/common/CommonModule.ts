@@ -15,3 +15,10 @@ export class BaseModel {
 export class Constants {
   public static readonly dtFormat = "yyyy-MM-dd'T'HH:mm:ss";
 }
+export class UploadFileModel{
+  public fileName;
+  public fileDownloadUri;
+  public fileType;
+  public size;
+  public targetPath;
+}

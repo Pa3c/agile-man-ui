@@ -9,6 +9,7 @@ import { User, UserSpecialization } from 'src/app/model/user/UserModule';
 import { AppUserService } from 'src/app/service/app-user.service';
 import { UserSpecializationService } from 'src/app/service/user-specialization.service';
 import { UserService } from 'src/app/service/user.service';
+import { CustomTextEditorComponent } from '../custom-text-editor/custom-text-editor.component';
 
 @Component({
   selector: 'app-profile',
@@ -26,7 +27,7 @@ export class ProfileComponent implements OnInit {
   specsCtrl = new FormControl();
 
 
-  constructor(private specializationService: UserSpecializationService, private domSanitizer: DomSanitizer, private datePipe: DatePipe, private route: ActivatedRoute, private appUserService: AppUserService, private userService: UserService) { }
+  constructor(private customTextEditorComponent :CustomTextEditorComponent, private specializationService: UserSpecializationService, private domSanitizer: DomSanitizer, private datePipe: DatePipe, private route: ActivatedRoute, private appUserService: AppUserService, private userService: UserService) { }
 
   ngOnInit(): void {
     let login: string;
@@ -147,4 +148,13 @@ export class ProfileComponent implements OnInit {
     this.specializations[specIndex].skill = spec.skill == value ? 0 : value;
     this.specializationService.updateUserSpec(this.user.login,spec).subscribe(success=>console.log(success),error=>console.log(error));
   }
+
+
+  editorStyle = {
+    height: '200px',
+    color: 'ghostwhite',
+    background: '#222'
+  };
+
+  htmlContent: any;
 }

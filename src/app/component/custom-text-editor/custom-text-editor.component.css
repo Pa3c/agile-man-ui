@@ -1,0 +1,9 @@
+::ng-deep .ql-stroke {
+  stroke: ghostwhite !important;
+}
+::ng-deep .ql-fill {
+  stroke: ghostwhite !important;
+}
+::ng-deep .ql-picker-label {
+  color: ghostwhite !important;
+}

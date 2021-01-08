@@ -62,6 +62,8 @@ import { CopyMoveTaskComponent } from './component/dialogs/copy-move-task/copy-m
 import { CloseContainerComponent } from './component/dialogs/close-container/close-container.component';
 import { TaskFilterComponent } from './component/task-filter/task-filter.component';
 import { UserSpecializationService } from './service/user-specialization.service';
+import { QuillModule } from 'ngx-quill';
+import { CustomTextEditorComponent } from './component/custom-text-editor/custom-text-editor.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +91,8 @@ import { UserSpecializationService } from './service/user-specialization.service
     EditProjectRoleComponent,
     CopyMoveTaskComponent,
     CloseContainerComponent,
-    TaskFilterComponent
+    TaskFilterComponent,
+    CustomTextEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -114,7 +117,8 @@ import { UserSpecializationService } from './service/user-specialization.service
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    QuillModule.forRoot()
   ],
   entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent,DeleteColumnComponent,TeamComponent],
   providers: [
@@ -138,6 +142,7 @@ import { UserSpecializationService } from './service/user-specialization.service
     DatePipe,
     TaskFilterComponent,
     UserSpecializationService,
+    CustomTextEditorComponent,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
