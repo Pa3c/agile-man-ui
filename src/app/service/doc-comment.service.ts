@@ -7,24 +7,22 @@ import { Comment, ICommentService } from '../model/comment/CommentModule';
 @Injectable({
   providedIn: 'root'
 })
-export class TaskCommentService implements ICommentService {
-
-
+export class DocCommentService implements ICommentService{
   public host = environment.backendAddress;
   constructor(private http: HttpClient) { }
 
   create(comment: Comment) :Observable<Comment>{
-    return this.http.post<Comment>(`${environment.backendAddress}/taskcommentary`,comment);
+    return this.http.post<Comment>(`${environment.backendAddress}/doccommentary`,comment);
   }
 
   update(comment: Comment) :Observable<Comment> {
-   return this.http.put<Comment>(`${environment.backendAddress}/taskcommentary/${comment.id}`,comment);
+   return this.http.put<Comment>(`${environment.backendAddress}/doccommentary/${comment.id}`,comment);
   }
 
   get(id: number) :Observable<Comment> {
-    return this.http.get<Comment>(`${environment.backendAddress}/taskcommentary/${id}`);
+    return this.http.get<Comment>(`${environment.backendAddress}/doccommentary/${id}`);
   }
   delete(id: number){
-    return this.http.delete<any>(`${environment.backendAddress}/taskcommentary/${id}`);
+    return this.http.delete<any>(`${environment.backendAddress}/doccommentary/${id}`);
   }
 }

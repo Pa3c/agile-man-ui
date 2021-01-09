@@ -78,6 +78,18 @@ export class CustomTextEditorComponent implements OnInit {
 
     var toolbar = this.quill.getModule('toolbar');
     toolbar.addHandler('image', this.showImageUI);
+
+
+    // this.quill.on('text-change', (delta, oldDelta, source) => {
+    //   if (source == 'api') {
+    //     console.log("An API call triggered this change.");
+    //   } else if (source == 'user') {
+    //     console.log("A user action triggered this change.");
+    //   }
+    //   console.log(this.quill.getText());
+    //   console.log(this.quill.getText());
+    //   document.querySelector(".ql-editor").innerHTML
+    // });
   }
 
   showImageUI(image, callback) {
@@ -99,15 +111,15 @@ export class CustomTextEditorComponent implements OnInit {
   quillUploadImage($event) {
     console.log($event);
     let file: File = $event.target.files[0];
-    let formData:FormData = new FormData();
-    formData.append('file',file, file.name);
+    let formData: FormData = new FormData();
+    formData.append('file', file, file.name);
     console.log(file);
 
 
-    this.fileService.saveFile(formData).subscribe(success=>{
+    this.fileService.saveFile(formData).subscribe(success => {
       console.log(success);
       var selection = this.quill.getSelection(true);
-      this.quill.insertEmbed(selection.index,'image',success.fileDownloadUri);
+      this.quill.insertEmbed(selection.index, 'image', success.fileDownloadUri);
     })
 
     // const reader = new FileReader();
@@ -134,6 +146,7 @@ export class CustomTextEditorComponent implements OnInit {
   logSelection($event: any) {
     console.log($event);
   }
+
 }
 
 const modules = {

@@ -104,3 +104,15 @@ cursor: pointer;
 color: ghostwhite;
 background-color: #111;
 }
+
+
+.comment-creator-wrapper{
+  padding: 1rem 1rem;
+}
+.comment-creator {
+  padding:0;
+}
+.comment-submitter{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}

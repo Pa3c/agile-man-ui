@@ -11,6 +11,7 @@ import { AppUserService } from 'src/app/service/app-user.service';
 import { LabelService } from 'src/app/service/label.service';
 import { TaskService } from 'src/app/service/task.service';
 import { UserService } from 'src/app/service/user.service';
+import { CustomTextEditorComponent } from '../custom-text-editor/custom-text-editor.component';
 
 @Component({
   selector: 'app-task',
@@ -47,6 +48,7 @@ export class TaskComponent implements OnInit {
 
 
   constructor(
+    private customTextEditor: CustomTextEditorComponent,
     private userService: UserService, private route: ActivatedRoute,
     private taskService: TaskService, private labelService: LabelService,
     private appUserService: AppUserService) {
