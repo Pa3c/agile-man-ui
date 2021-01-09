@@ -1,10 +1,14 @@
 <div class="comment-creator-wrapper">
   <div class="comment-creator">
-    <custom-editor>
+    <custom-editor (uploadFileEvent)="handleFileUpload($event)">
     </custom-editor>
   </div>
   <button type="submit"
   class="btn btn-dark w-100 comment-submitter" (click)="submitCommentary()">Comment</button>
 </div>
 <div class="comment-container">
+  <div *ngFor="let com of comments" [class]="'mat-elevation-z4'" style="margin: 1rem;">
+    <quill-view [content]="com.content" format="html" theme="snow"></quill-view>
+  </div>
+
 </div>

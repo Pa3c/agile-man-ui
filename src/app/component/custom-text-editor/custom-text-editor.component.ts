@@ -1,6 +1,4 @@
-import { Component, ElementRef, ViewChild, ViewEncapsulation, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import Quill from 'quill';
 
@@ -23,7 +21,10 @@ Quill.register(Block /* or NewBlock */, true);
   styleUrls: ['./custom-text-editor.component.css']
 })
 export class CustomTextEditorComponent implements OnInit {
-  quill: Quill;
+  public quill: Quill;
+
+  @Output() uploadFileEvent = new EventEmitter<File>();
+
   readonly toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
     ['blockquote', 'code-block'],
@@ -44,7 +45,7 @@ export class CustomTextEditorComponent implements OnInit {
 
     ['clean']                                         // remove formatting button
   ];
-  constructor(private fileService: FileService) {
+  constructor() {
   }
 
 
@@ -116,18 +117,9 @@ export class CustomTextEditorComponent implements OnInit {
     fileInfo.type = FileInfoType.TASK;
 
     let file: File = $event.target.files[0];
-    let formData: FormData = new FormData();
-    formData.append('file', file, file.name);
-    formData.append('resourceId', fileInfo.resourceId);
-    formData.append('type',fileInfo.type);
-    console.log(file);
 
+    this.uploadFileEvent.emit(file);
 
-    this.fileService.saveFile(formData).subscribe(success => {
-      console.log(success);
-      var selection = this.quill.getSelection(true);
-      this.quill.insertEmbed(selection.index, 'image', success.fileDownloadUri);
-    })
 
     // const reader = new FileReader();
     // reader.readAsDataURL(file);
@@ -164,6 +156,12 @@ export class CustomTextEditorComponent implements OnInit {
 
   setContents(delta: any){
     this.quill.setContents(delta,'user');
+  }
+
+
+  insertImageEmbedded(fileUri:string){
+    var selection = this.quill.getSelection(true);
+    this.quill.insertEmbed(selection, 'image', fileUri);
   }
 }
 

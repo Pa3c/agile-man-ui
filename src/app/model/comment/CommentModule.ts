@@ -23,6 +23,10 @@ export enum CommentType {
   TASK="TASK",
   DOC="DOC"
 }
+export enum CommentScope{
+  PUBLIC = "PUBLIC",
+  PRIVATE = "PRIVATE"
+}
 
 
 export interface ICommentService{
