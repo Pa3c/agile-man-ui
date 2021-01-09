@@ -315,14 +315,6 @@
       class="btn btn-dark w-100 submit-solution">Reopen</button>
     </div>
   </div>
-  <div class="comment-creator-wrapper">
-    <div class="comment-creator">
-      <custom-editor>
-      </custom-editor>
-    </div>
-    <button type="submit"
-    class="btn btn-dark w-100 submit-solution comment-submitter">Comment</button>
-  </div>
-  <div class="comment-container">
-  </div>
 </div>
+<comment-container [commentService]="commentService" [resourceId]="task.id" [commentType]="'TASK'">
+</comment-container>

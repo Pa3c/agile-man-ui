@@ -9,8 +9,10 @@ import { Step, Task, TaskRelationType, TaskUser } from 'src/app/model/task/TaskM
 import { BasicUserInfo } from 'src/app/model/user/UserModule';
 import { AppUserService } from 'src/app/service/app-user.service';
 import { LabelService } from 'src/app/service/label.service';
+import { TaskCommentService } from 'src/app/service/task-comment.service';
 import { TaskService } from 'src/app/service/task.service';
 import { UserService } from 'src/app/service/user.service';
+import { CommentComponent } from '../comment/comment.component';
 import { CustomTextEditorComponent } from '../custom-text-editor/custom-text-editor.component';
 
 @Component({
@@ -48,7 +50,8 @@ export class TaskComponent implements OnInit {
 
 
   constructor(
-    private customTextEditor: CustomTextEditorComponent,
+    public commentService: TaskCommentService,
+    private commentComponent: CommentComponent,
     private userService: UserService, private route: ActivatedRoute,
     private taskService: TaskService, private labelService: LabelService,
     private appUserService: AppUserService) {

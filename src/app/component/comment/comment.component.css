@@ -1,0 +1,19 @@
+
+.comment-creator {
+  padding:0;
+}
+.comment-submitter{
+  text-align: center;
+  margin-top: 1vh;
+  background-color: yellowgreen;
+  border-radius: 10px;
+  padding: 1vh;
+  color: #222222;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.comment-submitter:hover{
+  cursor: pointer;
+  color: ghostwhite;
+  background-color: #111;
+  }

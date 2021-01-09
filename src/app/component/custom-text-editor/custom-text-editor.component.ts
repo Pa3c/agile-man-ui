@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, ViewEncapsulation, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -7,6 +7,7 @@ import Quill from 'quill';
 // add image resize module
 import ImageResize from 'quill-image-resize-module';
 import { FileService } from 'src/app/service/file.service';
+import { FileInfo, FileInfoType, ICommentService } from 'src/app/model/comment/CommentModule';
 Quill.register('modules/imageResize', ImageResize);
 
 // override p with div tag
@@ -110,9 +111,15 @@ export class CustomTextEditorComponent implements OnInit {
 
   quillUploadImage($event) {
     console.log($event);
+    let fileInfo = new FileInfo();
+    fileInfo.resourceId = 2;
+    fileInfo.type = FileInfoType.TASK;
+
     let file: File = $event.target.files[0];
     let formData: FormData = new FormData();
     formData.append('file', file, file.name);
+    formData.append('resourceId', fileInfo.resourceId);
+    formData.append('type',fileInfo.type);
     console.log(file);
 
 
@@ -147,6 +154,17 @@ export class CustomTextEditorComponent implements OnInit {
     console.log($event);
   }
 
+  getContents(): any{
+    return this.quill.getContents();
+  }
+  getHtmlContents(): string{
+    return document.querySelector(".ql-editor").innerHTML;
+  }
+
+
+  setContents(delta: any){
+    this.quill.setContents(delta,'user');
+  }
 }
 
 const modules = {

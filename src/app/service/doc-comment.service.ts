@@ -10,6 +10,9 @@ import { Comment, ICommentService } from '../model/comment/CommentModule';
 export class DocCommentService implements ICommentService{
   public host = environment.backendAddress;
   constructor(private http: HttpClient) { }
+  getByResourceId(resourceId: number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${environment.backendAddress}/doccommentary?resourceId=${resourceId}`);
+  }
 
   create(comment: Comment) :Observable<Comment>{
     return this.http.post<Comment>(`${environment.backendAddress}/doccommentary`,comment);

@@ -13,6 +13,10 @@ export class TaskCommentService implements ICommentService {
   public host = environment.backendAddress;
   constructor(private http: HttpClient) { }
 
+  getByResourceId(resourceId: number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${environment.backendAddress}/taskcommentary?resourceId=${resourceId}`);
+  }
+
   create(comment: Comment) :Observable<Comment>{
     return this.http.post<Comment>(`${environment.backendAddress}/taskcommentary`,comment);
   }

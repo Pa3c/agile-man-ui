@@ -64,6 +64,8 @@ import { TaskFilterComponent } from './component/task-filter/task-filter.compone
 import { UserSpecializationService } from './service/user-specialization.service';
 import { QuillModule } from 'ngx-quill';
 import { CustomTextEditorComponent } from './component/custom-text-editor/custom-text-editor.component';
+import { CommentComponent } from './component/comment/comment.component';
+import { DocCommentService } from './service/doc-comment.service';
 
 @NgModule({
   declarations: [
@@ -92,7 +94,8 @@ import { CustomTextEditorComponent } from './component/custom-text-editor/custom
     CopyMoveTaskComponent,
     CloseContainerComponent,
     TaskFilterComponent,
-    CustomTextEditorComponent
+    CustomTextEditorComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,
@@ -143,6 +146,9 @@ import { CustomTextEditorComponent } from './component/custom-text-editor/custom
     TaskFilterComponent,
     UserSpecializationService,
     CustomTextEditorComponent,
+    TaskCommentService,
+    DocCommentService,
+    CommentComponent,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
