@@ -1,6 +1,5 @@
 .additional-selection {
   opacity: 0.75;
-  font-size: 0.75em;
 }
 
 .filter-container {
@@ -10,13 +9,11 @@
 .basic {
   color: ghostwhite;
   background-color: #222;
-  font-size: 2vh;
 }
 
 .custom-mat-select.mat-select-panel {
   background: #222;
   color: ghostwhite;
-  font-size: 1vh;
 }
 
 .mat-select-value-text {
@@ -40,14 +37,6 @@
   margin: 0.1rem;
   padding: 0;
 }
-
-::-webkit-scrollbar {
-  width: 5px;
-  height: 8px;
-  background-color: rgba(2, 2, 2, 0.5);
-  border-radius: 4px;
-}
-
 input[type="number"] {
   width: 3em;
 }

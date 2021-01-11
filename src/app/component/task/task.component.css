@@ -1,6 +1,5 @@
 .container {
   padding: 0.5rem 0.1rem;
-  font-size: 2vh;
   min-width: 100%;
   overflow-x: hidden;
 }
@@ -45,13 +44,13 @@ textarea.description:focus {
 .step-box {
   padding: 20px 10px;
   border-bottom: solid 1px black;
-  color: ghostwhite;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
   cursor: move;
+  color: ghostwhite;
   background: #222222;
   font-size: 14px;
 }
@@ -87,7 +86,6 @@ textarea.description:focus {
 }
 
 mat-chip {
-  font-size: inherit;
   padding: 0.5vh 0.5vw;
 }
 
@@ -104,15 +102,6 @@ cursor: pointer;
 color: ghostwhite;
 background-color: #111;
 }
-
-
-.comment-creator-wrapper{
-  padding: 1rem 1rem;
-}
-.comment-creator {
-  padding:0;
-}
-.comment-submitter{
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+.comment-container-wrapper{
+  padding: 1rem;
 }

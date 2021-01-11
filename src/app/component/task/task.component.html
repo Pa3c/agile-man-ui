@@ -315,6 +315,10 @@
       class="btn btn-dark w-100 submit-solution">Reopen</button>
     </div>
   </div>
+  <div class="comment-container-wrapper">
+    <comment-container [commentService]="commentService" [resourceId]="task.id" [commentType]="'TASK'">
+    </comment-container>
+  </div>
+
 </div>
-<comment-container [commentService]="commentService" [resourceId]="task.id" [commentType]="'TASK'">
-</comment-container>
+

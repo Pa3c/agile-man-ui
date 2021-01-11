@@ -101,12 +101,12 @@
                 </ng-container>
                 <ng-container *ngIf="editRoleIndex==i">
                   <mat-form-field style="width: 4rem;">
-                    <mat-label class="basic">Roles</mat-label>
+                    <mat-label class="basic-colors">Roles</mat-label>
                     <mat-select [formControl]="roles"  panelClass="custom-mat-select">
-                      <mat-select-trigger class="basic">
+                      <mat-select-trigger class="basic-colors">
                         {{roles.value ? roles.value.replace("_"," ") : ''}}
                       </mat-select-trigger>
-                      <mat-option *ngFor="let role of teamRoles" [value]="role" class="basic">
+                      <mat-option *ngFor="let role of teamRoles" [value]="role" class="basic-colors">
                         {{role.replace("_"," ")}}
                       </mat-option>
                     </mat-select>

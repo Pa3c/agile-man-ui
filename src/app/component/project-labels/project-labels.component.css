@@ -1,7 +1,6 @@
 .labels-container{
   text-align: center;
   justify-content: center;
-  font-size: 2vh;
 }
 .label-list {
   margin: 0 0.5rem;
@@ -16,14 +15,13 @@
 .label-box {
   padding: 20px 10px;
   border-bottom: solid 1px black;
-  color: ghostwhite;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
+  color: ghostwhite;
   background: #222222;
-  font-size: 14px;
 }
 input.label-search {
   padding-top: 1rem;
@@ -42,18 +40,10 @@ outline: none;
 .label-box-detail {
   width: 20%;
 }
-.deletable:hover {
-  color: red;
-}
 .custom-mat-select.mat-select-panel {
   background: #222;
   color: ghostwhite;
-  font-size: 1vh;
 }
 .mat-option.mat-active{
   color: ghostwhite !important;
-}
-.basic {
-  color: ghostwhite;
-  background-color: #222;
 }

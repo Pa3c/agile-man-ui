@@ -16,14 +16,14 @@
   .spacer{
     flex: 1 1 auto;
   }
-  
+
   .sidenav .mat-toolbar {
     background: yellowgreen;
   }
   mat-toolbar {
     background-color: yellowgreen;
     min-height: 65px;
-  } 
+  }
   mat-toolbar div {
     display: inline-block;
     margin: 0 10px;
@@ -44,7 +44,7 @@
     flex-direction: column;
     flex: 1;
   }
-  
+
   mat-nav-list > div {
     flex: 1 1 0;
     display: flex;
@@ -57,7 +57,7 @@
  .drawer-button:hover {
     color: #222;
     cursor: pointer;
-  } 
+  }
   .menu-button:hover {
     color: yellowgreen;
     cursor: pointer;

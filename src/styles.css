@@ -1,23 +1,30 @@
 @import 'basic-mat-style.css';
 html {
   color: ghostwhite;
-  background-color: #222;
   margin: 0;
-  font-size: 3vh;
 }
 
 body {
   height: 100%;
 }
-.custom-modalbox {
+
+body * {
+  font-size: 2vh;
+}
+
+.basic-colors{
   background-color: #222;
+  color: ghostwhite;
+}
+
+.custom-modalbox {
   min-width: 50vh;
   text-align: center;
 }
+
 .delete-column-container-dialog-container {
   min-width: 220px;
   background-color: yellowgreen;
-  font-size: 1vw;
   display: flex;
   width: 50vw;
   align-self: center;
@@ -25,8 +32,8 @@ body {
 }
 
 .custom-dialog-container .mat-dialog-container {
-  background-color: yellowgreen;
-  font-size: 2vh;
+  background-color: #222;
+  color: ghostwhite;
 }
 
 .delete-column-mat-dialog-actions {
@@ -40,13 +47,30 @@ body {
   padding: 1vw 1vh;
 }
 
-
 mat-icon:hover {
   cursor: pointer;
 }
-.flex-row {
-  display:flex; flex-direction: row;
+.editable:hover {
+  cursor: pointer;
 }
+.removable:hover {
+  color:red;
+  cursor: pointer;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
 .flex-column {
-  display:flex; flex-direction: column;
+  display: flex;
+  flex-direction: column;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: rgba(2, 2, 2, 0.5);
+  border-radius: 4px;
 }

@@ -1,4 +1,4 @@
-<div class="flex-column w-100" style="align-items: center;font-size: 2vh;">
+<div class="flex-column w-100" style="align-items: center;">
   <div class="user-info-wrapper" style="min-width: 50%;">
     <div class="profile-photo w-100">
       <div class="w-100" style="text-align: end;">
@@ -55,8 +55,8 @@
             {{user.birthday | date:'dd-MMM-YYYY'}}
           </div>
           <div *ngIf="editMode">
-            <input matInput [matDatepicker]="picker" class="basic" (dateChange)="tempUser.birthday=$event.target.value">
-            <mat-datepicker-toggle matSuffix [for]="picker" class="basic"></mat-datepicker-toggle>
+            <input matInput [matDatepicker]="picker" class="basic-colors" (dateChange)="tempUser.birthday=$event.target.value">
+            <mat-datepicker-toggle matSuffix [for]="picker" class="basic-colors"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </div>
         </div>

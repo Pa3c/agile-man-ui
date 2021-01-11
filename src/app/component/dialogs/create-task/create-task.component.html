@@ -87,7 +87,7 @@
               Deadline
             </span>
             <div style="display: flex; flex-direction: row;">
-              <input style="text-align: right; font-size: 2vh;" name="deadline" matInput [matDatepicker]="picker"
+              <input style="text-align: right;" name="deadline" matInput [matDatepicker]="picker"
                 [(ngModel)]="task.deadline" width="0">
               <mat-datepicker-toggle matSuffix [for]="picker"
               style="padding: 0;"></mat-datepicker-toggle>
@@ -99,7 +99,7 @@
             <span style="width: 90%;">
               Steps
             </span>
-            <mat-icon [inline]="true" style="width: 10%;text-align: right;font-size: 3vh;" (click)="addStep()">
+            <mat-icon [inline]="true" style="width: 10%;text-align: right;" (click)="addStep()">
               add_circle_outline
             </mat-icon>
           </div>
@@ -112,7 +112,7 @@
                                      background-color: transparent;
                                      border: 0; border-bottom: solid 1px black;">
                                     </textarea>
-                <mat-icon [inline]="true" style="width: 10%;text-align: right; font-size: 3vh;"
+                <mat-icon [inline]="true" style="width: 10%;text-align: right;"
                   (click)="removeStep(step.order)">
                   remove_circle_outline
                 </mat-icon>

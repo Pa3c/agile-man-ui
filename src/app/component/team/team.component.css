@@ -83,10 +83,6 @@ td, th {
   font-size: 1vh;
   width: fit-content;
 }
-.basic {
-  color: ghostwhite;
-  background-color: #222;
-}
 .info-chip{
   margin-top: 0.2rem;
 }

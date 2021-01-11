@@ -1,0 +1,24 @@
+<div class="doc-version-container">
+
+  <div class="view-header-container">
+    <mat-icon *ngIf=!editMode [inline]=true (click)="showEditMode()">
+      edit
+    </mat-icon>
+    <mat-icon *ngIf=editMode [inline]=true (click)="saveEditing()">
+      done
+    </mat-icon>
+    <mat-icon *ngIf=editMode [inline]=true (click)="cancelEditMode()">
+      cancel
+    </mat-icon>
+  </div>
+
+  <div [class.hidden]=!editMode>
+    <custom-editor (uploadFileEvent)="handleFileUpload($event,'DOC')">
+    </custom-editor>
+  </div>
+
+
+  <div *ngIf=!editMode class="view-container">
+    <quill-view [content]="docVersion.content" format="html" theme="snow"></quill-view>
+  </div>
+</div>

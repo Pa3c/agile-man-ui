@@ -4,7 +4,6 @@ import Quill from 'quill';
 
 // add image resize module
 import ImageResize from 'quill-image-resize-module';
-import { FileService } from 'src/app/service/file.service';
 import { FileInfo, FileInfoType, ICommentService } from 'src/app/model/comment/CommentModule';
 Quill.register('modules/imageResize', ImageResize);
 
@@ -73,7 +72,8 @@ export class CustomTextEditorComponent implements OnInit {
 
     this.quill = new Quill('#editor', {
       modules: {
-        toolbar: this.toolbarOptions
+        toolbar: this.toolbarOptions,
+        imageResize: {}
       },
       theme: 'snow'  // or 'bubble'
     });

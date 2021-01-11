@@ -6,11 +6,9 @@
 }
 .description-area {
     padding: 0;
-    font-size: 3vh;
 }
 input {
     margin: 10px 0px;
-    font-size: 3vh;
     padding: 0px;
 }
 
@@ -32,7 +30,6 @@ select:focus {
 }
 .button-holder > button {
     margin: 2px;
-    font-size: 3vh;
 }
 .form-content {
     display: flex;
@@ -41,12 +38,6 @@ select:focus {
     max-height: 40vh;
     overflow-x: hidden;
 }
-::-webkit-scrollbar {
-    width: 5px;
-    height: 8px;
-    background-color: rgba(2, 2, 2, 0.5);
-    border-radius: 4px;
-  }
 .form-content > textarea {
     min-height: 15vh;
 }

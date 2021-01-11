@@ -1,6 +1,5 @@
 .container {
   padding: 0.5rem 0.5rem;
-  font-size: 2vh;
   min-width: 100%;
   overflow-x: hidden;
   display: flex;
@@ -24,8 +23,5 @@ textarea.description {
 }
 .column {
   margin-right: 10px;
-}
-mat-chip {
-  font-size: 2vh;
 }
 

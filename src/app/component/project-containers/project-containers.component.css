@@ -23,7 +23,6 @@
 }
 
 .team-select {
-  font-size: 2vh;
   border: none;
   margin-bottom: 0.5rem;
   padding: 0.2rem;
@@ -36,7 +35,6 @@
 
 .title {
   margin-bottom: 1rem;
-  font-size: 2.5vh;
   text-align: right;
 }
 
@@ -65,7 +63,6 @@ select {
   width: 100%;
 }
 mat-icon.editable{
-  font-size: 2.5vh;
 }
 mat-icon.editable:hover{
   color: black;

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { DocumentationVersionComponent } from './component/documentation-version/documentation-version.component';
+import { DocumentationComponent } from './component/documentation/documentation.component';
 import { HomeComponent } from './component/home/home.component';
 import { MainProjectsViewComponent } from './component/main-projects-view/main-projects-view.component';
 import { MainTaskTableViewComponent } from './component/main-task-table-view/main-task-table-view.component';
@@ -21,7 +23,9 @@ const routes: Routes = [
   {path:'teams',component: MainTeamsViewComponent,canActivate: [AuthenticationGuard]},
   {path:'teams/:id',component: TeamComponent,canActivate: [AuthenticationGuard]},
   {path:'tasks/:id',component: TaskComponent,canActivate: [AuthenticationGuard]},
-  {path:'users/:id',component: ProfileComponent,canActivate: [AuthenticationGuard]}
+  {path:'users/:id',component: ProfileComponent,canActivate: [AuthenticationGuard]},
+  {path:'documentations/:id',component: DocumentationVersionComponent,canActivate: [AuthenticationGuard]},
+  {path:'documentationversions/:id',component: DocumentationComponent,canActivate: [AuthenticationGuard]}
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

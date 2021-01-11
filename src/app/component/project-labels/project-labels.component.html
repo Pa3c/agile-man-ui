@@ -10,11 +10,11 @@
       <input #labelInput class="label-search" #trigger="matAutocompleteTrigger" [formControl]="labelsFormControl"
         [matAutocomplete]="autoUser">
       <mat-select [(ngModel)]=selectedType panelClass="custom-mat-select" style="width: 5rem;">
-        <mat-select-trigger class="basic">
+        <mat-select-trigger class="basic-colors">
           {{selectedType}}
         </mat-select-trigger>
-        <mat-option value="LABEL" class="basic"> LABEL</mat-option>
-        <mat-option value="TECHNOLOGY" class="basic">TECHNOLOGY</mat-option>
+        <mat-option value="LABEL" class="basic-colors"> LABEL</mat-option>
+        <mat-option value="TECHNOLOGY" class="basic-colors">TECHNOLOGY</mat-option>
       </mat-select>
     </div>
     <mat-autocomplete #autoUser="matAutocomplete" style="width: 100%;"

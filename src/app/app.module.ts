@@ -66,6 +66,9 @@ import { QuillModule } from 'ngx-quill';
 import { CustomTextEditorComponent } from './component/custom-text-editor/custom-text-editor.component';
 import { CommentComponent } from './component/comment/comment.component';
 import { DocCommentService } from './service/doc-comment.service';
+import { DocumentationVersionComponent } from './component/documentation-version/documentation-version.component';
+import { DocumentationComponent } from './component/documentation/documentation.component';
+import { CreateDocComponent } from './component/dialogs/create-doc/create-doc.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +98,10 @@ import { DocCommentService } from './service/doc-comment.service';
     CloseContainerComponent,
     TaskFilterComponent,
     CustomTextEditorComponent,
-    CommentComponent
+    CommentComponent,
+    DocumentationVersionComponent,
+    DocumentationComponent,
+    CreateDocComponent
   ],
   imports: [
     BrowserModule,

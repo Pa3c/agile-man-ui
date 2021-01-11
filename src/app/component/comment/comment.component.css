@@ -8,7 +8,6 @@
   background-color: yellowgreen;
   border-radius: 10px;
   padding: 1vh;
-  color: #222222;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
@@ -17,3 +16,7 @@
   color: ghostwhite;
   background-color: #111;
   }
+
+.comment {
+  margin: 1rem 0;
+}

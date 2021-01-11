@@ -1,14 +1,29 @@
 <div class="comment-creator-wrapper">
   <div class="comment-creator">
-    <custom-editor (uploadFileEvent)="handleFileUpload($event)">
+    <div>
+      Public Commentary
+      <input type="checkbox" [(ngModel)]=isPublic>
+    </div>
+    <custom-editor (uploadFileEvent)="handleFileUpload($event,'TASK_COMMENT')">
     </custom-editor>
   </div>
   <button type="submit"
   class="btn btn-dark w-100 comment-submitter" (click)="submitCommentary()">Comment</button>
 </div>
 <div class="comment-container">
-  <div *ngFor="let com of comments" [class]="'mat-elevation-z4'" style="margin: 1rem;">
-    <quill-view [content]="com.content" format="html" theme="snow"></quill-view>
-  </div>
+  <div *ngFor="let com of comments;let i = index;" [class]="'mat-elevation-z4'" class="comment">
+    <ng-container *ngIf="com.isPublic||com.login==this.login;">
+      <div class="flex-row">
+        <quill-view [content]="com.content" format="html" theme="snow"></quill-view>
+        <ng-container *ngIf="com.login==this.login">
+          <div style="flex-grow: 1;">
 
+          </div>
+          <mat-icon class="deletable" [inline]=true (click)="deleteComment(i)">
+            delete_forever
+          </mat-icon>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
 </div>

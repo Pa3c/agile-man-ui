@@ -5,7 +5,7 @@ export class Comment extends BaseModel implements Identifable{
   public id: number;
   public resourceId: number;
 	public content :string;
-	public scope :string;
+	public isPublic :boolean;
 	public login :string;
 }
 export class FileInfo {
@@ -23,16 +23,10 @@ export enum CommentType {
   TASK="TASK",
   DOC="DOC"
 }
-export enum CommentScope{
-  PUBLIC = "PUBLIC",
-  PRIVATE = "PRIVATE"
-}
-
-
 export interface ICommentService{
   getByResourceId(resourceId: number) :Observable<Comment[]>;
   create(comment: Comment) :Observable<Comment>;
   update(comment: Comment) :Observable<Comment>;
   get(id: number) :Observable<Comment> ;
-  delete(id: number);
+  delete(id: number) :Observable<any>;
 }

@@ -10,10 +10,9 @@ div.menu div{
   flex: 0.25;
   text-align: center;
   margin-left: 0.5rem;
-  background-color: #222222;
-  color: ghostwhite;
+  /* background-color: #222222;
+  color: ghostwhite; */
   padding: 1rem 0;
-  font-size: 2vh;
   white-space: normal;
 }
 div.menu div:first-child{

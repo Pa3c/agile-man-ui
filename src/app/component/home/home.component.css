@@ -1,9 +1,9 @@
 .page{
-    color:ghostwhite;
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    background-color: #222;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  color:ghostwhite;
+  background-color: #222;
 }
 .form-container{
     display: flex;

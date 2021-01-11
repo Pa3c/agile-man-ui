@@ -1,0 +1,17 @@
+.doc-version-container {
+  padding: 1rem;
+}
+
+/* .view-container {
+  background-color: ghostwhite;
+  color: black;
+} */
+
+.view-header-container {
+  /* background-color: #222;
+  color: ghostwhite; */
+  text-align: right;
+}
+.hidden{
+  display: none;
+}

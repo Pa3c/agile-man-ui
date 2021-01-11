@@ -1,9 +1,9 @@
-<div class="flex-column" style="font-size: 2vh; color: ghostwhite; padding: 0.5rem; min-width: 200px;">
+<div class="flex-column" style="color: ghostwhite; padding: 0.5rem; min-width: 200px;">
   <div class="flex-column">
     <mat-form-field>
-      <mat-label class="basic">Filters</mat-label>
-      <mat-select [formControl]="filters" multiple panelClass="custom-mat-select" class="basic">
-        <mat-option (onSelectionChange)="handleRemove($event.source.value,$event)" *ngFor="let prop of allProperties.list" [value]="prop" class="basic">{{prop.name.replace("_"," ")}}</mat-option>
+      <mat-label class="basic-colors">Filters</mat-label>
+      <mat-select [formControl]="filters" multiple panelClass="custom-mat-select" class="basic-colors">
+        <mat-option (onSelectionChange)="handleRemove($event.source.value,$event)" *ngFor="let prop of allProperties.list" [value]="prop" class="basic-colors">{{prop.name.replace("_"," ")}}</mat-option>
       </mat-select>
     </mat-form-field>
     <button class="mat-elevation-z4 filter-button" (click)="filtersApply()">
@@ -59,8 +59,8 @@
       </div>
       <div *ngIf="value.type=='date'" class="prop-container">
         <mat-form-field>
-          <input matInput [matDatepicker]="picker" class="basic" (dateChange)="addDate(value.name,$event.target.value)">
-          <mat-datepicker-toggle matSuffix [for]="picker" class="basic"></mat-datepicker-toggle>
+          <input matInput [matDatepicker]="picker" class="basic-colors" (dateChange)="addDate(value.name,$event.target.value)">
+          <mat-datepicker-toggle matSuffix [for]="picker" class="basic-colors"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>

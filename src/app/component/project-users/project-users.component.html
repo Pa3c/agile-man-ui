@@ -6,12 +6,12 @@
           <input class="team-search" #trigger="matAutocompleteTrigger" [formControl]="teamFormControl"
             [matAutocomplete]="autoTeam">
              <mat-select [(ngModel)]=selectedProjectType panelClass="custom-mat-select" style="width: 5rem;">
-              <mat-select-trigger class="basic" style="text-align: center;">
+              <mat-select-trigger class="basic-colors" style="text-align: center;">
                 {{selectedProjectType}}
                </mat-select-trigger>
-              <mat-option value="KANBAN" class="basic">KANBAN</mat-option>
-              <mat-option value="SCRUM" class="basic">SCRUM</mat-option>
-              <mat-option value="XP" class="basic">XP</mat-option>
+              <mat-option value="KANBAN" class="basic-colors">KANBAN</mat-option>
+              <mat-option value="SCRUM" class="basic-colors">SCRUM</mat-option>
+              <mat-option value="XP" class="basic-colors">XP</mat-option>
             </mat-select>
        </div>
 
