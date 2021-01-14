@@ -25,6 +25,8 @@ export class DocCommentService implements ICommentService{
   get(id: number) :Observable<Comment> {
     return this.http.get<Comment>(`${environment.backendAddress}/doccommentary/${id}`);
   }
+
+
   delete(id: number){
     return this.http.delete<any>(`${environment.backendAddress}/doccommentary/${id}`);
   }

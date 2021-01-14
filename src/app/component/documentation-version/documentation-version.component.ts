@@ -33,19 +33,6 @@ export class DocumentationVersionComponent implements OnInit {
     })
   }
 
-  createHandler() {
-   let docVersion = new DocumentationVersion();
-   docVersion.content = "Basic content";
-   docVersion.resourceId = this.documentationId;
-   this.createDocumentationVersion(docVersion);
-  }
-  createDocumentationVersion(doc: DocumentationVersion) {
-    this.documentationVersionService.create(doc).subscribe((success: DocumentationVersion) => {
-      this.documentation.push(success);
-      console.log(success);
-    }, error => console.log(error));
-  }
-
   sortData(sort: Sort) {
     if (!sort.active || sort.direction === "") {
       return;

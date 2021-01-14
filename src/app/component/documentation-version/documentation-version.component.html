@@ -10,9 +10,11 @@
   </ng-container>
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef style="text-align: end;">
-      <mat-icon (click)="createHandler()" *ngIf="documentation.length==0">
+      <a href='{{this.resourceUrl}}/{{this.documentationId}}/create'>
+      <mat-icon>
         add_circle_outline
       </mat-icon>
+    </a>
     </th>
     <td mat-cell *matCellDef="let element; let i = dataIndex;" style="text-align: end;">
       <mat-icon [inline]=true class="editable" (click)="deleteDocumentationVersion(i)">

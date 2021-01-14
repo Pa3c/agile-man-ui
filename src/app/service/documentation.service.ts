@@ -11,8 +11,13 @@ export class DocumentationService {
 
   public host = environment.backendAddress;
   constructor(private http: HttpClient) { }
+
   getByProjectId(projectId: number): Observable<Documentation[]> {
     return this.http.get<Documentation[]>(`${environment.backendAddress}/documentation?projectId=${projectId}`);
+  }
+
+  getNewestVersion(resourceId: number): Observable<DocumentationVersion> {
+    return this.http.get<DocumentationVersion>(`${environment.backendAddress}/documentation/${resourceId}/version/newest`);
   }
 
   getAllVersions(id:number): Observable<DocumentationVersion[]> {

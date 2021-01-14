@@ -69,6 +69,7 @@ import { DocCommentService } from './service/doc-comment.service';
 import { DocumentationVersionComponent } from './component/documentation-version/documentation-version.component';
 import { DocumentationComponent } from './component/documentation/documentation.component';
 import { CreateDocComponent } from './component/dialogs/create-doc/create-doc.component';
+import { DocumentationViewComponent } from './component/documentation-view/documentation-view.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import { CreateDocComponent } from './component/dialogs/create-doc/create-doc.co
     CommentComponent,
     DocumentationVersionComponent,
     DocumentationComponent,
-    CreateDocComponent
+    CreateDocComponent,
+    DocumentationViewComponent
   ],
   imports: [
     BrowserModule,
