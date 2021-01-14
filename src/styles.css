@@ -1,6 +1,7 @@
 @import 'basic-mat-style.css';
 html {
   color: ghostwhite;
+  background-color: #222;
   margin: 0;
 }
 
@@ -48,12 +49,13 @@ body * {
 }
 
 mat-icon:hover {
+  color: yellowgreen;
   cursor: pointer;
 }
 .editable:hover {
   cursor: pointer;
 }
-.removable:hover {
+.deletable:hover {
   color:red;
   cursor: pointer;
 }
