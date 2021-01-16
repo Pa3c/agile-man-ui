@@ -72,6 +72,7 @@ import { CreateDocComponent } from './component/dialogs/create-doc/create-doc.co
 import { DocumentationViewComponent } from './component/documentation-view/documentation-view.component';
 import { ProjectContainersBasicComponent } from './component/project-containers-basic/project-containers-basic.component';
 import { ProjectContainersXpComponent } from './component/project-containers-xp/project-containers-xp.component';
+import { NgxGraphModule } from '@swimlane/ngx-graph';
 
 @NgModule({
   declarations: [
@@ -133,7 +134,8 @@ import { ProjectContainersXpComponent } from './component/project-containers-xp/
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    QuillModule.forRoot()
+    QuillModule.forRoot(),
+    NgxGraphModule
   ],
   entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent,DeleteColumnComponent,TeamComponent],
   providers: [

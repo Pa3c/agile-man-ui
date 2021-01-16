@@ -1,10 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Edge, Node } from '@swimlane/ngx-graph';
+import * as shape from "d3-shape";
+import { Subject } from 'rxjs';
 import { ProjectType } from 'src/app/model/ProjectModule';
 import { TaskContainer, Type } from 'src/app/model/task-container/TaskContainerModule';
 import { TaskContainerService } from 'src/app/service/task-container.service';
 import { CreateTaskContainerComponent } from '../dialogs/create-task-container/create-task-container.component';
-import { LeafPosition } from './xp-container-model/xp-container-model';
+import { Leaf } from './xp-container-model/xp-container-model';
 
 @Component({
   selector: 'project-containers-xp',
@@ -19,53 +22,47 @@ export class ProjectContainersXpComponent implements OnInit {
   @Input() resourceUrl: string;
 
   private dialogRef: MatDialogRef<any>;
-  private leafPositions:LeafPosition[] = [];
-  private maxChildrenLength = 1;
-
+  nodes: Node[] = [];
+  links: Edge[] = [];
+  curve = shape.curveLinear;
+  update$: Subject<boolean> = new Subject();
 
   constructor(public dialog: MatDialog, private taskContainerService: TaskContainerService) { }
 
   ngOnInit(): void {
     console.log(this.taskContainers);
+
+
   }
 
-  draw() {
-    console.log(this.taskContainers);
-    const root = this.taskContainers.find(x => x.type == Type.BACKLOG);
-    console.log(root);
-    this.drawContainer(root,0,0,1);
-
-    const width = 200 * this.maxChildrenLength;
-    document.getElementById("container-field").style.width = width+'px';
-    this.leafPositions.forEach(leaf=>{
-      const htmlContainer :HTMLElement = document.getElementById("container-"+leaf.containerId);
-      console.log(htmlContainer);
-
-      htmlContainer.style.left = ((width/leaf.rowLength)+leaf.col*100)+'px';
-      htmlContainer.style.top = leaf.row*200+'px';
+  draw(){
+    this.links = [];
+    this.nodes = [];
+    this.update$.next(true);
+    this.taskContainers.forEach(x=>{
+      this.nodes.push({
+        id:x.id+"",
+        label:x.title,
+        data:x,
+        dimension:{
+          width: 200,
+          height: 100
+        },
+      })
+      if(x.overcontainer!=null){
+        this.links.push({
+          id:x.overcontainer.id+"-"+x.id,
+          source:x.overcontainer.id+"",
+          target:x.id+""
+        })
+      }
     })
+    console.log(this.links);
+
   }
-
-
-  drawContainer(container: TaskContainer,col:number,row:number,rowLength: number) {
-   // console.log(container.id + " posXM: "+posXM*10+" posYM: "+posYM*10);
-    this.leafPositions.push(new LeafPosition(container.id,col,row,rowLength));
-
-
-    const children: TaskContainer[] = this.taskContainers
-                                      .filter(x => (x.overcontainer != null) && (x.overcontainer.id == container.id));
-
-    if(children.length>this.maxChildrenLength){
-      this.maxChildrenLength = children.length;
-    }
-    row++;
-    children.forEach((x,index) => this.drawContainer(x,col+index,row,children.length));
-  }
-
 
   updateContainerBox(event: any) {
     console.log(event);
-
   }
 
   createTaskContainer(containerId: number) {

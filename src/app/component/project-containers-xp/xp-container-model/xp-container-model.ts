@@ -1,4 +1,8 @@
-export class LeafPosition {
-  constructor(public containerId: number, public col: number, public row: number,public rowLength:number) {
-  }
+export class Leaf {
+  public containerId: number;
+  public parentId: number;
+  public width: number;
+  public height = 100;
+  public x: number;
+  public y: number;
 }

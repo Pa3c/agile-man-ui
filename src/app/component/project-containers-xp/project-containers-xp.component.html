@@ -1,30 +1,16 @@
-<div id="container-field" class="w-100 basic basic-colors-reverse xp-container-field">
-  <div style=" height: 10px; width: 10px; background-color: black; top:10px; left:20px;">
-  </div>
+<div class="basic basic-colors-reverse xp-container-field">
   <button (click)="draw()">
-    draw
+    Draw
   </button>
-
-  <div *ngFor="let container of taskContainers;">
-    <ng-container *ngTemplateOutlet="draggablediv; context:{container : container}">
-
-    </ng-container>
-  </div>
+  <ngx-graph class="chart-container"
+  [showMiniMap]="true" [nodes]=nodes
+  [links]=links [update$]=update$ [curve]=curve>
+    <ng-template #nodeTemplate let-node>
+      <svg:g class="node">
+        <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height" style="fill:#222" />
+        <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height/2" style="fill:ghostwhite">
+          {{node.data.title}}</svg:text>
+      </svg:g>
+    </ng-template>
+  </ngx-graph>
 </div>
-
-<ng-template #draggablediv let-index="index" let-container="container">
-  <div id="{{ 'container-' + container.id}}" class="container-box" cdkDrag (cdkDragEnded)="updateContainerBox($event)">
-    {{container.title}}
-    <div class="container-handle" cdkDragHandle>
-      <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-        <path
-          d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
-        </path>
-        <path d="M0 0h24v24H0z" fill="none"></path>
-      </svg>
-    </div>
-    <mat-icon (click)="createTaskContainer(container.id)">
-      add_circle_outline
-    </mat-icon>
-  </div>
-</ng-template>
