@@ -11,7 +11,7 @@ export class TaskContainer extends BaseModel implements Identifable{
     closeDate: string;
 
     closed: boolean;
-    overContainer: TaskContainer;
+    overcontainer: TaskContainer;
 }
 export class State implements Identifable {
     id: number;

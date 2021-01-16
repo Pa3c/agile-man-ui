@@ -18,6 +18,11 @@ body * {
   color: ghostwhite;
 }
 
+.basic-colors-reverse{
+  background-color: ghostwhite;
+  color: #222;
+}
+
 .custom-modalbox {
   min-width: 50vh;
   text-align: center;

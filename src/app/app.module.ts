@@ -70,6 +70,8 @@ import { DocumentationVersionComponent } from './component/documentation-version
 import { DocumentationComponent } from './component/documentation/documentation.component';
 import { CreateDocComponent } from './component/dialogs/create-doc/create-doc.component';
 import { DocumentationViewComponent } from './component/documentation-view/documentation-view.component';
+import { ProjectContainersBasicComponent } from './component/project-containers-basic/project-containers-basic.component';
+import { ProjectContainersXpComponent } from './component/project-containers-xp/project-containers-xp.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +105,9 @@ import { DocumentationViewComponent } from './component/documentation-view/docum
     DocumentationVersionComponent,
     DocumentationComponent,
     CreateDocComponent,
-    DocumentationViewComponent
+    DocumentationViewComponent,
+    ProjectContainersBasicComponent,
+    ProjectContainersXpComponent
   ],
   imports: [
     BrowserModule,

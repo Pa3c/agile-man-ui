@@ -20,65 +20,20 @@
   </div>
 </div>
 
+
 <ng-template #contentTable>
-  <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="detailedProject?.taskContainers"
-    multiTemplateDataRows class="mat-elevation-z8" style="margin: 0 0.5rem;">
-
-    <!-- Pattern for columns for not clicked row -->
-    <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="title">
-        <span style="text-transform: capitalize;">
-          Title
-        </span>
-      </th>
-      <td mat-cell *matCellDef="let element">{{element.title}}</td>
-    </ng-container>
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef style="text-align: end;">
-        <mat-icon (click)="createTaskContainer()">
-          add_circle_outline
-        </mat-icon>
-      </th>
-      <td mat-cell *matCellDef="let element; let i = dataIndex;" style="text-align: end;">
-        <mat-icon *ngIf="element.type!='BACKLOG'"  [inline]="true" class="editable" (click)="deleteElement(element.id)">
-          delete_forever
-        </mat-icon>
-        <mat-icon [inline]="true" class="editable" (click)="copyTaskContainer(element.id,element.title)">
-          content_copy
-        </mat-icon>
-        <mat-icon *ngIf="!element.closed && element.type!='BACKLOG' " [inline]="true" class="editable" (click)="closeTaskContainer(i)">
-          close
-        </mat-icon>
-        <mat-icon *ngIf="element.closed" [inline]="true" class="editable" (click)="openTaskContainer(i)">
-          change_circle
-        </mat-icon>
-        <a class="row-action-icons" href='{{this.resourceUrl}}/{{element.id}}'>
-          <mat-icon [inline]="true">forward</mat-icon>
-        </a>
-
-      </td>
-    </ng-container>
-
-    <!-- Pattern for columns for clicked row -->
-    <ng-container matColumnDef="detailedColumn">
-      <td mat-cell *matCellDef="let detailedElement" [attr.colspan]="2" class="detail-cell">
-        <div class="detail-container-row">
-          <div class="detail-container" style="flex: 1 1 auto;">
-            <div class="detail-container-element" *ngFor="let detailColumn of columnsForDetails"
-              [@detailExpand]="detailedElement == expandedElement ? 'expanded' : 'collapsed'">
-              <div class="detail-element-title">{{detailColumn}}:</div>
-              <div [innerHTML]="itemResolver(detailedElement[detailColumn])">
-              </div>
-            </div>
-          </div>
-        </div>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="element-row"
-      [class.expanded-row]="expandedElement === element" (click)="toggleElement(element);">
-    </tr>
-    <tr mat-row *matRowDef="let detailedElement; columns: ['detailedColumn']" class="detail-row"></tr>
-  </table>
+<project-containers-basic *ngIf="this.detailedProject.type!='XP'" class="w-100"
+[tipId]=this.detailedProject.teamInProjectId
+[projectId]=this.detailedProject.projectId
+[taskContainers]=this.detailedProject.taskContainers
+[projectType]=this.detailedProject.type
+[resourceUrl]=this.resourceUrl>
+</project-containers-basic>
+<project-containers-xp *ngIf="this.detailedProject.type=='XP'" class="w-100"
+[tipId]=this.detailedProject.teamInProjectId
+[projectId]=this.detailedProject.projectId
+[taskContainers]=this.detailedProject.taskContainers
+[projectType]=this.detailedProject.type
+[resourceUrl]=this.resourceUrl>
+</project-containers-xp>
 </ng-template>
