@@ -64,7 +64,7 @@
         Teams
         <div style="max-height: 20vh; min-height: 20vh; overflow-y: auto;">
           <div *ngFor="let team of addedTeams" class="team-div">
-            <div style="flex-grow: 1;">
+            <div style="flex-grow: 1;" class="basic-colors-reverse">
               ID: {{team.id}}<br>
               Name: {{team.title}}
             </div>
@@ -94,7 +94,7 @@
 
       Teams
       <div style="max-height: 20vh;min-height: 20vh; overflow-y: auto;">
-        <div *ngFor="let team of filteredUserTeams" class="team-div">
+        <div *ngFor="let team of filteredUserTeams" class="team-div basic-colors-reverse">
           <div>
             ID: {{team.id}}<br>
             Name: {{team.title}}

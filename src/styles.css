@@ -26,6 +26,7 @@ body * {
 .custom-modalbox {
   min-width: 50vh;
   text-align: center;
+  background-color: #222;
 }
 
 .delete-column-container-dialog-container {

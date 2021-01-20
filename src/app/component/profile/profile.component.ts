@@ -105,7 +105,7 @@ export class ProfileComponent implements OnInit {
 
   selectedSpec(event: any) {
     console.log(event);
-
+    this.specsCtrl.setValue("");
     this.specializationService.addUserSpec(this.user.login, event.option.value).subscribe((success: UserSpecialization) => {
       this.specializations.push(success)
       console.log(this.specializations);
