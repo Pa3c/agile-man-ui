@@ -39,5 +39,7 @@ export enum PlaceTaskActions{
 }
 export enum TaskContainerStatus{
   CLOSE = "CLOSE",
-  OPEN = "OPEN"
+  OPEN = "OPEN",
+  ABANDON = "ABANDON",
+  UNABANDON = "UNABANDON"
 }

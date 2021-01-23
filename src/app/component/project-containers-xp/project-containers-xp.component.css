@@ -1,4 +1,14 @@
-
-.xp-container-field {
-  height: calc(100vh - 15rem);
+.editable:hover {
+  fill: yellowgreen;
+}
+.abandoned {
+fill:gray;
+}
+.closed {
+  fill: yellow;
+}
+.container-node {
+  fill:ghostwhite;
+  stroke-width:3;
+  stroke:rgb(2,2,2);
 }

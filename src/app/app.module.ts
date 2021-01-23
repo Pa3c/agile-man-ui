@@ -73,6 +73,7 @@ import { DocumentationViewComponent } from './component/documentation-view/docum
 import { ProjectContainersBasicComponent } from './component/project-containers-basic/project-containers-basic.component';
 import { ProjectContainersXpComponent } from './component/project-containers-xp/project-containers-xp.component';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -135,7 +136,8 @@ import { NgxGraphModule } from '@swimlane/ngx-graph';
     MatNativeDateModule,
     MatSelectModule,
     QuillModule.forRoot(),
-    NgxGraphModule
+    NgxGraphModule,
+    MatMenuModule
   ],
   entryComponents: [MainProjectsViewComponent,MainTeamsViewComponent,DeleteColumnComponent,TeamComponent],
   providers: [

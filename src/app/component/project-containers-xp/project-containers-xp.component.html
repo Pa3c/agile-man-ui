@@ -1,16 +1,51 @@
 <div class="basic basic-colors-reverse xp-container-field">
-  <button (click)="draw()">
-    Draw
-  </button>
-  <ngx-graph class="chart-container"
-  [showMiniMap]="true" [nodes]=nodes
-  [links]=links [update$]=update$ [curve]=curve>
-    <ng-template #nodeTemplate let-node>
-      <svg:g class="node">
-        <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height" style="fill:#222" />
-        <svg:text alignment-baseline="central" [attr.x]="10" [attr.y]="node.dimension.height/2" style="fill:ghostwhite">
-          {{node.data.title}}</svg:text>
-      </svg:g>
-    </ng-template>
-  </ngx-graph>
+  <div class="w-100 basic-colors" style="text-align: right; padding: 0 1rem;">
+    <mat-icon (click)="draw()" [inline]=true>
+      autorenew
+    </mat-icon>
+  </div>
+
+  <div style="height: 70vh;">
+    <ngx-graph [showMiniMap]="true" [nodes]=nodes [links]=links [update$]=update$>
+      <ng-template #nodeTemplate let-node>
+        <svg:g class="node">
+          <svg style="cursor: move;" [attr.width]="node.dimension.width" [attr.height]="node.dimension.height">
+
+            <rect *ngIf="!node.data.abandoned &&!node.data.closed" x="0" y="0" rx="15" [attr.width]="node.dimension.width"
+              [attr.height]="node.dimension.height" class="container-node" />
+            <rect *ngIf="node.data.abandoned" x="0" y="0" rx="15" [attr.width]="node.dimension.width"
+              [attr.height]="node.dimension.height" class="container-node" style="fill: rgba(2, 2, 2, 0.5);" />
+            <rect *ngIf="node.data.closed" x="0" y="0" rx="15" [attr.width]="node.dimension.width"
+              [attr.height]="node.dimension.height" class="container-node" style="fill: rgba(0, 255, 0, 0.5);" />
+
+            <text class="editable" (click)="onContextMenu($event, node.data.id)" x="50%" y="50%"
+              dominant-baseline="middle" text-anchor="middle" fill="#222">{{node.data.title}}</text>
+          </svg>
+        </svg:g>
+      </ng-template>
+    </ngx-graph>
+  </div>
+
 </div>
+
+
+<div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+  [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+</div>
+<mat-menu #contextMenu="matMenu">
+  <ng-template matMenuContent let-item="item">
+    <a mat-menu-item href='{{this.resourceUrl}}/{{item.id}}'>Show</a>
+
+    <button mat-menu-item *ngIf="!item.abandoned" (click)="createTaskContainer(item.id)">Add</button>
+
+    <button *ngIf="!item.abandoned" mat-menu-item (click)="copyTaskContainer(item.id,item.title)">Copy</button>
+
+    <button mat-menu-item *ngIf="item.type!='BACKLOG' && !item.closed"
+      (click)="closeTaskContainer(item.id)">Close</button>
+
+    <button mat-menu-item *ngIf="item.type!='BACKLOG' && !item.abandoned" (click)="abandonPath(item.id)">Abandon
+      Path</button>
+
+    <button mat-menu-item *ngIf="item.type!='BACKLOG'" (click)="deleteTaskContainer(item.id)">Delete</button>
+  </ng-template>
+</mat-menu>
