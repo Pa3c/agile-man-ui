@@ -30,7 +30,7 @@
         </div>
       </div>
       <div *ngIf="value.type=='string' || 'user'" class="prop-container">
-        <mat-form-field *ngIf="value.type=='string'"  class="example-chip-list">
+        <mat-form-field *ngIf="value.type=='string'"  class="basic-chip-list">
           <mat-chip-list #chipList aria-label="Fruit selection">
             <mat-chip *ngFor="let propValue of propValueList[value.name]"
                      [removable]="true" (removed)="remove(propValue,value.name,'string')">
@@ -43,7 +43,7 @@
                    (matChipInputTokenEnd)="add($event,value.name,'string')">
           </mat-chip-list>
         </mat-form-field >
-        <mat-form-field *ngIf="value.type=='user'" class="example-chip-list">
+        <mat-form-field *ngIf="value.type=='user'" class="basic-chip-list">
           <mat-chip-list #chipList aria-label="Fruit selection">
             <mat-chip *ngFor="let propValue of propUserList[value.name]"
                      [removable]="true" (removed)="remove(propValue,value.name,'user')">

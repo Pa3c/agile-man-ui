@@ -16,7 +16,7 @@
         <br>
 
 
-        <mat-form-field class="example-chip-list">
+        <mat-form-field class="basic-chip-list">
           <mat-chip-list #labelList aria-label="label selection">
             <mat-chip *ngFor="let label of labels" [selectable]=false [removable]=true (removed)='removeLabel(label,"LABEL")'>
               {{label.name}}
@@ -38,7 +38,7 @@
           </mat-autocomplete>
         </mat-form-field>
 
-        <mat-form-field class="example-chip-list">
+        <mat-form-field class="basic-chip-list">
           <mat-chip-list #techLabelList aria-label="label selection">
             <mat-chip *ngFor="let label of techLabels" [selectable]=false [removable]=true (removed)='removeLabel(label,"TECHNOLOGY")'>
               {{label.name}}
