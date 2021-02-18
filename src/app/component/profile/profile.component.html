@@ -2,10 +2,10 @@
   <div class="user-info-wrapper" style="min-width: 50%;">
     <div class="profile-photo w-100">
       <div class="w-100" style="text-align: end;">
-        <mat-icon *ngIf="!editMode" [inline]=true (click)="showEditMode()">
+        <mat-icon *ngIf="!isModifable() && loggedLogin==user.login" [inline]=true (click)="showEditMode()" >
           edit
         </mat-icon>
-        <div style="text-align: end;" *ngIf="editMode">
+        <div style="text-align: end;" *ngIf="isModifable()">
           <mat-icon [inline]=true (click)="saveEditMode()">
             done
           </mat-icon>
@@ -18,21 +18,21 @@
       <div class="w-100" style="text-align: center;">
         <div class="w-100" style="text-align: center;">
           <ng-container>
-            <mat-icon class="ordinar-photo"  *ngIf=!editMode style="transform: scale(2);">
+            <mat-icon class="ordinar-photo"  *ngIf=!isModifable() style="transform: scale(2);">
               person_outline
             </mat-icon>
-            <mat-icon *ngIf=editMode  class="clickable-photo" style="transform: scale(2);" (click)="fileInput.click()">
+            <mat-icon *ngIf=isModifable()  class="clickable-photo" style="transform: scale(2);" (click)="fileInput.click()">
               person_outline
             </mat-icon>
           </ng-container>
-          <!-- <img *ngIf="user.photo!=null && user.photo!=undefined && !editMode"
+          <!-- <img *ngIf="user.photo!=null && user.photo!=undefined && !isModifable()"
                 [src]=user.photo> -->
         </div>
         <div class="basic-info">
-          <div class="name w-100" *ngIf="!editMode">
+          <div class="name w-100" *ngIf="!isModifable()">
             {{user.name}} {{user.surname}}
           </div>
-          <div class="flex-row name w-100" *ngIf="editMode" style="justify-content: center;">
+          <div class="flex-row name w-100" *ngIf="isModifable()" style="justify-content: center;">
             <div contenteditable="true" (input)="tempUser.name = $event.target.innerText">
               {{user.name}}
             </div>
@@ -51,10 +51,10 @@
           <mat-icon [inline]=true>
             cake
           </mat-icon>
-          <div *ngIf="!editMode">
+          <div *ngIf="!isModifable()">
             {{user.birthday | date:'dd-MMM-YYYY'}}
           </div>
-          <div *ngIf="editMode">
+          <div *ngIf="isModifable()">
             <input matInput [matDatepicker]="picker" class="basic-colors" (dateChange)="tempUser.birthday=$event.target.value">
             <mat-datepicker-toggle matSuffix [for]="picker" class="basic-colors"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -62,10 +62,10 @@
         </div>
         <div class="flex-row contact-detail">
           <i class="fa fa-skype" aria-hidden="true"></i>
-          <span *ngIf=!editMode>
+          <span *ngIf=!isModifable()>
             {{user.skype}}
           </span>
-          <div *ngIf=editMode>
+          <div *ngIf=isModifable()>
             <input type="text" [(ngModel)]="tempUser.skype">
           </div>
         </div>
@@ -73,10 +73,10 @@
           <mat-icon [inline]=true>
             alternate_email
           </mat-icon>
-          <span *ngIf=!editMode>
+          <span *ngIf=!isModifable()>
             {{user.email}}
           </span>
-          <div *ngIf=editMode>
+          <div *ngIf=isModifable()>
             <input type="email" [(ngModel)]="tempUser.email">
           </div>
         </div>
@@ -84,10 +84,10 @@
           <mat-icon [inline]=true>
             smartphone
           </mat-icon>
-          <span *ngIf=!editMode>
+          <span *ngIf=!isModifable()>
             {{user.phoneNumber}}
           </span>
-          <div *ngIf=editMode>
+          <div *ngIf=isModifable()>
             <input type="tel" [(ngModel)]="tempUser.phoneNumber">
           </div>
         </div>
@@ -96,16 +96,19 @@
         <div class="w-100"style="text-align:center">
           About Me
         </div>
-        <textarea *ngIf="!editMode" class="description" [ngModel]="user.description" disabled style="outline: none;border: none;"></textarea>
-        <textarea *ngIf="editMode"  class="description" [(ngModel)]="tempUser.description"></textarea>
+        <textarea *ngIf="!isModifable()" class="description" [ngModel]="user.description" disabled style="outline: none;border: none;"></textarea>
+        <textarea *ngIf="isModifable()"  class="description" [(ngModel)]="tempUser.description"></textarea>
       </div>
       <div class="skills w-100">
-        <input #specInput [formControl]="specsCtrl"
+        <input *ngIf="loggedLogin==user.login" #specInput [formControl]="specsCtrl"
          [matAutocomplete]="autoLabel" class="w-100"
          placeholder="My Skills"
          style="text-align: center;"
           >
-          <mat-autocomplete class="w-100" #autoLabel="matAutocomplete" (optionSelected)="selectedSpec($event)">
+          <mat-autocomplete
+          class="w-100"
+          #autoLabel="matAutocomplete"
+          (optionSelected)="selectedSpec($event)">
             <mat-option style="text-align: center;background-color: yellowgreen;" *ngIf="isLoading"
               class="is-loading">
               <i style="text-align: center;" class="fa fa-spinner fa-spin"></i>
@@ -132,7 +135,7 @@
             </ng-container>
 
           </span>
-          <span>
+          <span *ngIf="loggedLogin==user.login">
             <mat-icon class="deletable" [inline]=true (click)="deleteUserSpecialization(spec)">
               delete_forever
             </mat-icon>

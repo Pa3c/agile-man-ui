@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit {
   specializations: UserSpecialization[] = [];
   filteredSpecs: UserSpecialization[] = [];
   specsCtrl = new FormControl();
+  loggedLogin = null;
 
 
   constructor(private specializationService: UserSpecializationService, private domSanitizer: DomSanitizer, private datePipe: DatePipe, private route: ActivatedRoute, private appUserService: AppUserService, private userService: UserService) { }
@@ -42,6 +43,8 @@ export class ProfileComponent implements OnInit {
       this.specializations = success;
       console.log(this.specializations);
     }, error => console.log(error));
+
+    this.loggedLogin = this.userService.getUserFromLocalCache().login;
 
 
     this.specsCtrl.valueChanges.pipe(
@@ -86,7 +89,6 @@ export class ProfileComponent implements OnInit {
     this.tempUser = null;
   }
   saveEditMode() {
-
     this.tempUser.birthday = this.datePipe.transform(new Date(this.tempUser.birthday), Constants.dtFormat);
     this.appUserService.update(this.tempUser).subscribe(
       (success: User) => {
@@ -147,4 +149,9 @@ export class ProfileComponent implements OnInit {
     this.specializations[specIndex].skill = spec.skill == value ? 0 : value;
     this.specializationService.updateUserSpec(this.user.login,spec).subscribe(success=>console.log(success),error=>console.log(error));
   }
+
+  isModifable(){
+    return this.editMode && this.user.login == this.loggedLogin;
+  }
+
 }

@@ -10,7 +10,7 @@ import { UserService } from './service/user.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent  {
   title = 'agileman';
   showFrame: boolean;
   login: string = "";
@@ -23,10 +23,7 @@ export class AppComponent implements OnInit {
     );
 
 
-  constructor(private userService: UserService, private router: Router,private breakpointObserver: BreakpointObserver,private componentFactoryResolver: ComponentFactoryResolver) {
-
-  }
-  ngOnInit(): void {
+  constructor(private userService: UserService, private router: Router,private breakpointObserver: BreakpointObserver) {
     this.login = this.userService.getUserFromLocalCache().login;
   }
   logOut(){
